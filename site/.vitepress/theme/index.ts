@@ -4,9 +4,8 @@ import { h } from 'vue'
 import './styles/vars.css'
 import './styles/base.css'
 import ProjectPage from './layouts/ProjectPage.vue'
-import HomeHeroLogo from './components/HomeHeroLogo.vue'
+import HomeEcosystem from './components/HomeEcosystem.vue'
 import HomeNews from './components/HomeNews.vue'
-import HomeProjectStrip from './components/HomeProjectStrip.vue'
 import LiteYouTube from './components/LiteYouTube.vue'
 import LoopVideo from './components/LoopVideo.vue'
 import NewsIndex from './components/NewsIndex.vue'
@@ -20,8 +19,7 @@ export default {
   extends: DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      'home-hero-info-before': () => h(HomeHeroLogo),
-      'home-hero-actions-after': () => h(HomeProjectStrip),
+      'home-hero-image': () => h(HomeEcosystem),
       'doc-before': () => h(PostHeader),
       'layout-bottom': () => h(SiteFooter),
     })

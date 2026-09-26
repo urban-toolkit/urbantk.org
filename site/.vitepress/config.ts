@@ -3,6 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitepress'
 import { SITE } from './site'
+import { DARK_BG, ensureContrast, mix } from './theme/node/color'
 import { writeFeed } from './theme/node/feed'
 import { socialHead } from './theme/node/head'
 import { buildNav } from './theme/node/nav'
@@ -13,6 +14,20 @@ import { loadRedirects, writeRedirects } from './theme/node/redirects'
 const projects = loadProjects()
 const categories = loadCategories()
 const unlisted = new Set(projects.filter((p) => !p.listed).map((p) => p.url))
+
+// Each category's arc in the home page diagram: a pale fill of its color in each theme, and a label
+// color that stays readable on that fill.
+const tintedCategories = categories.map((c) => {
+  const fillLight = mix(c.color, '#ffffff', 0.2)
+  const fillDark = mix(c.color, DARK_BG, 0.26)
+  return {
+    ...c,
+    fillLight,
+    fillDark,
+    inkLight: ensureContrast(c.color, fillLight, 4.5),
+    inkDark: ensureContrast(c.color, fillDark, 4.5),
+  }
+})
 
 // VitePress writes sitemap.xml through a stream it does not await, so it can still be open in buildEnd.
 async function completeFile(file: string, ending: string, timeoutMs = 10_000): Promise<void> {
@@ -57,7 +72,8 @@ export default defineConfig({
     outline: false,
     // Site content read by the theme's components (the theme itself holds none).
     utk: {
-      categories,
+      categories: tintedCategories,
+      ecosystem: SITE.ecosystem,
       homeOrder: SITE.homeOrder,
       newsOnHome: SITE.newsOnHome,
       others: SITE.others,

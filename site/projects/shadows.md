@@ -15,6 +15,7 @@ hero:
 card:
   image: "/media/projects/shadows/card.webp"
   alt: "A single timestep shadow next to shadows accumulated over a time range, over a 3D city"
+bubble: { image: /media/projects/shadows/bubble.webp }
 links:
   - { kind: data, url: "https://osf.io/4yztn/", label: Global Shadow Dataset, primary: true }
   - { kind: demo, url: "http://evl.uic.edu/shadows/map/", label: Web viewer }

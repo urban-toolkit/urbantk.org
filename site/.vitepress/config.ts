@@ -24,10 +24,6 @@ async function completeFile(file: string, ending: string, timeoutMs = 10_000): P
   throw new Error(`${file} was not written in time`)
 }
 
-function escapeHtml(text: string): string {
-  return String(text).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!)
-}
-
 export default defineConfig({
   lang: 'en-US',
   title: SITE.title,
@@ -59,20 +55,6 @@ export default defineConfig({
     nav: buildNav(projects, categories),
     socialLinks: [{ icon: 'github', link: SITE.github, ariaLabel: 'The Urban Toolkit on GitHub' }],
     outline: false,
-    search: {
-      provider: 'local',
-      options: {
-        // Project pages keep most of their text in frontmatter; index it too.
-        _render(src, env, md) {
-          const html = md.render(src, env)
-          const fm = env.frontmatter ?? {}
-          if (fm.layout === 'home') return ''
-          if (fm.layout !== 'ProjectPage') return html
-          const extra = [fm.tagline, ...(fm.features ?? []).map((f: { title: string }) => f.title)]
-          return `<h1>${escapeHtml(fm.name)}: ${escapeHtml(fm.title)}</h1><p>${extra.map(escapeHtml).join('. ')}</p>${html}`
-        },
-      },
-    },
     // Site content read by the theme's components (the theme itself holds none).
     utk: {
       categories,

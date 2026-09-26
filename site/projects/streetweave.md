@@ -11,7 +11,6 @@ hero:
   image: "/media/projects/streetweave/teaser.webp"
   alt: "Eight street network visualizations made with StreetWeave"
   caption: "Street and pedestrian network visualizations with StreetWeave: multivariate line maps, pattern-based overlays, bristle maps and charts along streets."
-  credit: "srabanti2026streetweave"
   w: 1600
   h: 577
 card:

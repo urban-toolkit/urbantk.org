@@ -13,8 +13,7 @@ logo: /media/projects/<slug>/logo.webp  # omit to get a monogram in the accent c
 hero:                       # the one image the page leads with, usually the paper's teaser; prefer wide
   image: /media/projects/<slug>/teaser.webp
   alt: What the image shows
-  caption: "One or two sentences on what the image shows."
-  credit: key-in-papers-bib  # the paper the image comes from
+  caption: "One or two sentences on what the image shows."   # required
   w: 1600
   h: 900
 card:                       # the home page card, cropped from the hero by scripts/media/build-cards.mjs

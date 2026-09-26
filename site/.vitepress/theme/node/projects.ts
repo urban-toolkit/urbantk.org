@@ -61,11 +61,11 @@ function monogramOf(name: string): string {
   return (words.length > 1 ? words.slice(0, 2).map((w) => w[0]) : [name[0]]).join('').toUpperCase()
 }
 
-// Every paper key, image credit and team id a project names must exist; a typo fails the build here
+// Every paper key and team id a project names must exist; a typo fails the build here
 // instead of breaking the page in the browser.
 function checkReferences(file: string, p: ProjectFrontmatter, papers: Set<string>, people: Set<string>): void {
   const problems: string[] = []
-  for (const key of [p.paper, p.hero.credit, ...p.links.map((l) => l.bib)]) {
+  for (const key of [p.paper, ...p.links.map((l) => l.bib)]) {
     if (key && !papers.has(key)) problems.push(`unknown papers.bib key "${key}"`)
   }
   for (const id of p.team) if (!people.has(id)) problems.push(`unknown team.yaml id "${id}"`)
@@ -112,5 +112,14 @@ export function loadProjects(): ProjectSummary[] {
         features: p.features.map((f) => f.title),
       }
     })
+  const slugs = new Set(projects.map((p) => p.slug))
+  for (const paper of papers.values()) {
+    for (const slug of paper.projects) {
+      if (!slugs.has(slug)) throw new Error(`papers.bib: ${paper.key} names unknown project "${slug}"`)
+    }
+    for (const id of paper.categories) {
+      if (!categories.has(id)) throw new Error(`papers.bib: ${paper.key} has unknown category "${id}" (see site/data/categories.yaml)`)
+    }
+  }
   return projects.sort((a, b) => a.order - b.order || a.name.localeCompare(b.name))
 }

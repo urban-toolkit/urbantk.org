@@ -11,7 +11,6 @@ hero:
   image: "/media/projects/urbanite/teaser.webp"
   alt: "Analyzing flood simulations with Urbanite"
   caption: "Analyzing flood simulations: provenance and data inspection, simulation nodes documented with dataflow- and node-level explanations, and results shown with UTK nodes."
-  credit: "moreira2026urbanite"
   w: 1600
   h: 630
 card:

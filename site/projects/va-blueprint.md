@@ -11,7 +11,6 @@ hero:
   image: "/media/projects/va-blueprint/teaser.webp"
   alt: "From visual analytics papers to a hierarchical blueprint of system components"
   caption: "VA-Blueprint turns visual analytics papers into a hierarchical JSON blueprint of each system: its components at several levels of abstraction and their dependencies."
-  credit: "ferreira2026vablueprint"
   w: 1600
   h: 568
 card:

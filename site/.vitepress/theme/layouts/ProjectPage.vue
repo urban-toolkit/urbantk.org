@@ -33,14 +33,6 @@ const related = computed(() =>
   projects.filter((p) => p.listed && p.category === project.value.category && p.slug !== slug.value),
 )
 const hero = computed(() => fm.value.hero ?? {})
-
-// "Figure from Moreira et al. (2025)." under a lead image taken from a paper.
-const credit = computed(() => {
-  const paper = hero.value.credit ? papers.find((p) => p.key === hero.value.credit) : undefined
-  if (!paper) return null
-  const first = paper.authors[0]?.split(' ').pop()
-  return `Figure from ${first}${paper.authors.length > 1 ? ' et al.' : ''} (${paper.year}).`
-})
 </script>
 
 <template>
@@ -70,10 +62,7 @@ const credit = computed(() => {
         <a :href="withBase(hero.image)" target="_blank" rel="noopener" :aria-label="`Open the full-size image: ${hero.alt ?? fm.name}`">
           <img :src="withBase(hero.image)" :alt="hero.alt ?? fm.name" :width="hero.w" :height="hero.h" />
         </a>
-        <figcaption v-if="hero.caption || credit">
-          {{ hero.caption }}
-          <span v-if="credit" class="utk-project-credit">{{ credit }}</span>
-        </figcaption>
+        <figcaption>{{ hero.caption }}</figcaption>
       </figure>
     </div>
 
@@ -222,12 +211,6 @@ const credit = computed(() => {
 .utk-project-teaser a {
   display: block;
   cursor: zoom-in;
-}
-
-.utk-project-credit {
-  display: block;
-  margin-top: 2px;
-  font-size: 0.8rem;
 }
 
 .utk-project-teaser figcaption {

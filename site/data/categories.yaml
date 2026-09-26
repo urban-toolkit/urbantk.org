@@ -1,0 +1,18 @@
+# Project categories, in menu order. `label` is the menu entry, `heading` the home page section title,
+# `anchor` the id of that section (the old site linked /other-projects/ for AI & ML; it now points to /#ai-ml).
+- id: grammars
+  label: Grammars & Toolkits
+  heading: Grammars & toolkits
+  anchor: grammars
+- id: dataflow
+  label: Dataflow frameworks
+  heading: Dataflow frameworks
+  anchor: dataflow
+- id: knowledge
+  label: Knowledge bases
+  heading: Knowledge bases & guidelines
+  anchor: knowledge
+- id: ai
+  label: AI & ML
+  heading: AI & ML
+  anchor: ai-ml

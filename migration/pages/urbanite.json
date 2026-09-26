@@ -1,0 +1,51 @@
+{
+  "link": "/urbanite/",
+  "title": "Urbanite",
+  "modified": "2026-04-27T15:33:12",
+  "template": null,
+  "headings": [
+    "h2 Urbanite: A Dataflow-Based Framework for Human-AI Interactive Alignment in Urban Visual Analytics",
+    "h3 Team"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/urbanite/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://arxiv.org/abs/2508.07390",
+      "text": "Preprint (Arxiv)"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/urbanite/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://arxiv.org/abs/2508.07390",
+      "text": "Preprint (Arxiv)"
+    },
+    {
+      "href": "https://www.linkedin.com/in/gustavo-morei/",
+      "text": "Gustavo Moreira"
+    },
+    {
+      "href": "https://www.maryamhosseini.me/",
+      "text": "Maryam Hosseini"
+    },
+    {
+      "href": "https://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2026/04/urbanite-2.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/1598671-200_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2025/04/urbanite_compressed720.mp4"
+  ],
+  "iframes": []
+}

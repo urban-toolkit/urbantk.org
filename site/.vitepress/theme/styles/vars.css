@@ -1,0 +1,39 @@
+/* Urban Toolkit blue, carried over from the WordPress site. The dark-mode link color is lighter because
+   #046bd2 is only 3.3:1 on the dark background; buttons keep #046bd2, where white text is 5.2:1. */
+:root {
+  --utk-blue: #046bd2;
+  --vp-c-brand-1: #046bd2;
+  --vp-c-brand-2: #045cb4;
+  --vp-c-brand-3: #046bd2;
+  --vp-c-brand-soft: rgba(4, 107, 210, 0.12);
+
+  --utk-radius: 12px;
+  --utk-radius-sm: 8px;
+  --utk-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.08);
+  --utk-max: 1152px;
+  --utk-text-max: 760px;
+}
+
+.dark {
+  --vp-c-brand-1: #4c9bff;
+  --vp-c-brand-2: #2a83ec;
+  --vp-c-brand-3: #046bd2;
+  --vp-c-brand-soft: rgba(76, 155, 255, 0.16);
+  --utk-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Inside a project (its page, its cards), the brand colors become the project's accent.
+   --p-light is readable on white, --p-dark on the dark background; both are computed at build time. */
+.utk-accent {
+  --vp-c-brand-1: var(--p-light);
+  --vp-c-brand-2: color-mix(in srgb, var(--p-light) 82%, #000);
+  --vp-c-brand-3: var(--p-light);
+  --vp-c-brand-soft: color-mix(in srgb, var(--p-raw) 13%, transparent);
+}
+
+.dark .utk-accent {
+  --vp-c-brand-1: var(--p-dark);
+  --vp-c-brand-2: color-mix(in srgb, var(--p-dark) 82%, #fff);
+  --vp-c-brand-3: var(--p-light);
+  --vp-c-brand-soft: color-mix(in srgb, var(--p-raw) 18%, transparent);
+}

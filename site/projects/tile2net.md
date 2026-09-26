@@ -1,0 +1,24 @@
+---
+layout: ProjectPage
+name: tile2net
+title: "Mapping the Walk: A Scalable Computer Vision Approach for Generating Sidewalk Network Datasets from Aerial Imagery"
+tagline: Automatic generation of sidewalk networks from aerial imagery
+category: ai
+order: 20
+accent: "#0c8599"
+monogram: T2N
+venue: Computers, Environment and Urban Systems 2023
+hero:
+  image: /media/projects/tile2net/overview.webp
+  alt: Overview of tile2net, from aerial imagery to a sidewalk network
+  w: 900
+  h: 600
+links:
+  - { kind: github, url: "https://github.com/VIDA-NYU/tile2net", primary: true }
+  - { kind: paper, bib: hosseini2023tile2net }
+paper: hosseini2023tile2net
+---
+
+Tile2Net is an end-to-end tool for automated mapping of pedestrian infrastructure from aerial imagery. We trained a semantic segmentation model to detect roads, sidewalk, crosswalk, and footpath from orthorectified imagery. The results are then converted to geo-referenced polygons and finally a topologically interconnected centerline network is generated. This work is as an important step towards a robust and open-source framework that enables comprehensive digitization of pedestrian infrastructure, which we argue to be a key missing link to more accurate and reliable pedestrian modeling and analyses. By offering low-cost solutions to create planimetric dataset describing pedestrian environment, we enable cities with a tight budget to create datasets describing pedestrian environment which otherwise would not be possible at a comparable cost and time.
+
+For a detailed overview of tile2net, see its [GitHub repository](https://github.com/VIDA-NYU/tile2net).

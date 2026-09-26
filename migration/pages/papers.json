@@ -1,0 +1,75 @@
+{
+  "link": "/papers/",
+  "title": "Papers",
+  "modified": "2026-02-07T01:37:31",
+  "template": null,
+  "headings": [
+    "h2 Papers",
+    "h3 2026",
+    "h3 2025",
+    "h3 2024",
+    "h3 2023"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "https://scholar.google.com/citations?user=9fR0LqAAAAAJ&hl=en",
+      "text": "here"
+    },
+    {
+      "href": "https://arxiv.org/abs/2602.03743",
+      "text": "Occlusion-Free Conformal Lensing for Spatiotemporal Visualization in 3D Urban Analytics"
+    },
+    {
+      "href": "/neural-3d/",
+      "text": "A Neural Field-Based Approach for View Computation & Data Exploration in 3D Urban Environments"
+    },
+    {
+      "href": "/urbanite/",
+      "text": "Urbanite: A Dataflow-Based Framework for Human-AI Interactive Alignment in Urban Visual Analytics"
+    },
+    {
+      "href": "/va-blueprint/",
+      "text": "VA-Blueprint: Uncovering Building Blocks for Visual Analytics System Design"
+    },
+    {
+      "href": "/streetweave/",
+      "text": "StreetWeave: A Declarative Grammar for Street-Overlaid Visualization of Multivariate Data"
+    },
+    {
+      "href": "/curio/",
+      "text": "Curio: A Dataflow-Based Framework for Collaborative Urban Visual Analytics"
+    },
+    {
+      "href": "https://doi.org/10.1016/j.cag.2024.104013",
+      "text": "Assessing the landscape of toolkits, frameworks, and authoring tools for urban visual analytics systems"
+    },
+    {
+      "href": "https://doi.org/10.1111/cgf.15112",
+      "text": "The State of the Art in Visual Analytics for 3D Urban Data"
+    },
+    {
+      "href": "https://doi.org/10.1109/TBDATA.2024.3382964",
+      "text": "Deep Umbra: A Generative Approach for Sunlight Access Computation in Urban Spaces"
+    },
+    {
+      "href": "https://doi.org/10.1109/TVCG.2023.3326514",
+      "text": "ProWis: A Visual Approach for Building, Managing, and Analyzing Weather Simulation Ensembles at Runtime"
+    },
+    {
+      "href": "https://doi.org/10.1109/TVCG.2023.3326598",
+      "text": "The Urban Toolkit: A Grammar-based Framework for Urban Visual Analytics"
+    },
+    {
+      "href": "https://doi.org/10.1016/j.compenvurbsys.2023.101950",
+      "text": "Mapping the walk: A scalable computer vision approach for generating sidewalk network datasets from aerial imagery"
+    },
+    {
+      "href": "https://doi.org/10.1109/TVCG.2022.3209474",
+      "text": "A comparison of spatiotemporal visualizations for 3D urban analytics"
+    }
+  ],
+  "images": [],
+  "videos": [],
+  "iframes": []
+}

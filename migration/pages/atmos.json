@@ -1,0 +1,29 @@
+{
+  "link": "/atmos/",
+  "title": "Atmos",
+  "modified": "2026-04-08T04:13:05",
+  "template": null,
+  "headings": [
+    "h2 Atmos: A Declarative Grammar for Atmospheric Data Visualization"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/atmos/",
+      "text": "GitHub"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/atmos/",
+      "text": "GitHub"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2026/04/atmos_logo-1.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2026/04/vis-atmos-video.mp4"
+  ],
+  "iframes": []
+}

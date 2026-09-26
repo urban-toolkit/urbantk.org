@@ -1,0 +1,31 @@
+{
+  "link": "/other-projects/",
+  "title": "Other projects",
+  "modified": "2024-04-24T17:50:00",
+  "template": null,
+  "headings": [
+    "h2 Other projects"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "/citysurfaces/",
+      "text": "CitySurfaces"
+    },
+    {
+      "href": "/tile2net/",
+      "text": "Tile2Net"
+    },
+    {
+      "href": "/shadows/",
+      "text": "Deep Umbra"
+    },
+    {
+      "href": "/survey-3d",
+      "text": "The State of the Art in Visual Analytics for 3D Urban Data"
+    }
+  ],
+  "images": [],
+  "videos": [],
+  "iframes": []
+}

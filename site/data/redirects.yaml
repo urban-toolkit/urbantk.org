@@ -1,0 +1,6 @@
+# Old URLs that now forward somewhere else. GitHub Pages has no server-side redirects, so the build writes
+# a small HTML page at each `from`. Year and month archives (/2024/, /2024/08/) are added automatically.
+- from: /curio/tutorials/
+  to: /utk/tutorials/
+- from: /other-projects/
+  to: /#ai-ml

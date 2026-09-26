@@ -1,0 +1,60 @@
+{
+  "link": "/va-blueprint/",
+  "title": "VA-Blueprint",
+  "modified": "2025-08-12T02:05:45",
+  "template": null,
+  "headings": [
+    "h2 VA-Blueprint: Uncovering Building Blocks for Visual Analytics System Design",
+    "h3 Team"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/va-blueprint",
+      "text": "Github"
+    },
+    {
+      "href": "https://leovsferreira.github.io/va-building-blocks/",
+      "text": "VA-Blueprint interface"
+    },
+    {
+      "href": "https://arxiv.org/abs/2508.07497",
+      "text": "Preprint (Arxiv)"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/va-blueprint",
+      "text": "Github"
+    },
+    {
+      "href": "https://leovsferreira.github.io/va-building-blocks/",
+      "text": "VA-Blueprint interface"
+    },
+    {
+      "href": "https://arxiv.org/abs/2508.07497",
+      "text": "Preprint (Arxiv)"
+    },
+    {
+      "href": "https://www.linkedin.com/in/leo-vsferreira/",
+      "text": "Leonardo Ferreira"
+    },
+    {
+      "href": "https://gmmuller.github.io/",
+      "text": "Gustavo Moreira"
+    },
+    {
+      "href": "http://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2025/04/logo_gray_background_grid.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/1598671-200_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/1598671-200_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2025/07/vis25a-sub2001-i7.mp4"
+  ],
+  "iframes": []
+}

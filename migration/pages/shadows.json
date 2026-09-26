@@ -1,0 +1,54 @@
+{
+  "link": "/shadows/",
+  "title": "Deep Umbra",
+  "modified": "2023-12-11T12:24:05",
+  "template": null,
+  "headings": [
+    "h2 Deep Umbra",
+    "h2 Abstract",
+    "h2 Accumulated shadow",
+    "h2 Results",
+    "h2 Web viewer",
+    "h2 Links",
+    "h2 Team"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "http://evl.uic.edu/shadows/map/",
+      "text": "here"
+    },
+    {
+      "href": "https://osf.io/4yztn/",
+      "text": "here"
+    },
+    {
+      "href": "http://evl.uic.edu/shadows/map/",
+      "text": "web interface"
+    },
+    {
+      "href": "https://osf.io/4yztn/",
+      "text": "Link"
+    },
+    {
+      "href": "https://github.com/uic-evl/deep-umbra",
+      "text": "Link"
+    },
+    {
+      "href": "http://evl.uic.edu/shadows/map/",
+      "text": "Link"
+    },
+    {
+      "href": "https://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2023/12/overview.jpg",
+    "https://urbantk.org/wp-content/uploads/2023/12/accumulation.png",
+    "https://urbantk.org/wp-content/uploads/2023/12/results.jpg",
+    "https://www.evl.uic.edu/shadows/images/web.png"
+  ],
+  "videos": [],
+  "iframes": []
+}

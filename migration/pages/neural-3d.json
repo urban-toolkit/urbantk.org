@@ -1,0 +1,42 @@
+{
+  "link": "/neural-3d/",
+  "title": "neural-3d",
+  "modified": "2025-12-04T19:57:40",
+  "template": null,
+  "headings": [
+    "h2 A Neural Field-Based Approach for View Computation & Data Exploration in 3D Urban Environments",
+    "h2 Team"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/neural-3d",
+      "text": "Github"
+    },
+    {
+      "href": "https://arxiv.org/abs/2511.14742",
+      "text": "Preprint (Arxiv)"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/neural-3d",
+      "text": "Github"
+    },
+    {
+      "href": "https://arxiv.org/abs/2511.14742",
+      "text": "Preprint (Arxiv)"
+    },
+    {
+      "href": "http://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/1598671-200_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2025/12/Urban-Vis-Video-Submission.mp4"
+  ],
+  "iframes": []
+}

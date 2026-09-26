@@ -1,0 +1,131 @@
+{
+  "link": "/",
+  "title": "Home",
+  "modified": "2025-08-13T04:19:21",
+  "template": null,
+  "headings": [
+    "h3 News & Updates",
+    "h5 Dataflow frameworks",
+    "h5 Grammars & toolkits",
+    "h5 Knowledge bases & guidelines",
+    "h5 AI & ML",
+    "h3 "
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "/papers/",
+      "text": "here"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/",
+      "text": "here"
+    },
+    {
+      "href": "/2026/02/occlusion-free-conformal-lensing-for-spatiotemporal-visualization-in-3d-urban-analytics-accepted-to-ieee-vr/",
+      "text": "“Occlusion-Free Conformal Lensing for Spatiotemporal Visualization in 3D Urban Analytics” accepted to IEEE VR!"
+    },
+    {
+      "href": "/2026/02/occlusion-free-conformal-lensing-for-spatiotemporal-visualization-in-3d-urban-analytics-accepted-to-ieee-vr/",
+      "text": "Read more : “Occlusion-Free Conformal Lensing for Spatiotemporal Visualization in 3D Urban Analytics” accepted to IEEE VR!"
+    },
+    {
+      "href": "/2026/02/a-neural-field-based-approach-for-view-computation-data-exploration-in-3d-urban-environments-accepted-to-tvcg/",
+      "text": "‘A Neural Field-Based Approach for View Computation & Data Exploration in 3D Urban Environments’ accepted to TVCG!"
+    },
+    {
+      "href": "/2026/02/a-neural-field-based-approach-for-view-computation-data-exploration-in-3d-urban-environments-accepted-to-tvcg/",
+      "text": "Read more : ‘A Neural Field-Based Approach for View Computation & Data Exploration in 3D Urban Environments’ accepted to TVCG!"
+    },
+    {
+      "href": "/2025/08/three-papers-accepted-to-ieee-vis-2025/",
+      "text": "Three papers accepted at IEEE VIS 2025!"
+    },
+    {
+      "href": "/2025/08/three-papers-accepted-to-ieee-vis-2025/",
+      "text": "Read more : Three papers accepted at IEEE VIS 2025!"
+    },
+    {
+      "href": "/2024/08/our-work-featured-on-uic-today/",
+      "text": "Our work featured on UIC Today"
+    },
+    {
+      "href": "/2024/08/our-work-featured-on-uic-today/",
+      "text": "Read more : Our work featured on UIC Today"
+    },
+    {
+      "href": "/2024/08/oscur-funded-by-the-national-science-foundation/",
+      "text": "OSCUR funded by the National Science Foundation!"
+    },
+    {
+      "href": "/2024/08/oscur-funded-by-the-national-science-foundation/",
+      "text": "Read more : OSCUR funded by the National Science Foundation!"
+    },
+    {
+      "href": "/2024/08/assessing-the-landscape-of-toolkits-frameworks-and-authoring-tools-for-urban-visual-analytics-systems-accepted-to-computers-graphics/",
+      "text": "“Assessing the Landscape of Toolkits, Frameworks, and Authoring Tools for Urban Visual Analytics Systems” accepted to Computers & Graphics!"
+    },
+    {
+      "href": "/2024/08/assessing-the-landscape-of-toolkits-frameworks-and-authoring-tools-for-urban-visual-analytics-systems-accepted-to-computers-graphics/",
+      "text": "Read more : “Assessing the Landscape of Toolkits, Frameworks, and Authoring Tools for Urban Visual Analytics Systems” accepted to Computers & Graphics!"
+    },
+    {
+      "href": "/news/",
+      "text": "Check all news"
+    },
+    {
+      "href": "/curio/",
+      "text": ""
+    },
+    {
+      "href": "/urbanite/",
+      "text": ""
+    },
+    {
+      "href": "/utk",
+      "text": ""
+    },
+    {
+      "href": "/streetweave/",
+      "text": ""
+    },
+    {
+      "href": "/va-blueprint/",
+      "text": ""
+    },
+    {
+      "href": "/survey-3d/",
+      "text": ""
+    },
+    {
+      "href": "https://doi.org/10.1016/j.cag.2024.104013",
+      "text": "Landscape of tools for urban visual analytics"
+    },
+    {
+      "href": "https://doi.org/10.1109/TVCG.2022.3209474",
+      "text": "Comparison of visualizations for 3D urban analytics"
+    },
+    {
+      "href": "/shadows/",
+      "text": "Deep Umbra"
+    },
+    {
+      "href": "/tile2net/",
+      "text": "Tile2Net"
+    },
+    {
+      "href": "/citysurfaces/",
+      "text": "CitySurfaces"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2024/06/logo.png",
+    "https://urbantk.org/wp-content/uploads/2025/04/logo-white.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/logo-utk-circle-1.png",
+    "https://urbantk.org/wp-content/uploads/2025/08/streetweave.png",
+    "https://urbantk.org/wp-content/uploads/2025/04/logo_gray_background_grid.png",
+    "https://urbantk.org/wp-content/uploads/2025/08/3d.png"
+  ],
+  "videos": [],
+  "iframes": []
+}

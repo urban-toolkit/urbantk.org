@@ -1,0 +1,116 @@
+import fs from 'node:fs'
+import path from 'node:path'
+import { parse, type Entry } from '@retorquere/bibtex-parser'
+import { DATA_DIR } from './paths'
+
+// Fields that only this site reads. They are removed from the BibTeX that visitors copy.
+export const SITE_FIELDS = ['projects', 'presented', 'pdf', 'code', 'video', 'thumbnail', 'award', 'page']
+
+export interface Paper {
+  key: string
+  type: string
+  title: string
+  authors: string[]
+  venue: string
+  presented: string | null
+  year: number
+  doi: string | null
+  arxiv: string | null
+  url: string | null
+  pdf: string | null
+  code: string | null
+  video: string | null
+  page: string | null
+  thumbnail: string | null
+  award: string | null
+  projects: string[]
+  bibtex: string
+}
+
+function clean(text: string | undefined): string {
+  // The parser writes {\'\i} as a dotless i plus a combining accent.
+  return (text ?? '').replace(/\u0131\u0301/g, '\u00ed').normalize('NFC').replace(/\s+/g, ' ').trim()
+}
+
+// Splits the body of a raw entry into its top-level `name = value` fields and drops the named ones.
+export function stripFields(raw: string, names: string[]): string {
+  const drop = new Set(names.map((n) => n.toLowerCase()))
+  const keyEnd = raw.indexOf(',')
+  const head = raw.slice(0, keyEnd + 1).trim()
+  const body = raw.slice(keyEnd + 1, raw.lastIndexOf('}'))
+  const fields: string[] = []
+  let depth = 0
+  let quoted = false
+  let start = 0
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i]
+    if (ch === '{') depth++
+    else if (ch === '}') depth--
+    else if (ch === '"' && depth === 0) quoted = !quoted
+    else if (ch === ',' && depth === 0 && !quoted) {
+      fields.push(body.slice(start, i))
+      start = i + 1
+    }
+  }
+  fields.push(body.slice(start))
+  const kept = fields
+    .map((f) => f.replace(/^\s*%.*$/gm, '').trim())
+    .filter((f) => f && !drop.has(f.split('=')[0].trim().toLowerCase()))
+    .map((f) => `  ${f.replace(/\s*=\s*/, ' = ')}`)
+  return `${head}\n${kept.join(',\n')}\n}`
+}
+
+function list(value: string | undefined): string[] {
+  return (value ?? '').split(',').map((v) => v.trim()).filter(Boolean)
+}
+
+function toPaper(entry: Entry): Paper {
+  const f = entry.fields as Record<string, any>
+  const year = Number.parseInt(f.year ?? f.date ?? '', 10)
+  if (!Number.isFinite(year)) throw new Error(`papers.bib: ${entry.key} has no year`)
+  if (!f.title) throw new Error(`papers.bib: ${entry.key} has no title`)
+  const arxiv =
+    (f.archiveprefix ?? '').toLowerCase() === 'arxiv' || (f.eprinttype ?? '').toLowerCase() === 'arxiv'
+      ? clean(f.eprint)
+      : null
+  return {
+    key: entry.key,
+    type: entry.type,
+    title: clean(f.title),
+    authors: (f.author ?? []).map((a: any) =>
+      clean(a.name ?? [a.firstName, a.prefix, a.lastName, a.suffix].filter(Boolean).join(' ')),
+    ),
+    venue: clean(f.journal ?? f.journaltitle ?? f.booktitle ?? (arxiv ? 'arXiv preprint' : f.publisher?.[0])),
+    presented: f.presented ? clean(f.presented) : null,
+    year,
+    doi: f.doi ? clean(f.doi) : null,
+    arxiv,
+    url: f.url ? clean(f.url) : null,
+    pdf: f.pdf ?? null,
+    code: f.code ?? null,
+    video: f.video ?? null,
+    page: f.page ?? null,
+    thumbnail: f.thumbnail ?? null,
+    award: f.award ? clean(f.award) : null,
+    projects: list(f.projects),
+    bibtex: stripFields(entry.input, SITE_FIELDS),
+  }
+}
+
+export function loadPapers(file = path.join(DATA_DIR, 'papers.bib')): Paper[] {
+  const library = parse(fs.readFileSync(file, 'utf8'), {
+    sentenceCase: false,
+    caseProtection: false,
+    verbatimFields: ['url', 'doi', 'eprint', 'pdf', 'code', 'video', 'thumbnail', 'page', /^file$/],
+  })
+  if (library.errors.length) {
+    throw new Error(`papers.bib: ${library.errors.map((e) => JSON.stringify(e)).join('; ')}`)
+  }
+  const seen = new Set<string>()
+  for (const entry of library.entries) {
+    if (seen.has(entry.key)) throw new Error(`papers.bib: duplicate key ${entry.key}`)
+    seen.add(entry.key)
+  }
+  // Newest year first; within a year, the order of the file (the sort is stable).
+  return library.entries.map(toPaper).sort((a, b) => b.year - a.year)
+}

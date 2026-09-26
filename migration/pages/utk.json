@@ -1,0 +1,85 @@
+{
+  "link": "/utk/",
+  "title": "The Urban Toolkit",
+  "modified": "2025-03-10T12:59:38",
+  "template": null,
+  "headings": [
+    "h3 The Urban Toolkit",
+    "h3 Authors"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/utk/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/USAGE.md",
+      "text": "Installation"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/QUICK-START.md",
+      "text": "Getting Started"
+    },
+    {
+      "href": "/utk/tutorials/",
+      "text": "Tutorials"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/utk/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/USAGE.md",
+      "text": "Installation"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/QUICK-START.md",
+      "text": "Getting Started"
+    },
+    {
+      "href": "/utk/tutorials/",
+      "text": "Tutorials"
+    },
+    {
+      "href": "https://arxiv.org/abs/2308.07769",
+      "text": "paper"
+    },
+    {
+      "href": "https://www.linkedin.com/in/gustavo-morei/",
+      "text": "Gustavo Moreira"
+    },
+    {
+      "href": "https://www.maryamhosseini.me/",
+      "text": "Maryam Hosseini"
+    },
+    {
+      "href": "http://www.ic.uff.br/~mlage/",
+      "text": "Marcos Lage"
+    },
+    {
+      "href": "https://www.cin.ufpe.br/~nivan/",
+      "text": "Nivan Ferreira"
+    },
+    {
+      "href": "https://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2023/06/logo-utk-wide-1-scaled-1.jpg",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/613307_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/1598671-200_white.png",
+    "https://urbantk.org/wp-content/uploads/2023/08/download.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/university-of-illinois-at-chicago-uic-logo-vector.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/MIT-Massachusetts-Institute-of-Technology-Logo-700x394-2.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/image-1.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/image.jpeg"
+  ],
+  "videos": [],
+  "iframes": [
+    "https://www.youtube.com/embed/JYcIPj3F0t4?feature=oembed"
+  ]
+}

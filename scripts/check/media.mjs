@@ -41,6 +41,18 @@ for (const file of files(PUBLIC)) {
   if (size > MAX_FILE) problems.push(`${rel}: ${Math.round(size / MB)} MB is over the ${MAX_FILE / MB} MB file limit`)
 }
 
+// Every file under media/ must be used somewhere, or it only adds weight to the repository.
+const sources = [path.join(ROOT, 'site')]
+  .flatMap((dir) => files(dir))
+  .filter((file) => !file.includes(`${path.sep}public${path.sep}`) && !file.includes(`${path.sep}dist${path.sep}`) && !file.includes(`${path.sep}cache${path.sep}`))
+  .filter((file) => /\.(md|ts|vue|yaml|bib|css)$/.test(file))
+  .map((file) => fs.readFileSync(file, 'utf8'))
+  .join('\n')
+for (const file of files(path.join(PUBLIC, 'media'))) {
+  const url = `/${path.relative(PUBLIC, file).split(path.sep).join('/')}`
+  if (!sources.includes(url)) problems.push(`${path.relative(ROOT, file)}: not referenced by any page or data file`)
+}
+
 const distSize = files(DIST).reduce((sum, file) => sum + fs.statSync(file).size, 0)
 if (distSize > MAX_DIST) problems.push(`the built site is ${Math.round(distSize / MB)} MB, over the ${MAX_DIST / MB} MB budget`)
 console.log(`media: ${files(PUBLIC).length} files in site/public, built site ${Math.round(distSize / MB)} MB`)

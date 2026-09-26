@@ -1,0 +1,71 @@
+{
+  "_about": "Windows of the Curio feature clips, in seconds after each scene's start in a tour recorded with CURIO_TOUR_CAPTIONS=0 (see clips.mjs). Picked from the frame sheets of clip-frames.mjs. `crop` drops the bottom strip, where the app shows its version.",
+  "crop": "crop=1280:768:0:0",
+  "clips": [
+    {
+      "id": "data-catalog",
+      "scene": "datacatalog",
+      "from": 1.5,
+      "to": 12.5,
+      "poster": 10.5
+    },
+    {
+      "id": "build",
+      "scene": "build",
+      "from": 18,
+      "to": 33,
+      "poster": 32
+    },
+    {
+      "id": "lineage",
+      "scene": "lineage",
+      "from": 1,
+      "to": 10.5,
+      "poster": 8,
+      "redact": [
+        {
+          "x": 570,
+          "y": 258,
+          "w": 240,
+          "h": 114,
+          "from": 1.6
+        }
+      ]
+    },
+    {
+      "id": "node-catalog",
+      "scene": "nodecatalog",
+      "from": 1.5,
+      "to": 16,
+      "poster": 13
+    },
+    {
+      "id": "agents",
+      "scene": "agentattach",
+      "from": 1.5,
+      "to": 15,
+      "poster": 13.5
+    },
+    {
+      "id": "vega-lite",
+      "scene": "linkedviews",
+      "from": 10,
+      "to": 22.5,
+      "poster": 21
+    },
+    {
+      "id": "linked-views",
+      "scene": "interaction",
+      "from": 12,
+      "to": 24.5,
+      "poster": 21
+    },
+    {
+      "id": "autark",
+      "scene": "autark",
+      "from": 26,
+      "to": 35.5,
+      "poster": 35
+    }
+  ]
+}

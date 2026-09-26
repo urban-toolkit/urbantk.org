@@ -9,7 +9,7 @@ category: grammars          # grammars | dataflow | knowledge | ai (site/data/ca
 order: 100                  # position within the category
 listed: true                # false: reachable by URL, but not in the menu or on the home page
 accent: "#046bd2"           # the project's color; dark-mode and contrast variants are derived
-logo: /media/projects/<slug>/logo.png   # omit to get a monogram in the accent color
+logo: /media/projects/<slug>/logo.webp  # omit to get a monogram in the accent color
 hero:
   image: /media/projects/<slug>/teaser.webp
   alt: What the image shows

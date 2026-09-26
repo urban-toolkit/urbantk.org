@@ -6,7 +6,7 @@ tagline: Grammar for street-overlaid visualizations
 category: grammars
 order: 20
 accent: "#e03e36"
-logo: /media/projects/streetweave/logo.png
+logo: /media/projects/streetweave/logo.webp
 hero:
   image: "/media/projects/streetweave/teaser.webp"
   alt: "Eight street network visualizations made with StreetWeave"

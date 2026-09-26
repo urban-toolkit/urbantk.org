@@ -22,14 +22,14 @@ const LOGOS = [
   { from: src('2023/06/logo-utk-circle-1.png'), to: 'brand/utk-logo.png', size: 192 },
   { from: src('2023/06/logo-utk-circle-1.png'), to: '../favicon-192.png', size: 192 },
   { from: src('2023/06/logo-utk-circle-1.png'), to: '../favicon-32.png', size: 32 },
-  { from: src('2024/06/logo.png'), to: 'projects/curio/logo.png', size: 256 },
-  { from: src('2025/04/logo-white.png'), to: 'projects/urbanite/logo.png', size: 256 },
-  { from: src('2023/06/logo-utk-circle-1.png'), to: 'projects/utk/logo.png', size: 256 },
-  { from: src('2025/08/streetweave.png'), to: 'projects/streetweave/logo.png', size: 256 },
-  { from: src('2025/04/logo_gray_background_grid.png'), to: 'projects/va-blueprint/logo.png', size: 256 },
-  { from: src('2026/04/atmos_logo-1.png'), to: 'projects/atmos/logo.png', size: 256 },
-  { from: src('2026/04/logo.png'), to: 'projects/vitral/logo.png', size: 256 },
-  { from: src('2026/04/icon.png'), to: 'projects/scout/logo.png', size: 256 },
+  { from: src('2024/06/logo.png'), to: 'projects/curio/logo.webp', size: 160 },
+  { from: src('2025/04/logo-white.png'), to: 'projects/urbanite/logo.webp', size: 160 },
+  { from: src('2023/06/logo-utk-circle-1.png'), to: 'projects/utk/logo.webp', size: 160 },
+  { from: src('2025/08/streetweave.png'), to: 'projects/streetweave/logo.webp', size: 160 },
+  { from: src('2025/04/logo_gray_background_grid.png'), to: 'projects/va-blueprint/logo.webp', size: 160 },
+  { from: src('2026/04/atmos_logo-1.png'), to: 'projects/atmos/logo.webp', size: 160 },
+  { from: src('2026/04/logo.png'), to: 'projects/vitral/logo.webp', size: 160 },
+  { from: src('2026/04/icon.png'), to: 'projects/scout/logo.webp', size: 160 },
 ]
 
 // Logos shown on a wide strip (footer): fixed height.
@@ -38,21 +38,13 @@ const STRIPS = [
   { from: src('2025/08/CAMP.CIRC_.SM_.BLK_.RGB_.png'), to: 'institutions/uic.png', height: 96 },
 ]
 
-// Photos and figures from the old pages.
+// Photos and figures from the old pages that the paper figures (build-figures.mjs) did not replace.
 const IMAGES = [
-  { from: src('2023/12/overview.jpg'), to: 'projects/shadows/overview.webp' },
-  { from: src('2023/12/accumulation.png'), to: 'projects/shadows/accumulation.webp' },
   { from: src('2023/12/results.jpg'), to: 'projects/shadows/results.webp' },
-  // The original at www.evl.uic.edu/shadows/images/web.png now returns 404; this is the archived copy.
-  { from: 'https://web.archive.org/web/2024id_/https://www.evl.uic.edu/shadows/images/web.png', to: 'projects/shadows/web-viewer.webp' },
   { from: src('2023/12/overview-1.jpg'), to: 'projects/tile2net/overview.webp' },
-  { from: src('2023/12/overview-2.jpg'), to: 'projects/citysurfaces/overview.webp' },
-  { from: src('2026/04/urbanite-2.png'), to: 'projects/urbanite/overview.webp' },
-  { from: src('2025/08/3d.png'), to: 'projects/survey-3d/layers.webp' },
   { from: src('2026/04/scout-4.png'), to: 'projects/scout/overview.webp' },
   { from: src('2026/04/Stewards-VIS-2026-video.jpg'), to: 'projects/sidewalk/video-still.webp' },
   { from: src('2026/04/vitral_video_v5.jpg'), to: 'projects/vitral/video-still.webp' },
-  { from: path.join(WORKSPACE, 'autarkjs.org/guide/public/imgs/hero.png'), to: 'projects/autark/hero.webp' },
   { from: path.join(WORKSPACE, 'curio-main/docs/images/banner.jpg'), to: 'projects/curio/banner.webp' },
   // The 2023 UTK post's featured image is private in WordPress; the wide UTK logo stands in.
   { from: src('2023/06/logo-utk-wide-1-scaled-1.jpg'), to: 'news/utk-accepted-to-ieee-vis-2023/utk-wide.webp' },
@@ -73,12 +65,13 @@ async function write(image, to) {
   return info
 }
 
+// Project logos show at most 72 px wide, so 160 px WebP covers 2x screens; the brand logo and
+// favicons stay PNG for the browser tab and the navbar.
 for (const { from, to, size } of LOGOS) {
   const image = sharp(await input(from))
     .trim({ threshold: 5 })
     .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    .png({ compressionLevel: 9, palette: size <= 64 })
-  await write(image, to)
+  await write(to.endsWith('.webp') ? image.webp({ quality: 90 }) : image.png({ compressionLevel: 9, palette: size <= 64 }), to)
 }
 
 for (const { from, to, height } of STRIPS) {

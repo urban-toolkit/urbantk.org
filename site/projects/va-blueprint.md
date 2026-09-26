@@ -6,7 +6,7 @@ tagline: LLM-generated knowledge base for visual analytics system components
 category: knowledge
 order: 10
 accent: "#1c4f8a"
-logo: /media/projects/va-blueprint/logo.png
+logo: /media/projects/va-blueprint/logo.webp
 hero:
   image: "/media/projects/va-blueprint/teaser.webp"
   alt: "From visual analytics papers to a hierarchical blueprint of system components"

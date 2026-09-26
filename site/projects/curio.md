@@ -6,13 +6,14 @@ tagline: Dataflow-based framework for collaboration in urban visual analytics
 category: dataflow
 order: 10
 accent: "#e8590c"
-logo: /media/projects/curio/logo.png
+logo: /media/projects/curio/logo.webp
 hero:
   image: /media/projects/curio/banner.webp
   alt: Dataflows built in Curio for urban accessibility, climate and sunlight access studies
   w: 1600
   h: 449
   video: https://github.com/urban-toolkit/curio/assets/2387594/6d29bda8-5e94-4496-a4ae-fd55adff024f
+  poster: /media/projects/curio/clips/vega-lite.webp
 card:
   image: "/media/projects/curio/card.webp"
   alt: "A Curio dataflow analyzing the shadow impact of a proposed building in Boston"
@@ -25,31 +26,76 @@ links:
   - { kind: paper, bib: moreira2025curio }
   - { kind: pypi, url: "https://pypi.org/project/utk-curio/" }
   - { kind: discord, url: "https://discord.gg/ajT6wF8TmN" }
+features:
+  - id: build
+    title: "Build dataflows from code, grammar and GUI nodes"
+    text: "Drag nodes onto the canvas, wire them together and write each step in Python, JavaScript or a visualization grammar. Run one node, or the whole dataflow in order."
+    clip: /media/projects/curio/clips/build.mp4
+    poster: /media/projects/curio/clips/build.webp
+    w: 1280
+    h: 768
+  - id: data-catalog
+    title: "Datasets one click away"
+    text: "Browse the Data Catalog and add a dataset to the project, or import your own CSV, GeoJSON, Parquet, GeoTIFF, Shapefile or OSM PBF files. Drag a dataset onto the canvas and Curio writes the loader code for you."
+    clip: /media/projects/curio/clips/data-catalog.mp4
+    poster: /media/projects/curio/clips/data-catalog.webp
+    w: 1280
+    h: 768
+  - id: vega-lite
+    title: "Charts with Vega-Lite"
+    text: "Vega-Lite nodes chart the output of any upstream node, so the analysis and its visualizations live in one dataflow."
+    clip: /media/projects/curio/clips/vega-lite.mp4
+    poster: /media/projects/curio/clips/vega-lite.webp
+    w: 1280
+    h: 768
+  - id: autark
+    title: "2D and 3D maps with Autark"
+    text: "A single Autark node combines OpenStreetMap and PBF data loading, GPU compute and map rendering."
+    clip: /media/projects/curio/clips/autark.mp4
+    poster: /media/projects/curio/clips/autark.webp
+    w: 1280
+    h: 768
+  - id: linked-views
+    title: "Linked interactions"
+    text: "Data-driven filtering and brushing across views: a selection in one view flows through the dataflow to the others."
+    clip: /media/projects/curio/clips/linked-views.mp4
+    poster: /media/projects/curio/clips/linked-views.webp
+    w: 1280
+    h: 768
+  - id: lineage
+    title: "Outputs become inputs"
+    text: "Every node run can save its output as a computed dataset, with lineage back to the node and dataflow that produced it, so any intermediate result becomes a reusable input."
+    clip: /media/projects/curio/clips/lineage.mp4
+    poster: /media/projects/curio/clips/lineage.webp
+    w: 1280
+    h: 768
+  - id: node-catalog
+    title: "One-click Node Catalog"
+    text: "Add packaged nodes from the catalog with one click, and mix built-ins, community packages and your own in a single dataflow."
+    clip: /media/projects/curio/clips/node-catalog.mp4
+    poster: /media/projects/curio/clips/node-catalog.webp
+    w: 1280
+    h: 768
+  - id: agents
+    title: "AI agents in the dataflow"
+    text: "Attach agents from the Agent Catalog to a node, a connection or the whole dataflow, with the LLM of your choice: OpenAI, Anthropic, Gemini or a custom endpoint."
+    clip: /media/projects/curio/clips/agents.mp4
+    poster: /media/projects/curio/clips/agents.webp
+    w: 1280
+    h: 768
 more:
-  - title: Provenance-aware dataflow
-    text: "Track every transformation and visualization step."
-  - title: Linked interactions
-    text: "Data-driven filtering and brushing across views."
-  - title: Autark and Vega-Lite
-    text: "2D and 3D maps through Autark, plus Vega-Lite charts."
-  - title: Agent Catalog
-    text: "Attach AI agents to a node, a connection, or the whole dataflow."
-  - title: Jupyter Notebook import
+  - title: "Provenance-aware dataflow"
+    text: "Track transformation and visualization steps, and browse the versions of a dataflow."
+  - title: "Shareable dashboards"
+    text: "Pinned nodes get a page of their own, drawn from the saved outputs. Share the link; nobody has to run anything."
+  - title: "Real-time collaboration"
+    text: "Co-edit a project with presence, soft locks and shared execution output."
+  - title: "Jupyter Notebook import"
     text: "Bring existing notebooks into Curio dataflows."
-  - title: Scenario-oriented analyses
+  - title: "Scenario-oriented analyses"
     text: "Multi-user what-if exploration with branching dataflows."
-  - title: One-click Node Catalog
-    text: "Add packaged nodes from a catalog, or author your own from the canvas."
-  - title: Composable node packages
-    text: "Mix built-ins, community packages and your own in a single dataflow."
-  - title: Reproducible and shareable
-    text: "Versioned, forkable .curio.zip archives pin a workflow's exact node set."
-  - title: One-click Data Catalog
-    text: "Add datasets to a dataflow, or publish your own for everyone on the deployment."
-  - title: Bring your own data
-    text: "Import CSV, GeoJSON, Parquet, GeoTIFF, Shapefile, or an OSM PBF extract."
-  - title: Outputs become inputs
-    text: "Node results are saved as computed datasets, with lineage back to the node that made them."
+  - title: "Reproducible and shareable"
+    text: "Versioned, forkable .curio.zip archives pin the exact node set of a workflow."
 figures:
   - src: "/media/projects/curio/fig-interface.webp"
     w: 1600

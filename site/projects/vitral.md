@@ -7,7 +7,7 @@ category: dataflow
 order: 40
 listed: false
 accent: "#5f3dc4"
-logo: /media/projects/vitral/logo.png
+logo: /media/projects/vitral/logo.webp
 hero:
   image: /media/projects/vitral/video-still.webp
   alt: The Vitral interface

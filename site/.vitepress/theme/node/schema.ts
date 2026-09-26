@@ -59,8 +59,6 @@ export const projectSchema = z
         image: sitePath.optional(),
         alt: z.string().optional(),
         caption: z.string().optional(),
-        // papers.bib key of the paper the image comes from, shown as a credit line under it.
-        credit: z.string().optional(),
         w: z.number().int().positive().optional(),
         h: z.number().int().positive().optional(),
         clip: sitePath.optional(),
@@ -69,6 +67,7 @@ export const projectSchema = z
         video: z.string().optional(),
       })
       .strict()
+      .refine((h) => !h.image || h.caption, { message: 'a hero image needs a caption', path: ['caption'] })
       .default({}),
     links: z.array(link).default([]),
     features: z.array(feature).default([]),

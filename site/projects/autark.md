@@ -12,7 +12,6 @@ hero:
   image: "/media/projects/autark/teaser.webp"
   alt: "Urbane rebuilt with Autark"
   caption: "Urbane, a multi-resolution urban visual analytics system, rebuilt with Autark: OpenStreetMap data, sky exposure computed on the GPU, neighborhood and building views, and linked charts."
-  credit: "alexandre2026autark"
   w: 1600
   h: 562
 card:

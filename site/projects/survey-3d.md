@@ -11,7 +11,6 @@ hero:
   image: "/media/projects/survey-3d/teaser.webp"
   alt: "The structure of the survey"
   caption: "The survey's structure: paper type and three dimensions asking why, what and how visualization supports 3D urban data analytics."
-  credit: "miranda2024star"
   w: 1600
   h: 483
 card:

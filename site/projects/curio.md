@@ -9,8 +9,8 @@ accent: "#e8590c"
 logo: /media/projects/curio/logo.webp
 hero:
   image: "/media/projects/curio/banner.webp"
-  alt: "Dataflows built in Curio for urban accessibility, climate and sunlight access studies"
-  credit: "moreira2025curio"
+  alt: "A Curio dataflow analyzing the shadow impact of a proposed building in Boston"
+  caption: "A dataflow that analyzes the shadow impact of a proposed building in Boston: it loads OpenStreetMap data, runs a shadow model, and compares the current and alternate scenarios and their shadow difference in UTK views."
   w: 1600
   h: 449
   video: "https://github.com/urban-toolkit/curio/assets/2387594/6d29bda8-5e94-4496-a4ae-fd55adff024f"

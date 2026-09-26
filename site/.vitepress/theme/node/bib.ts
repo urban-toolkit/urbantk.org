@@ -4,7 +4,7 @@ import { parse, type Entry } from '@retorquere/bibtex-parser'
 import { DATA_DIR } from './paths'
 
 // Fields that only this site reads. They are removed from the BibTeX that visitors copy.
-export const SITE_FIELDS = ['projects', 'presented', 'pdf', 'code', 'video', 'thumbnail', 'award', 'page']
+export const SITE_FIELDS = ['projects', 'category', 'presented', 'pdf', 'code', 'video', 'thumbnail', 'award', 'page']
 
 export interface Paper {
   key: string
@@ -24,6 +24,8 @@ export interface Paper {
   thumbnail: string | null
   award: string | null
   projects: string[]
+  // Category ids from the `category` field; papers.data.ts adds the categories of the paper's projects.
+  categories: string[]
   bibtex: string
 }
 
@@ -93,6 +95,7 @@ function toPaper(entry: Entry): Paper {
     thumbnail: f.thumbnail ?? null,
     award: f.award ? clean(f.award) : null,
     projects: list(f.projects),
+    categories: list(f.category),
     bibtex: stripFields(entry.input, SITE_FIELDS),
   }
 }

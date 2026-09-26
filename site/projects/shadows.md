@@ -10,7 +10,6 @@ hero:
   image: "/media/projects/shadows/teaser.webp"
   alt: "A single timestep shadow next to shadows accumulated over a time range, over a 3D city"
   caption: "Left: a single timestep shadow. Right: accumulated shadows over a time range, which show the impact of buildings on sunlight access in public spaces."
-  credit: "omar2025deepumbra"
   w: 1600
   h: 304
 card:

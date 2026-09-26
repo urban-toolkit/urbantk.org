@@ -11,7 +11,6 @@ hero:
   image: "/media/projects/utk/teaser.webp"
   alt: "What-if shadow analysis and building-level sunlight access specified with the UTK grammar"
   caption: "Left: what-if planning for urban shadows, comparing current and proposed developments through algebraic operations in the grammar. Right: sunlight access analysis at the building level."
-  credit: "moreira2024utk"
   w: 1600
   h: 355
   youtube: "JYcIPj3F0t4"

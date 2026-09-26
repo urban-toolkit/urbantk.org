@@ -1,50 +1,57 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { useData } from 'vitepress'
 import { data as papers } from '@data/papers.data'
-import { data as projects } from '@data/projects.data'
 import PaperEntry from './PaperEntry.vue'
 
-// Every paper, newest first, grouped by year. The full list is prerendered; the project filter
-// (also reachable as /papers/?project=<slug>) only applies once the page has loaded.
+interface Category {
+  id: string
+  label: string
+}
+
+// Every paper, newest first, grouped by year. The full list is prerendered; the category filter
+// (also reachable as /papers/?category=<id>) only applies once the page has loaded.
+const { theme } = useData()
 const active = ref<string | null>(null)
 
+// The menu's categories, in menu order, that have at least one paper.
 const filters = computed(() =>
-  projects.filter((p) => p.listed && papers.some((paper) => paper.projects.includes(p.slug))),
+  (theme.value.utk.categories as Category[]).filter((c) => papers.some((paper) => paper.categories.includes(c.id))),
 )
 
 const years = computed(() => {
-  const shown = active.value ? papers.filter((p) => p.projects.includes(active.value!)) : papers
+  const shown = active.value ? papers.filter((p) => p.categories.includes(active.value!)) : papers
   const groups = new Map<number, typeof papers>()
   for (const paper of shown) groups.set(paper.year, [...(groups.get(paper.year) ?? []), paper])
   return [...groups]
 })
 
-function select(slug: string | null) {
-  active.value = slug
+function select(id: string | null) {
+  active.value = id
   const url = new URL(window.location.href)
-  if (slug) url.searchParams.set('project', slug)
-  else url.searchParams.delete('project')
+  if (id) url.searchParams.set('category', id)
+  else url.searchParams.delete('category')
   history.replaceState(history.state, '', url)
 }
 
 onMounted(() => {
-  const wanted = new URLSearchParams(window.location.search).get('project')
-  if (wanted && filters.value.some((p) => p.slug === wanted)) active.value = wanted
+  const wanted = new URLSearchParams(window.location.search).get('category')
+  if (wanted && filters.value.some((c) => c.id === wanted)) active.value = wanted
 })
 </script>
 
 <template>
   <div class="utk-papers vp-raw">
-    <div class="utk-papers-filters" role="group" aria-label="Filter by project">
+    <div class="utk-papers-filters" role="group" aria-label="Filter by category">
       <button type="button" :aria-pressed="active === null" @click="select(null)">All</button>
       <button
-        v-for="project in filters"
-        :key="project.slug"
+        v-for="category in filters"
+        :key="category.id"
         type="button"
-        :aria-pressed="active === project.slug"
-        @click="select(project.slug)"
+        :aria-pressed="active === category.id"
+        @click="select(category.id)"
       >
-        <span class="utk-dot" :style="{ '--utk-dot': project.accent }" aria-hidden="true" />{{ project.name }}
+        {{ category.label }}
       </button>
     </div>
     <section v-for="[year, entries] in years" :id="String(year)" :key="year" class="utk-papers-year">

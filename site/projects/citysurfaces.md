@@ -12,7 +12,6 @@ hero:
   image: "/media/projects/citysurfaces/teaser.webp"
   alt: "Sidewalk paving materials mapped in Chicago, Washington DC and Brooklyn"
   caption: "Paving materials classified from street-level images of Chicago, Washington DC and Brooklyn, none of them in the training data. Thicker lines mark segments whose dominant material is not concrete."
-  credit: "hosseini2022citysurfaces"
   w: 1600
   h: 417
 card:

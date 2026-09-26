@@ -45,7 +45,8 @@ curl -LH "Accept: application/x-bibtex" https://doi.org/10.1109/TVCG.2024.345635
 Then add the fields that only this site reads (they are removed from the BibTeX that visitors copy):
 
 ```bibtex
-  projects  = {curio},              % project pages that list the paper
+  projects  = {curio},              % project pages that list the paper; it is filed under their categories
+  category  = {knowledge},          % for a paper without a project page: a category id from categories.yaml
   presented = {IEEE VIS 2024},      % conference, for journal papers presented at one
   page      = {/curio/},            % project page on this site
   code      = {https://github.com/urban-toolkit/curio},
@@ -53,7 +54,7 @@ Then add the fields that only this site reads (they are removed from the BibTeX 
   archiveprefix = {arXiv},
 ```
 
-`pdf`, `video`, `thumbnail` and `award` are also available. Within a year, papers appear in the order of the file.
+`pdf`, `video`, `thumbnail` and `award` are also available. Within a year, papers appear in the order of the file. The papers page filters them by the menu's categories; a paper with neither `projects` nor `category` appears only under All.
 
 ## Add a news post
 

@@ -12,7 +12,6 @@ hero:
   image: "/media/projects/neural-3d/teaser.webp"
   alt: "Direct and inverse view queries over building facades"
   caption: "Direct queries compute what building facades see (buildings, sky, water, trees); inverse queries find the facade positions that meet view constraints set in parallel coordinates."
-  credit: "cobeli2026neural"
   w: 1600
   h: 552
 card:

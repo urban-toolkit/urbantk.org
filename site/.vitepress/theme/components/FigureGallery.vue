@@ -122,7 +122,7 @@ function open(figure: Figure) {
   display: block;
   margin-top: 2px;
   font-size: 0.8rem;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
 }
 
 .utk-figure-dialog {

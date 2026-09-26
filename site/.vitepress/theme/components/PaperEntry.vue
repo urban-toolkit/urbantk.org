@@ -105,13 +105,8 @@ const tags = computed(() =>
   color: var(--vp-c-brand-1);
 }
 
-.utk-paper-venue {
-  font-style: italic;
-}
-
 .utk-paper-award {
   margin-left: 8px;
-  font-style: normal;
 }
 
 .utk-paper-award svg {

@@ -6,7 +6,7 @@ tagline: Dataflow-based framework for collaboration in urban visual analytics
 category: dataflow
 order: 10
 accent: "#e8590c"
-logo: /media/projects/curio/logo.png
+logo: /media/projects/curio/logo.webp
 hero:
   image: /media/projects/curio/banner.webp
   alt: Dataflows built in Curio for urban accessibility, climate and sunlight access studies

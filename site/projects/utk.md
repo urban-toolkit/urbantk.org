@@ -6,7 +6,7 @@ tagline: Grammar for urban visualizations
 category: grammars
 order: 10
 accent: "#046bd2"
-logo: /media/projects/utk/logo.png
+logo: /media/projects/utk/logo.webp
 hero:
   image: "/media/projects/utk/teaser.webp"
   alt: "What-if shadow analysis and building-level sunlight access specified with the UTK grammar"

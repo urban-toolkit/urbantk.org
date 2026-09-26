@@ -7,7 +7,7 @@ category: grammars
 order: 40
 listed: false
 accent: "#228be6"
-logo: /media/projects/atmos/logo.png
+logo: /media/projects/atmos/logo.webp
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/atmos", primary: true }
 ---

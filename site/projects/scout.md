@@ -7,7 +7,7 @@ category: dataflow
 order: 30
 listed: false
 accent: "#2f9e44"
-logo: /media/projects/scout/logo.png
+logo: /media/projects/scout/logo.webp
 links:
   - { kind: demo, url: "https://arcade.evl.uic.edu/scout/", label: Live application, primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/scout" }

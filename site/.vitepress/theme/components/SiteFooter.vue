@@ -72,11 +72,16 @@ const year = new Date().getFullYear()
 
 .utk-footer a {
   color: var(--vp-c-brand-1);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .utk-footer a:hover {
-  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.utk-footer-logos a {
+  text-decoration: none;
 }
 
 .utk-footer-logos {
@@ -106,6 +111,6 @@ const year = new Date().getFullYear()
 .utk-footer-meta {
   margin: 0;
   font-size: 0.82rem;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-2);
 }
 </style>

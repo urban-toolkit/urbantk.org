@@ -34,10 +34,15 @@ export interface Accent {
   accentDark: string
 }
 
+// Above the 4.5:1 minimum on purpose: the accent also sits on its own soft tint (badges, active
+// filters), which lowers the contrast it has against the plain page background.
+export const LIGHT_TARGET = 6
+export const DARK_TARGET = 7
+
 export function deriveAccent(accent: string, accentDark?: string): Accent {
   return {
     accent,
-    accentLight: ensureContrast(accent, LIGHT_BG),
-    accentDark: accentDark ?? ensureContrast(accent, DARK_BG),
+    accentLight: ensureContrast(accent, LIGHT_BG, LIGHT_TARGET),
+    accentDark: accentDark ?? ensureContrast(accent, DARK_BG, DARK_TARGET),
   }
 }

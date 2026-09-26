@@ -11,36 +11,16 @@ hero:
   image: "/media/projects/survey-3d/teaser.webp"
   alt: "The structure of the survey"
   caption: "The survey's structure: paper type and three dimensions asking why, what and how visualization supports 3D urban data analytics."
+  credit: "miranda2024star"
   w: 1600
   h: 483
 card:
   image: "/media/projects/survey-3d/card.webp"
-  alt: "Urban analyses at macro, meso and micro scales"
+  alt: "The structure of the survey"
 links:
   - { kind: survey, url: "https://urban-survey.github.io/vis/", label: Open the interactive survey, primary: true }
   - { kind: github, url: "https://github.com/urban-survey/vis" }
   - { kind: paper, bib: miranda2024star }
-figures:
-  - src: "/media/projects/survey-3d/fig-scales.webp"
-    w: 1600
-    h: 805
-    caption: "Analyses at different spatial scales: view impact across a city, seismic analysis of a neighborhood and shadow impact on a building."
-    credit: miranda2024star
-  - src: "/media/projects/survey-3d/fig-integration.webp"
-    w: 1600
-    h: 248
-    caption: "Approaches to integrate physical and thematic data: superimposition, embedded views, linked views, interchangeable views and juxtaposition."
-    credit: miranda2024star
-  - src: "/media/projects/survey-3d/fig-integration-examples.webp"
-    w: 1600
-    h: 554
-    caption: "Physical and thematic layers integrated for sunlight access analysis (left) and disaster management (right)."
-    credit: miranda2024star
-  - src: "/media/projects/survey-3d/fig-actions.webp"
-    w: 1600
-    h: 498
-    caption: "Search (left) and query (right) analysis actions."
-    credit: miranda2024star
 paper: miranda2024star
 arxiv: "2404.15976"
 ---

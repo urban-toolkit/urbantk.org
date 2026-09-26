@@ -1,80 +1,12 @@
 {
-  "_about": "Figures picked from media-src/figures/<slug>/sheet.png (see extract_figures.py). role: hero (page teaser), card (16:9 crop for the home page card), figure (gallery). Captions live in the project pages.",
-  "curio": [
-    { "from": "07-1", "to": "card", "role": "card" },
-    { "from": "02-1", "to": "fig-interface", "role": "figure" },
-    { "from": "01-1", "to": "fig-dataflow-model", "role": "figure" },
-    { "from": "06-1", "to": "fig-heterogeneous", "role": "figure" },
-    { "from": "05-1", "to": "fig-model-inspection", "role": "figure" }
-  ],
-  "utk": [
-    { "from": "09-1", "to": "teaser", "role": "hero" },
-    { "from": "05-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-multiscale", "role": "figure" },
-    { "from": "04-1", "to": "fig-integration", "role": "figure" },
-    { "from": "05-1", "to": "fig-json-editor", "role": "figure" },
-    { "from": "07-1", "to": "fig-boston-shadows", "role": "figure" }
-  ],
-  "streetweave": [
-    { "from": "06-1", "to": "teaser", "role": "hero" },
-    { "from": "06-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-spatial-relations", "role": "figure" },
-    { "from": "03-1", "to": "fig-accessibility", "role": "figure" },
-    { "from": "04-1", "to": "fig-segments", "role": "figure" },
-    { "from": "05-1", "to": "fig-charts", "role": "figure" }
-  ],
-  "urbanite": [
-    { "from": "04-1", "to": "teaser", "role": "hero" },
-    { "from": "01-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-interface", "role": "figure" },
-    { "from": "02-1", "to": "fig-sidewalk", "role": "figure" },
-    { "from": "03-1", "to": "fig-urban-pulse", "role": "figure" }
-  ],
-  "va-blueprint": [
-    { "from": "07-1", "to": "teaser", "role": "hero" },
-    { "from": "05-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-process", "role": "figure" },
-    { "from": "02-1", "to": "fig-interface", "role": "figure" },
-    { "from": "05-1", "to": "fig-taxivis", "role": "figure" },
-    { "from": "03-1", "to": "fig-dependencies", "role": "figure" }
-  ],
-  "autark": [
-    { "from": "07-1", "to": "teaser", "role": "hero" },
-    { "from": "06-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-architecture", "role": "figure" },
-    { "from": "03-1", "to": "fig-chicago-shadows", "role": "figure" },
-    { "from": "04-1", "to": "fig-niteroi-heat", "role": "figure" },
-    { "from": "06-1", "to": "fig-jupyter", "role": "figure" }
-  ],
-  "neural-3d": [
-    { "from": "07-1", "to": "teaser", "role": "hero" },
-    { "from": "06-1", "to": "card", "role": "card" },
-    { "from": "03-1", "to": "fig-interface", "role": "figure" },
-    { "from": "04-1", "to": "fig-queries", "role": "figure" },
-    { "from": "05-1", "to": "fig-inverse-query", "role": "figure" },
-    { "from": "06-1", "to": "fig-facades", "role": "figure" }
-  ],
-  "shadows": [
-    { "from": "02-1", "to": "teaser", "role": "hero" },
-    { "from": "03-1", "to": "card", "role": "card" },
-    { "from": "01-1", "to": "fig-accumulation", "role": "figure" },
-    { "from": "03-1", "to": "fig-tiles", "role": "figure" },
-    { "from": "10-1", "to": "fig-paris-parks", "role": "figure" }
-  ],
-  "survey-3d": [
-    { "from": "01-1", "to": "teaser", "role": "hero" },
-    { "from": "09-1", "to": "card", "role": "card" },
-    { "from": "09-1", "to": "fig-scales", "role": "figure" },
-    { "from": "12-1", "to": "fig-integration", "role": "figure" },
-    { "from": "08-1", "to": "fig-integration-examples", "role": "figure" },
-    { "from": "06-1", "to": "fig-actions", "role": "figure" }
-  ],
-  "citysurfaces": [
-    { "from": "01-1", "to": "teaser", "role": "hero" },
-    { "from": "02-1", "to": "card", "role": "card" },
-    { "from": "02-1", "to": "fig-materials", "role": "figure" },
-    { "from": "04-1", "to": "fig-workflow", "role": "figure" },
-    { "from": "09-1", "to": "fig-predictions", "role": "figure" },
-    { "from": "10-1", "to": "fig-cities", "role": "figure" }
-  ]
+  "_about": "The one figure each project page leads with, picked from media-src/figures/<slug>/sheet.png (see extract_figures.py): the paper's teaser or Figure 1, preferring wide figures. build-figures.mjs writes it as site/public/media/projects/<slug>/teaser.webp; build-cards.mjs crops the home page card from it.",
+  "utk": "09-1",
+  "streetweave": "06-1",
+  "urbanite": "04-1",
+  "va-blueprint": "07-1",
+  "autark": "07-1",
+  "neural-3d": "07-1",
+  "shadows": "01-1",
+  "survey-3d": "01-1",
+  "citysurfaces": "01-1"
 }

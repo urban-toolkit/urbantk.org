@@ -8,15 +8,16 @@ order: 10
 accent: "#e8590c"
 logo: /media/projects/curio/logo.webp
 hero:
-  image: /media/projects/curio/banner.webp
-  alt: Dataflows built in Curio for urban accessibility, climate and sunlight access studies
+  image: "/media/projects/curio/banner.webp"
+  alt: "Dataflows built in Curio for urban accessibility, climate and sunlight access studies"
+  credit: "moreira2025curio"
   w: 1600
   h: 449
-  video: https://github.com/urban-toolkit/curio/assets/2387594/6d29bda8-5e94-4496-a4ae-fd55adff024f
-  poster: /media/projects/curio/clips/vega-lite.webp
+  video: "https://github.com/urban-toolkit/curio/assets/2387594/6d29bda8-5e94-4496-a4ae-fd55adff024f"
+  poster: "/media/projects/curio/clips/vega-lite.webp"
 card:
   image: "/media/projects/curio/card.webp"
-  alt: "A Curio dataflow analyzing the shadow impact of a proposed building in Boston"
+  alt: "Dataflows built in Curio for urban accessibility, climate and sunlight access studies"
 links:
   - { kind: demo, url: "https://curio.urbantk.org", label: Try Curio online, primary: true }
   - { kind: install, url: "https://github.com/urban-toolkit/curio/blob/main/docs/USAGE.md" }
@@ -96,27 +97,6 @@ more:
     text: "Multi-user what-if exploration with branching dataflows."
   - title: "Reproducible and shareable"
     text: "Versioned, forkable .curio.zip archives pin the exact node set of a workflow."
-figures:
-  - src: "/media/projects/curio/fig-interface.webp"
-    w: 1600
-    h: 383
-    caption: "Curio's interface. Left: its main elements. Center and right: facets connected to the same node, a drop-down menu created by an annotation in a Vega-Lite specification, and a checkbox created by an annotation in Python code."
-    credit: moreira2025curio
-  - src: "/media/projects/curio/fig-dataflow-model.webp"
-    w: 1600
-    h: 385
-    caption: "The key concepts of the dataflow model: thematic and physical layers are loaded, spatially joined and visualized, and interaction nodes link the views so a selection in one propagates to the others."
-    credit: moreira2025curio
-  - src: "/media/projects/curio/fig-heterogeneous.webp"
-    w: 1600
-    h: 528
-    caption: "Combining datasets: weather data and the UTCI heat index are joined with Milan's neighborhoods in linked views of heat and older population. Changing two nodes repeats the analysis for Chicago."
-    credit: moreira2025curio
-  - src: "/media/projects/curio/fig-model-inspection.webp"
-    w: 1600
-    h: 377
-    caption: "Expert-in-the-loop inspection of a computer vision model: training with provenance, uncertainty on unseen images, and an interactive view of that uncertainty across Boston neighborhoods."
-    credit: moreira2025curio
 team: [gmoreira, mhosseini, cveiga, lalexandre, ncolaninno, doliveira, mlage, nferreira, fmiranda]
 paper: moreira2025curio
 arxiv: "2408.06139"

@@ -9,10 +9,13 @@ accent: "#0c8599"
 monogram: T2N
 venue: Computers, Environment and Urban Systems 2023
 hero:
-  image: /media/projects/tile2net/overview.webp
-  alt: Overview of tile2net, from aerial imagery to a sidewalk network
+  image: "/media/projects/tile2net/overview.webp"
+  alt: "Overview of tile2net, from aerial imagery to a sidewalk network"
   w: 900
   h: 600
+card:
+  image: "/media/projects/tile2net/card.webp"
+  alt: "Overview of tile2net, from aerial imagery to a sidewalk network"
 links:
   - { kind: github, url: "https://github.com/VIDA-NYU/tile2net", primary: true }
   - { kind: paper, bib: hosseini2023tile2net }

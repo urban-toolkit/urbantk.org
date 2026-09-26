@@ -1,0 +1,61 @@
+{
+  "link": "/vitral/",
+  "title": "Vitral",
+  "modified": "2026-09-07T04:52:00",
+  "template": null,
+  "headings": [
+    "h2 Vitral: A Framework for Reproducible Design Studies in Visual Analytics",
+    "h3 Team"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/vitral",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://arcade.evl.uic.edu/vitral",
+      "text": "Live server"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/vitral",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://arcade.evl.uic.edu/vitral",
+      "text": "Live server"
+    },
+    {
+      "href": "https://www.linkedin.com/in/gustavo-morei/",
+      "text": "Gustavo Moreira"
+    },
+    {
+      "href": "https://cs.uic.edu/profiles/luc-renambot/",
+      "text": "Luc Renambot"
+    },
+    {
+      "href": "http://www2.ic.uff.br/~danielcmo/",
+      "text": "Daniel Oliveira"
+    },
+    {
+      "href": "http://www.ic.uff.br/~mlage/",
+      "text": "Marcos Lage"
+    },
+    {
+      "href": "https://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2026/04/logo.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/wp-content/uploads/2023/08/download.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/university-of-illinois-at-chicago-uic-logo-vector.png",
+    "https://urbantk.org/wp-content/uploads/2023/06/image-1.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2026/04/vitral_video_v5.mp4"
+  ],
+  "iframes": []
+}

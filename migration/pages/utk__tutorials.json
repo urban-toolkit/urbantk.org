@@ -1,0 +1,48 @@
+{
+  "link": "/utk/tutorials/",
+  "title": "UTK: Tutorials",
+  "modified": "2025-02-18T01:59:47",
+  "template": null,
+  "headings": [
+    "h2 Guides",
+    "h2 Examples"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/USAGE.md",
+      "text": "Installation and usage"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/QUICK-START.md",
+      "text": "Quick start guide"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/API.md",
+      "text": "UTK API"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/GRAMMAR.md",
+      "text": "Grammar"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/examples/1-data.md",
+      "text": "Multiple datasets"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/examples/2-shadow.md",
+      "text": "Shadow in Downtown Manhattan"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/blob/master/docs/examples/3-what-if.md",
+      "text": "What-if scenarios"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/utk/tree/master/docs/examples",
+      "text": "here"
+    }
+  ],
+  "images": [],
+  "videos": [],
+  "iframes": []
+}

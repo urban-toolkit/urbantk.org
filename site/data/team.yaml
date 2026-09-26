@@ -1,0 +1,123 @@
+# People of the Urban Toolkit. The /team/ page groups them by institution, in the order below.
+# Project pages list people by id (`team:` in their frontmatter), and author names in papers.bib that
+# match a name or one of its `aliases` link to the person's page.
+# `listed: false` marks collaborators who appear on project pages but not on /team/.
+
+institutions:
+  - id: uic
+    name: University of Illinois Chicago
+    url: https://www.uic.edu/
+  - id: berkeley
+    name: University of California, Berkeley
+    url: https://www.berkeley.edu/
+  - id: uff
+    name: Universidade Federal Fluminense
+    url: https://www.uff.br/
+  - id: ufpe
+    name: Universidade Federal de Pernambuco
+    url: https://www.ufpe.br/
+  - id: uiuc
+    name: University of Illinois Urbana-Champaign
+    url: https://illinois.edu/
+  - id: polimi
+    name: Politecnico di Milano
+    url: https://www.polimi.it/
+
+people:
+  - id: fmiranda
+    name: Fabio Miranda
+    url: https://fmiranda.me/
+    institution: uic
+    role: Faculty
+  - id: kfalcao
+    name: Karla Falcão
+    institution: uic
+    role: Research software engineer
+  - id: gmoreira
+    name: Gustavo Moreira
+    url: https://gmmuller.github.io/
+    institution: uic
+    role: PhD candidate
+  - id: komar
+    name: Kazi Omar
+    url: https://komar41.github.io/
+    institution: uic
+    role: PhD candidate
+    aliases: [Kazi Shahrukh Omar]
+  - id: lferreira
+    name: Leonardo Ferreira
+    url: https://www.linkedin.com/in/leo-vsferreira/
+    institution: uic
+    role: PhD student
+  - id: ssrabanti
+    name: Sanjana Srabanti
+    url: https://sanjanasrabanti16.github.io/
+    institution: uic
+    role: PhD candidate
+  - id: scobeli
+    name: Stefan Cobeli
+    url: https://stefancobeli.github.io/
+    institution: uic
+    role: PhD student
+  - id: kwang
+    name: Keira Wang
+    institution: uic
+    role: PhD student
+  - id: mhosseini
+    name: Maryam Hosseini
+    url: https://www.maryamhosseini.me/
+    institution: berkeley
+    role: Faculty
+  - id: mlage
+    name: Marcos Lage
+    url: http://www.ic.uff.br/~mlage/
+    institution: uff
+    role: Faculty
+  - id: doliveira
+    name: Daniel de Oliveira
+    url: http://www2.ic.uff.br/~danielcmo/
+    institution: uff
+    role: Faculty
+    aliases: [Daniel Oliveira]
+  - id: lalexandre
+    name: Lucas Alexandre
+    institution: uff
+    role: MSc student
+  - id: nferreira
+    name: Nivan Ferreira
+    url: https://www.cin.ufpe.br/~nivan/
+    institution: ufpe
+    role: Faculty
+
+  # Collaborators on individual projects.
+  - id: lrenambot
+    name: Luc Renambot
+    url: https://cs.uic.edu/profiles/luc-renambot/
+    institution: uic
+    listed: false
+  - id: gmarai
+    name: G. Elisabeta Marai
+    url: https://cs.uic.edu/profiles/g-marai/
+    institution: uic
+    listed: false
+    aliases: [Elisabeta Marai]
+  - id: mnipu
+    name: Md Nafiul Alam Nipu
+    institution: uic
+    listed: false
+  - id: dhodczak
+    name: Daniel Hodczak
+    institution: uic
+    listed: false
+  - id: cveiga
+    name: Carolina Veiga
+    institution: uiuc
+    listed: false
+  - id: ncolaninno
+    name: Nicola Colaninno
+    institution: polimi
+    listed: false
+    aliases: [Nico Colaninno]
+  - id: rvalenca
+    name: Rodrigo Valença
+    listed: false

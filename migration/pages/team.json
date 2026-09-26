@@ -1,0 +1,59 @@
+{
+  "link": "/team/",
+  "title": "Team",
+  "modified": "2026-04-08T04:10:41",
+  "template": null,
+  "headings": [
+    "h2 Team",
+    "h2 University of Illinois Chicago",
+    "h2 University of California, Berkeley",
+    "h2 Universidade Federal Fluminense",
+    "h2 Universidade Federal de Pernambuco"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "https://fmiranda.me/team/",
+      "text": "here"
+    },
+    {
+      "href": "https://fmiranda.me/",
+      "text": "Fabio Miranda"
+    },
+    {
+      "href": "https://gmmuller.github.io/",
+      "text": "Gustavo Moreira"
+    },
+    {
+      "href": "https://komar41.github.io/",
+      "text": "Kazi Omar"
+    },
+    {
+      "href": "https://sanjanasrabanti16.github.io/",
+      "text": "Sanjana Srabanti"
+    },
+    {
+      "href": "https://stefancobeli.github.io/",
+      "text": "Stefan Cobeli"
+    },
+    {
+      "href": "https://www.maryamhosseini.me/",
+      "text": "Maryam Hosseini"
+    },
+    {
+      "href": "http://www.ic.uff.br/~mlage/",
+      "text": "Marcos Lage"
+    },
+    {
+      "href": "http://www2.ic.uff.br/~danielcmo/",
+      "text": "Daniel de Oliveira"
+    },
+    {
+      "href": "https://www.cin.ufpe.br/~nivan/",
+      "text": "Nivan Ferreira"
+    }
+  ],
+  "images": [],
+  "videos": [],
+  "iframes": []
+}

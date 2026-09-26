@@ -1,0 +1,43 @@
+{
+  "link": "/streetweave/",
+  "title": "StreetWeave",
+  "modified": "2025-08-13T03:56:51",
+  "template": null,
+  "headings": [
+    "h2 StreetWeave: A Declarative Grammar for Street-Overlaid Visualization of Multivariate Data",
+    "h2 Team"
+  ],
+  "buttons": [
+    {
+      "href": "https://arxiv.org/abs/2508.07496",
+      "text": "Preprint (Arxiv)"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://arxiv.org/abs/2508.07496",
+      "text": "Preprint (Arxiv)"
+    },
+    {
+      "href": "https://www.evl.uic.edu/people/2470",
+      "text": "Sanjana Srabanti"
+    },
+    {
+      "href": "https://cs.uic.edu/profiles/g-marai/",
+      "text": "G. Elisabeta Marai"
+    },
+    {
+      "href": "http://fmiranda.me",
+      "text": "Fabio Miranda"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2025/08/streetweave.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/1598671-200_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2025/08/streetweave1.mp4"
+  ],
+  "iframes": []
+}

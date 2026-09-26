@@ -1,0 +1,28 @@
+{
+  "link": "/sidewalk/",
+  "title": "Sidewalk Stewards",
+  "modified": "2026-04-08T04:05:59",
+  "template": null,
+  "headings": [
+    "h2 Sidewalk Stewards: A Visual Analytics Approach for Interactive Topology Repair of Sidewalk Networks"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/sidewalk-stewards",
+      "text": "GitHub"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/sidewalk-stewards",
+      "text": "GitHub"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2026/04/Stewards-VIS-2026-video.mp4"
+  ],
+  "iframes": []
+}

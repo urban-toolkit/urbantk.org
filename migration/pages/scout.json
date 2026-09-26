@@ -1,0 +1,54 @@
+{
+  "link": "/scout/",
+  "title": "Scout",
+  "modified": "2026-04-27T15:32:35",
+  "template": null,
+  "headings": [
+    "h2 SCOUT: An Open-Access Scenario-Oriented Urban Toolkit for Decision Support"
+  ],
+  "buttons": [
+    {
+      "href": "https://github.com/urban-toolkit/scout/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/scout/blob/main/README.md",
+      "text": "Installation"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/scout/blob/main/docs/how-to-use.md",
+      "text": "How to Use"
+    },
+    {
+      "href": "https://arcade.evl.uic.edu/scout/",
+      "text": "Live Application"
+    }
+  ],
+  "links": [
+    {
+      "href": "https://github.com/urban-toolkit/scout/",
+      "text": "GitHub"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/scout/blob/main/README.md",
+      "text": "Installation"
+    },
+    {
+      "href": "https://github.com/urban-toolkit/scout/blob/main/docs/how-to-use.md",
+      "text": "How to Use"
+    },
+    {
+      "href": "https://arcade.evl.uic.edu/scout/",
+      "text": "Live Application"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2026/04/scout-4-783x1024.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/Octicons-mark-github_white.png",
+    "https://urbantk.org/utk/wp-content/uploads/sites/2/2023/06/613307_white.png"
+  ],
+  "videos": [
+    "https://urbantk.org/wp-content/uploads/2026/04/SCOUT-video-updated.mp4"
+  ],
+  "iframes": []
+}

@@ -1,0 +1,29 @@
+{
+  "link": "/citysurfaces/",
+  "title": "CitySurfaces",
+  "modified": "2023-12-19T03:52:54",
+  "template": null,
+  "headings": [
+    "h2 CitySurfaces"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "https://www.sciencedirect.com/science/article/pii/S2210670721008933",
+      "text": "paper"
+    },
+    {
+      "href": "https://arxiv.org/abs/2201.02260",
+      "text": "here"
+    },
+    {
+      "href": "https://github.com/VIDA-NYU/city-surfaces",
+      "text": "https://github.com/VIDA-NYU/city-surfaces"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2023/12/overview-2-1024x268.jpg"
+  ],
+  "videos": [],
+  "iframes": []
+}

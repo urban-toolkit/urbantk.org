@@ -1,0 +1,25 @@
+{
+  "link": "/tile2net/",
+  "title": "tile2net",
+  "modified": "2023-12-19T03:35:16",
+  "template": null,
+  "headings": [
+    "h2 tile2net"
+  ],
+  "buttons": [],
+  "links": [
+    {
+      "href": "https://www.sciencedirect.com/science/article/pii/S0198971523000133",
+      "text": "paper"
+    },
+    {
+      "href": "https://github.com/VIDA-NYU/tile2net",
+      "text": "https://github.com/VIDA-NYU/tile2net"
+    }
+  ],
+  "images": [
+    "https://urbantk.org/wp-content/uploads/2023/12/overview-1.jpg"
+  ],
+  "videos": [],
+  "iframes": []
+}

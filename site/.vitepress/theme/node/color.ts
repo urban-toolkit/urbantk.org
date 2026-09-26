@@ -1,10 +1,15 @@
-import { clampChroma, converter, formatHex, parse, wcagContrast } from 'culori'
+import { clampChroma, converter, formatHex, interpolate, parse, wcagContrast } from 'culori'
 
 const toOklch = converter('oklch')
 
 // Background colors of the VitePress default theme, which every accent is checked against.
 export const LIGHT_BG = '#ffffff'
 export const DARK_BG = '#1b1b1f'
+
+// `amount` of color `a` mixed into `b`, in OKLab.
+export function mix(a: string, b: string, amount: number): string {
+  return formatHex(interpolate([b, a], 'oklab')(amount))
+}
 
 export function contrast(a: string, b: string): number {
   return wcagContrast(a, b)

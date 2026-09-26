@@ -23,7 +23,7 @@ npm run check     # links, old WordPress URLs, redirects and media budgets of th
 | Funding text, footer logos, home page order | `site/.vitepress/site.ts` |
 | Theme (layouts, components, styles) | `site/.vitepress/theme/` |
 
-The menu and the home page are generated from the project pages, so adding a project needs no other change.
+The menu, the home page cards and the home page diagram are generated from the project pages, so adding a project needs no other change.
 
 ## Add a project
 
@@ -33,6 +33,19 @@ The menu and the home page are generated from the project pages, so adding a pro
 4. Set `listed: false` to publish the page without adding it to the menu and the home page.
 
 Each project page has the same structure. What sets projects apart is the `accent` color, the `logo` (or a monogram in the accent color when there is none) and the `hero` image, which the home page card is cropped from. Dark-mode and contrast-safe variants of the accent are computed at build time.
+
+## The home page diagram
+
+The hero's diagram, after the 2026 NSF CSSI poster, puts every listed project on a ring around the UrbanTK logo, grouped into one arc per category. A new project appears in its category's arc, in `order`. What else shapes it:
+
+- `ecosystem` in `site/.vitepress/site.ts`: the categories' order around the ring (clockwise from the left) and the center image.
+- `color` in `site/data/categories.yaml`: each arc's tint; the fill and the label color are derived from it for both themes.
+- `bubble` in a project's frontmatter, all optional:
+  - `image`: the picture in the circle; defaults to the logo, else the card image.
+  - `fill`: the image covers the circle instead of sitting inside it; defaults to true when the image is not the logo.
+  - `label`: draws the project's name; defaults to true; set it to false when the logo already shows the name.
+
+The circle images of Deep Umbra, neural-3d and Sidewalk Stewards and the Autark wordmark come from the poster PDF: `python3 scripts/media/poster-bubbles.py <poster.pdf>`, then `node scripts/media/prepare-assets.mjs`.
 
 ## Add a paper
 

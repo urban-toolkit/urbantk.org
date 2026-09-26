@@ -17,6 +17,7 @@ hero:
 card:
   image: "/media/projects/neural-3d/card.webp"
   alt: "Direct and inverse view queries over building facades"
+bubble: { image: /media/projects/neural-3d/bubble.webp }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/neural-3d" }
   - { kind: paper, bib: cobeli2026neural }

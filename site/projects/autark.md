@@ -17,6 +17,7 @@ hero:
 card:
   image: "/media/projects/autark/card.webp"
   alt: "Urbane rebuilt with Autark"
+bubble: { image: /media/projects/autark/wordmark.webp, fill: false, label: false }
 links:
   - { kind: website, url: "https://autarkjs.org", label: autarkjs.org, primary: true }
   - { kind: docs, url: "https://autarkjs.org/introduction", label: Get started }

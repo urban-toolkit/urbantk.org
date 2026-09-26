@@ -13,6 +13,7 @@ export interface Category {
   label: string
   heading: string
   anchor: string
+  color: string
 }
 
 // What the menu, the home page cards and the related-project lists need to know about a project.
@@ -38,6 +39,7 @@ export interface ProjectSummary {
   paper: string | null
   arxiv: string | null
   features: string[]
+  bubble: { image: string | null; fill: boolean; label: boolean }
 }
 
 export function loadCategories(): Category[] {
@@ -54,6 +56,11 @@ export function readProject(file: string): ProjectFrontmatter {
     throw new Error(`${path.relative(process.cwd(), file)} has invalid frontmatter:\n${describe(parsed.error)}`)
   }
   return parsed.data
+}
+
+function bubbleOf(p: ProjectFrontmatter): ProjectSummary['bubble'] {
+  const image = p.bubble?.image ?? p.logo ?? p.card?.image ?? p.hero.image ?? null
+  return { image, fill: p.bubble?.fill ?? image !== p.logo, label: p.bubble?.label ?? true }
 }
 
 function monogramOf(name: string): string {
@@ -110,6 +117,7 @@ export function loadProjects(): ProjectSummary[] {
         paper: p.paper ?? null,
         arxiv: p.arxiv ?? null,
         features: p.features.map((f) => f.title),
+        bubble: bubbleOf(p),
       }
     })
   const slugs = new Set(projects.map((p) => p.slug))

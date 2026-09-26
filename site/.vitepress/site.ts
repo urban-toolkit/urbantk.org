@@ -9,6 +9,12 @@ export const SITE = {
   // Category order of the home page sections, as on the old site. The menu follows categories.yaml.
   homeOrder: ['dataflow', 'grammars', 'knowledge', 'ai'],
   newsOnHome: 6,
+  // The project diagram in the home page hero: categories clockwise from the left, as on the
+  // 2026 NSF CSSI poster, around the logo at the center.
+  ecosystem: {
+    order: ['dataflow', 'knowledge', 'grammars', 'ai'],
+    center: '/media/brand/utk-circle.webp',
+  },
   // Papers listed under "Others" in the Knowledge bases section of the home page.
   others: [
     { bib: 'ferreira2024landscape', label: 'Landscape of tools for urban visual analytics' },

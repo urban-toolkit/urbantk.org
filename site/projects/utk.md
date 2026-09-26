@@ -17,6 +17,7 @@ hero:
 card:
   image: "/media/projects/utk/card.webp"
   alt: "What-if shadow analysis and building-level sunlight access specified with the UTK grammar"
+bubble: { image: /media/projects/utk/card.webp }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/utk" }
   - { kind: install, url: "https://github.com/urban-toolkit/utk/blob/master/docs/USAGE.md" }

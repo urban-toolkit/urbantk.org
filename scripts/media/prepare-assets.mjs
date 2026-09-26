@@ -57,6 +57,15 @@ const STILLS = [
   { from: src('2026/04/vitral_video_v5.mp4'), at: 282.8, crop: [0, 0, 1920, 924], to: 'projects/vitral/teaser.webp' },
 ]
 
+// Home page diagram: circle images from the 2026 NSF CSSI poster (scripts/media/poster-bubbles.py extracts
+// them into media-src/poster/, which is not committed; these are skipped when it is missing).
+const POSTER = path.join(ROOT, 'media-src/poster')
+const BUBBLES = [
+  { from: 'shadows.png', to: 'projects/shadows/bubble.webp' },
+  { from: 'neural-3d.png', to: 'projects/neural-3d/bubble.webp' },
+  { from: 'sidewalk.png', to: 'projects/sidewalk/bubble.webp' },
+]
+
 async function input(from) {
   if (!from.startsWith('http')) return from
   const res = await fetch(from)
@@ -92,6 +101,27 @@ for (const { from, to } of IMAGES) {
 for (const { from, at, crop, to } of STILLS) {
   const png = execFileSync(ffmpeg, ['-v', 'error', '-ss', String(at), '-i', from, '-frames:v', '1', '-vf', `crop=${crop[2]}:${crop[3]}:${crop[0]}:${crop[1]}`, '-f', 'image2pipe', '-vcodec', 'png', '-'], { maxBuffer: 1 << 28 })
   await write(sharp(png).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }), to)
+}
+
+// The diagram's center: the UrbanTK logo, larger than the navbar copy.
+await write(sharp(src('2023/06/logo-utk-circle-1.png')).resize(512, 512).webp({ quality: 90 }), 'brand/utk-circle.webp')
+
+for (const { from, to } of BUBBLES) {
+  const file = path.join(POSTER, from)
+  if (!(await fs.stat(file).catch(() => null))) continue
+  const { width, height } = await sharp(file).metadata()
+  const side = Math.min(width, height)
+  await write(
+    sharp(file)
+      .extract({ left: Math.floor((width - side) / 2), top: Math.floor((height - side) / 2), width: side, height: side })
+      .resize(320, 320)
+      .flatten({ background: '#ffffff' })
+      .webp({ quality: 84 }),
+    to,
+  )
+}
+if (await fs.stat(path.join(POSTER, 'autark-wordmark.png')).catch(() => null)) {
+  await write(sharp(path.join(POSTER, 'autark-wordmark.png')).trim().resize({ width: 480 }).webp({ quality: 90 }), 'projects/autark/wordmark.webp')
 }
 
 // Open Graph image: the wide UTK logo on white, 1200x630.

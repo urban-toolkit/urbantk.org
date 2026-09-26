@@ -54,6 +54,13 @@ export const projectSchema = z
     monogram: z.string().max(3).optional(),
     venue: z.string().optional(),
     card: z.object({ image: sitePath.optional(), alt: z.string().optional() }).strict().optional(),
+    // The project's circle in the home page diagram. image: defaults to the logo, else the card image.
+    // fill: the image covers the circle (default when it is not the logo). label: draw the name
+    // (default true; false when the image already shows it).
+    bubble: z
+      .object({ image: sitePath.optional(), fill: z.boolean().optional(), label: z.boolean().optional() })
+      .strict()
+      .optional(),
     hero: z
       .object({
         image: sitePath.optional(),
@@ -84,7 +91,9 @@ export const projectSchema = z
 export type ProjectFrontmatter = z.infer<typeof projectSchema>
 
 export const categorySchema = z.array(
-  z.object({ id: z.string(), label: z.string(), heading: z.string(), anchor: z.string() }).strict(),
+  z
+    .object({ id: z.string(), label: z.string(), heading: z.string(), anchor: z.string(), color: hex.default('#94a3b8') })
+    .strict(),
 )
 
 export const teamSchema = z

@@ -16,6 +16,7 @@ hero:
 card:
   image: "/media/projects/urbanite/card.webp"
   alt: "Analyzing flood simulations with Urbanite"
+bubble: { label: false }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/urbanite" }
   - { kind: paper, bib: moreira2026urbanite }

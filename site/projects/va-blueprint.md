@@ -16,6 +16,7 @@ hero:
 card:
   image: "/media/projects/va-blueprint/card.webp"
   alt: "From visual analytics papers to a hierarchical blueprint of system components"
+bubble: { fill: true }
 links:
   - { kind: demo, url: "https://leovsferreira.github.io/va-building-blocks/", label: VA-Blueprint interface, primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/va-blueprint" }

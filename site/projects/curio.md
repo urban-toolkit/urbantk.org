@@ -18,6 +18,7 @@ hero:
 card:
   image: "/media/projects/curio/card.webp"
   alt: "Dataflows built in Curio for urban accessibility, climate and sunlight access studies"
+bubble: { label: false }
 links:
   - { kind: demo, url: "https://curio.urbantk.org", label: Try Curio online, primary: true }
   - { kind: install, url: "https://github.com/urban-toolkit/curio/blob/main/docs/USAGE.md" }

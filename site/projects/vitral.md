@@ -17,6 +17,7 @@ hero:
 card:
   image: "/media/projects/vitral/card.webp"
   alt: "Vitral: a graph of study shards, the GitHub panel and the design study timeline"
+bubble: { label: false }
 links:
   - { kind: demo, url: "https://arcade.evl.uic.edu/vitral", label: Live server, primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/vitral" }

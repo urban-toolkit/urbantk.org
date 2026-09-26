@@ -17,6 +17,7 @@ hero:
 card:
   image: "/media/projects/atmos/card.webp"
   alt: "The Atmos interface: a specification next to the map it defines"
+bubble: { fill: true }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/atmos", primary: true }
 ---

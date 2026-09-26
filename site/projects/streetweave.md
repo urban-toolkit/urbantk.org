@@ -16,6 +16,7 @@ hero:
 card:
   image: "/media/projects/streetweave/card.webp"
   alt: "Eight street network visualizations made with StreetWeave"
+bubble: { label: false }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/streetweave" }
   - { kind: paper, bib: srabanti2026streetweave }

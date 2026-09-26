@@ -16,6 +16,7 @@ hero:
 card:
   image: "/media/projects/sidewalk/card.webp"
   alt: "The Sidewalk Stewards interface over Recife: an uncertainty heatmap, parallel coordinates and a gallery of tiles"
+bubble: { image: /media/projects/sidewalk/bubble.webp }
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/sidewalk-stewards", primary: true }
 ---

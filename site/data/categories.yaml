@@ -1,18 +1,23 @@
 # Project categories, in menu order. `label` is the menu entry, `heading` the home page section title,
 # `anchor` the id of that section (the old site linked /other-projects/ for AI & ML; it now points to /#ai-ml).
+# `color` tints the category's arc in the home page diagram; its fill and label colors are derived from it.
 - id: grammars
   label: Grammars & Toolkits
   heading: Grammars & toolkits
   anchor: grammars
+  color: "#4b9fe8"
 - id: dataflow
   label: Dataflow frameworks
   heading: Dataflow frameworks
   anchor: dataflow
+  color: "#c2b04a"
 - id: knowledge
   label: Knowledge bases
   heading: Knowledge bases & guidelines
   anchor: knowledge
+  color: "#7f9c86"
 - id: ai
   label: AI & ML
   heading: AI & ML
   anchor: ai-ml
+  color: "#8595c4"

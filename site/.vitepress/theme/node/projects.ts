@@ -61,11 +61,11 @@ function monogramOf(name: string): string {
   return (words.length > 1 ? words.slice(0, 2).map((w) => w[0]) : [name[0]]).join('').toUpperCase()
 }
 
-// Every paper key, figure credit and team id a project names must exist; a typo fails the build here
+// Every paper key, image credit and team id a project names must exist; a typo fails the build here
 // instead of breaking the page in the browser.
 function checkReferences(file: string, p: ProjectFrontmatter, papers: Set<string>, people: Set<string>): void {
   const problems: string[] = []
-  for (const key of [p.paper, ...p.links.map((l) => l.bib), ...p.figures.map((f) => f.credit)]) {
+  for (const key of [p.paper, p.hero.credit, ...p.links.map((l) => l.bib)]) {
     if (key && !papers.has(key)) problems.push(`unknown papers.bib key "${key}"`)
   }
   for (const id of p.team) if (!people.has(id)) problems.push(`unknown team.yaml id "${id}"`)

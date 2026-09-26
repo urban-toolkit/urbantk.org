@@ -11,35 +11,15 @@ hero:
   image: "/media/projects/streetweave/teaser.webp"
   alt: "Eight street network visualizations made with StreetWeave"
   caption: "Street and pedestrian network visualizations with StreetWeave: multivariate line maps, pattern-based overlays, bristle maps and charts along streets."
+  credit: "srabanti2026streetweave"
   w: 1600
   h: 577
 card:
   image: "/media/projects/streetweave/card.webp"
-  alt: "Street-overlaid visualizations made with StreetWeave"
+  alt: "Eight street network visualizations made with StreetWeave"
 links:
   - { kind: github, url: "https://github.com/urban-toolkit/streetweave" }
   - { kind: paper, bib: srabanti2026streetweave }
-figures:
-  - src: "/media/projects/streetweave/fig-spatial-relations.webp"
-    w: 1600
-    h: 354
-    caption: "Thematic data joins the street network through spatial relations at each segment or intersection: nearest neighbor, contains and buffer."
-    credit: srabanti2026streetweave
-  - src: "/media/projects/streetweave/fig-accessibility.webp"
-    w: 1600
-    h: 609
-    caption: "Sidewalk accessibility. Left: three offset lines encode curb ramps, missing sidewalks and surface problems. Right: color and width combine several attributes."
-    credit: srabanti2026streetweave
-  - src: "/media/projects/streetweave/fig-segments.webp"
-    w: 1600
-    h: 422
-    caption: "Fine-grained analysis of street segments with a line map, a bristle map that adds height, and dual bristle maps aligned left and right."
-    credit: srabanti2026streetweave
-  - src: "/media/projects/streetweave/fig-charts.webp"
-    w: 1600
-    h: 2019
-    caption: "Crime and 311 service requests as charts on intersections and street segments, perpendicular to the streets (top) or parallel to them (bottom)."
-    credit: srabanti2026streetweave
 team: [ssrabanti, gmarai, fmiranda]
 paper: srabanti2026streetweave
 arxiv: "2508.07496"

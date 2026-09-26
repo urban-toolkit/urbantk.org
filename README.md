@@ -29,10 +29,10 @@ The menu and the home page are generated from the project pages, so adding a pro
 
 1. Copy `site/projects/_template.md` to `site/projects/<slug>.md`. The page is served at `/<slug>/`.
 2. Fill in the frontmatter. Every field is checked when the site builds, and a typo fails the build with a message saying which field is wrong.
-3. Put its logo and images in `site/public/media/projects/<slug>/`. Use WebP for images, of at most 1600 px wide and 500 KB.
+3. Put its logo and its lead image in `site/public/media/projects/<slug>/`: one image per project, the most descriptive one (usually the paper's teaser), preferably wide. Use WebP of at most 1600 px wide and 500 KB, then run `node scripts/media/build-cards.mjs <slug>` to crop the home page card from it.
 4. Set `listed: false` to publish the page without adding it to the menu and the home page.
 
-Each project page has the same structure. What sets projects apart is the `accent` color, the `logo` (or a monogram in the accent color when there is none) and the `hero` image. Dark-mode and contrast-safe variants of the accent are computed at build time.
+Each project page has the same structure. What sets projects apart is the `accent` color, the `logo` (or a monogram in the accent color when there is none) and the `hero` image, which the home page card is cropped from. Dark-mode and contrast-safe variants of the accent are computed at build time.
 
 ## Add a paper
 
@@ -76,18 +76,19 @@ Add `imageFit: contain` when the image is a logo or a wide banner that should no
 
 Add them to `site/data/team.yaml`, with an `institution` id from the same file. Author names in `papers.bib` that match a person's `name` or one of their `aliases` link to their page. Collaborators who should appear on project pages but not on `/team/` get `listed: false`.
 
-## Figures from papers
+## Lead images from papers
 
-Project pages use figures from their papers, taken from the LaTeX sources on arXiv:
+Each project page leads with one image, usually its paper's teaser, taken from the paper's LaTeX source on arXiv:
 
 ```bash
 python3 scripts/media/extract_figures.py [slug]   # needs PyMuPDF; writes media-src/figures/<slug>/
 cd scripts && npm install && cd ..
 node scripts/media/contact-sheet.mjs [slug]       # media-src/figures/<slug>/sheet.png, to pick from
-node scripts/media/build-figures.mjs [slug]       # the picks in scripts/media/figures.json, as WebP
+node scripts/media/build-figures.mjs [slug]       # the pick in scripts/media/figures.json, as teaser.webp
+node scripts/media/build-cards.mjs [slug]         # the home page card, cropped from the page's hero image
 ```
 
-The last command prints each image's width and height for the page's `figures` list. `media-src/` is not committed. The scripts under `scripts/` need Node 20.10 or newer.
+`build-figures.mjs` prints the image's width and height for the page's `hero`. Projects without a paper on arXiv use a frame of their video instead (`STILLS` in `scripts/media/prepare-assets.mjs`). `media-src/` is not committed. The scripts under `scripts/` need Node 20.10 or newer.
 
 ## Deployment
 

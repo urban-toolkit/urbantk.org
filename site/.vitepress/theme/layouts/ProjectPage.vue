@@ -7,7 +7,6 @@ import { accentStyle } from '../composables/accent'
 import CiteBox from '../components/CiteBox.vue'
 import FeatureCards from '../components/FeatureCards.vue'
 import FeatureGrid from '../components/FeatureGrid.vue'
-import FigureGallery from '../components/FigureGallery.vue'
 import LiteYouTube from '../components/LiteYouTube.vue'
 import LoopVideo from '../components/LoopVideo.vue'
 import PaperEntry from '../components/PaperEntry.vue'
@@ -17,7 +16,7 @@ import ProjectLogo from '../components/ProjectLogo.vue'
 import TeamList from '../components/TeamList.vue'
 
 // The one template every project page uses (layout: ProjectPage). What differs between projects is
-// their accent color, logo and figures; the structure is shared.
+// their accent color, logo and lead image; the structure is shared.
 const { frontmatter: fm, page, theme } = useData()
 
 const slug = computed(() => page.value.filePath.replace(/^projects\//, '').replace(/\.md$/, ''))
@@ -34,6 +33,14 @@ const related = computed(() =>
   projects.filter((p) => p.listed && p.category === project.value.category && p.slug !== slug.value),
 )
 const hero = computed(() => fm.value.hero ?? {})
+
+// "Figure from Moreira et al. (2025)." under a lead image taken from a paper.
+const credit = computed(() => {
+  const paper = hero.value.credit ? papers.find((p) => p.key === hero.value.credit) : undefined
+  if (!paper) return null
+  const first = paper.authors[0]?.split(' ').pop()
+  return `Figure from ${first}${paper.authors.length > 1 ? ' et al.' : ''} (${paper.year}).`
+})
 </script>
 
 <template>
@@ -59,8 +66,14 @@ const hero = computed(() => fm.value.hero ?? {})
     <div v-if="hero.clip || hero.image" class="utk-container utk-project-teaser">
       <LoopVideo v-if="hero.clip" :src="hero.clip" :poster="hero.poster ?? hero.image" :label="hero.alt ?? fm.name" :w="hero.w" :h="hero.h" />
       <figure v-else>
-        <img :src="withBase(hero.image)" :alt="hero.alt ?? fm.name" :width="hero.w" :height="hero.h" />
-        <figcaption v-if="hero.caption">{{ hero.caption }}</figcaption>
+        <!-- Paper figures are dense; the full-size file is one click away, and zoomable on a phone. -->
+        <a :href="withBase(hero.image)" target="_blank" rel="noopener" :aria-label="`Open the full-size image: ${hero.alt ?? fm.name}`">
+          <img :src="withBase(hero.image)" :alt="hero.alt ?? fm.name" :width="hero.w" :height="hero.h" />
+        </a>
+        <figcaption v-if="hero.caption || credit">
+          {{ hero.caption }}
+          <span v-if="credit" class="utk-project-credit">{{ credit }}</span>
+        </figcaption>
       </figure>
     </div>
 
@@ -85,14 +98,6 @@ const hero = computed(() => fm.value.hero ?? {})
         </header>
         <FeatureGrid v-if="fm.features?.length" :features="fm.features" />
         <FeatureCards v-if="fm.more?.length" :cards="fm.more" />
-      </section>
-
-      <section v-if="fm.figures?.length" id="figures" class="utk-section">
-        <header class="utk-section-header">
-          <h2 class="utk-section-title">Figures</h2>
-          <div class="utk-section-divider" aria-hidden="true" />
-        </header>
-        <FigureGallery :figures="fm.figures" />
       </section>
 
       <section v-if="projectPapers.length" id="publications" class="utk-section">
@@ -212,6 +217,17 @@ const hero = computed(() => fm.value.hero ?? {})
   border-radius: var(--utk-radius);
   background: #fff;
   box-shadow: var(--utk-shadow);
+}
+
+.utk-project-teaser a {
+  display: block;
+  cursor: zoom-in;
+}
+
+.utk-project-credit {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.8rem;
 }
 
 .utk-project-teaser figcaption {

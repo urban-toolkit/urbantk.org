@@ -11,36 +11,16 @@ hero:
   image: "/media/projects/va-blueprint/teaser.webp"
   alt: "From visual analytics papers to a hierarchical blueprint of system components"
   caption: "VA-Blueprint turns visual analytics papers into a hierarchical JSON blueprint of each system: its components at several levels of abstraction and their dependencies."
+  credit: "ferreira2026vablueprint"
   w: 1600
   h: 568
 card:
   image: "/media/projects/va-blueprint/card.webp"
-  alt: "The blueprint of a visual analytics system"
+  alt: "From visual analytics papers to a hierarchical blueprint of system components"
 links:
   - { kind: demo, url: "https://leovsferreira.github.io/va-building-blocks/", label: VA-Blueprint interface, primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/va-blueprint" }
   - { kind: paper, bib: ferreira2026vablueprint }
-figures:
-  - src: "/media/projects/va-blueprint/fig-process.webp"
-    w: 1600
-    h: 826
-    caption: "Building the knowledge base: 20 papers analyzed by hand define the schema, LLM extraction covers the other 81, and a human-in-the-loop review refines the results for all 101 systems."
-    credit: ferreira2026vablueprint
-  - src: "/media/projects/va-blueprint/fig-interface.webp"
-    w: 1600
-    h: 1526
-    caption: "The interface shows a system's blueprint: high-level blocks organize intermediate blocks, whose nodes are granular blocks connected by data and interaction dependencies."
-    credit: ferreira2026vablueprint
-  - src: "/media/projects/va-blueprint/fig-taxivis.webp"
-    w: 1600
-    h: 603
-    caption: "The blueprint of TaxiVis: trip data, a spatiotemporal index and a visual query engine feed geospatial and information visualizations, and filters loop back to the query engine."
-    credit: ferreira2026vablueprint
-  - src: "/media/projects/va-blueprint/fig-dependencies.webp"
-    w: 1600
-    h: 810
-    caption: "The most frequent dependencies between components across the knowledge base, by hierarchy level."
-    credit: ferreira2026vablueprint
 team: [lferreira, gmoreira, fmiranda]
 paper: ferreira2026vablueprint
 arxiv: "2508.07497"

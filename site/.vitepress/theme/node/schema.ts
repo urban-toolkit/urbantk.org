@@ -19,17 +19,6 @@ const link = z
   .strict()
   .refine((l) => l.url || l.bib, 'a link needs a url or a bib key')
 
-const figure = z
-  .object({
-    src: sitePath,
-    w: z.number().int().positive(),
-    h: z.number().int().positive(),
-    caption: z.string(),
-    alt: z.string().optional(),
-    credit: z.string().optional(),
-  })
-  .strict()
-
 const feature = z
   .object({
     id: z.string(),
@@ -70,6 +59,8 @@ export const projectSchema = z
         image: sitePath.optional(),
         alt: z.string().optional(),
         caption: z.string().optional(),
+        // papers.bib key of the paper the image comes from, shown as a credit line under it.
+        credit: z.string().optional(),
         w: z.number().int().positive().optional(),
         h: z.number().int().positive().optional(),
         clip: sitePath.optional(),
@@ -80,7 +71,6 @@ export const projectSchema = z
       .strict()
       .default({}),
     links: z.array(link).default([]),
-    figures: z.array(figure).default([]),
     features: z.array(feature).default([]),
     more: z.array(card).default([]),
     team: z.array(z.string()).default([]),

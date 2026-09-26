@@ -8,38 +8,19 @@ order: 10
 accent: "#9c36b5"
 hero:
   image: "/media/projects/shadows/teaser.webp"
-  alt: "Overview of the Deep Umbra framework"
-  caption: "The components of the Deep Umbra framework, from preprocessing OpenStreetMap building heights to training and evaluating the generative model."
+  alt: "A single timestep shadow next to shadows accumulated over a time range, over a 3D city"
+  caption: "Left: a single timestep shadow. Right: accumulated shadows over a time range, which show the impact of buildings on sunlight access in public spaces."
+  credit: "omar2025deepumbra"
   w: 1600
-  h: 294
+  h: 304
 card:
   image: "/media/projects/shadows/card.webp"
-  alt: "Accumulated shadows across map tiles in three seasons"
+  alt: "A single timestep shadow next to shadows accumulated over a time range, over a 3D city"
 links:
   - { kind: data, url: "https://osf.io/4yztn/", label: Global Shadow Dataset, primary: true }
   - { kind: demo, url: "http://evl.uic.edu/shadows/map/", label: Web viewer }
   - { kind: github, url: "https://github.com/uic-evl/deep-umbra", label: Model code }
   - { kind: paper, bib: omar2025deepumbra }
-figures:
-  - src: "/media/projects/shadows/fig-accumulation.webp"
-    w: 1600
-    h: 304
-    caption: "Left: a single timestep shadow. Right: accumulated shadows over a time range, which show the impact of buildings on sunlight access in public spaces."
-    credit: omar2025deepumbra
-  - src: "/media/projects/shadows/results.webp"
-    w: 1046
-    h: 477
-    caption: "Results with tiles from Chicago, Buenos Aires and Tokyo. The examples come from different seasons of the year but share one color scale, where darker shades of red mean greater shadow coverage during the accumulation period."
-  - src: "/media/projects/shadows/fig-tiles.webp"
-    w: 1600
-    h: 917
-    caption: "Shadows cast across tiles in three seasons. During training each tile is padded with parts of its neighbors, so shadows from nearby buildings count."
-    credit: omar2025deepumbra
-  - src: "/media/projects/shadows/fig-paris-parks.webp"
-    w: 1600
-    h: 957
-    caption: "Accumulated shadow over parks in Paris. Left: six parks in four categories of winter sunlight access. Right: one park, Square Saint Lambert, across the seasons."
-    credit: omar2025deepumbra
 team: [komar, gmoreira, dhodczak, mhosseini, mlage, fmiranda]
 paper: omar2025deepumbra
 arxiv: "2402.17169"

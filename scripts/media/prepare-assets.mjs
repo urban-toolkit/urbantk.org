@@ -7,6 +7,8 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { execFileSync } from 'node:child_process'
+import ffmpeg from 'ffmpeg-static'
 import sharp from 'sharp'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -38,16 +40,21 @@ const STRIPS = [
   { from: src('2025/08/CAMP.CIRC_.SM_.BLK_.RGB_.png'), to: 'institutions/uic.png', height: 96 },
 ]
 
-// Photos and figures from the old pages that the paper figures (build-figures.mjs) did not replace.
+// Images from the old pages and sibling repos that no paper figure (build-figures.mjs) replaces.
 const IMAGES = [
-  { from: src('2023/12/results.jpg'), to: 'projects/shadows/results.webp' },
   { from: src('2023/12/overview-1.jpg'), to: 'projects/tile2net/overview.webp' },
-  { from: src('2026/04/scout-4.png'), to: 'projects/scout/overview.webp' },
-  { from: src('2026/04/Stewards-VIS-2026-video.jpg'), to: 'projects/sidewalk/video-still.webp' },
-  { from: src('2026/04/vitral_video_v5.jpg'), to: 'projects/vitral/video-still.webp' },
   { from: path.join(WORKSPACE, 'curio-main/docs/images/banner.jpg'), to: 'projects/curio/banner.webp' },
   // The 2023 UTK post's featured image is private in WordPress; the wide UTK logo stands in.
   { from: src('2023/06/logo-utk-wide-1-scaled-1.jpg'), to: 'news/utk-accepted-to-ieee-vis-2023/utk-wide.webp' },
+]
+
+// Wide frames from the project videos (in the WordPress export) for projects with no paper source to
+// take a figure from. `crop` is [x, y, w, h] in the video's own pixels.
+const STILLS = [
+  { from: src('2026/04/SCOUT-video-updated.mp4'), at: 345, crop: [0, 456, 3624, 1368], to: 'projects/scout/teaser.webp' },
+  { from: src('2026/04/vis-atmos-video.mp4'), at: 278, crop: [0, 62, 1920, 956], to: 'projects/atmos/teaser.webp' },
+  { from: src('2026/04/Stewards-VIS-2026-video.mp4'), at: 100.5, crop: [185, 163, 1478, 816], to: 'projects/sidewalk/teaser.webp' },
+  { from: src('2026/04/vitral_video_v5.mp4'), at: 282.8, crop: [0, 0, 1920, 924], to: 'projects/vitral/teaser.webp' },
 ]
 
 async function input(from) {
@@ -80,6 +87,11 @@ for (const { from, to, height } of STRIPS) {
 
 for (const { from, to } of IMAGES) {
   await write(sharp(await input(from)).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }), to)
+}
+
+for (const { from, at, crop, to } of STILLS) {
+  const png = execFileSync(ffmpeg, ['-v', 'error', '-ss', String(at), '-i', from, '-frames:v', '1', '-vf', `crop=${crop[2]}:${crop[3]}:${crop[0]}:${crop[1]}`, '-f', 'image2pipe', '-vcodec', 'png', '-'], { maxBuffer: 1 << 28 })
+  await write(sharp(png).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }), to)
 }
 
 // Open Graph image: the wide UTK logo on white, 1200x630.

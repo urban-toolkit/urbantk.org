@@ -1,0 +1,43 @@
+import { clampChroma, converter, formatHex, parse, wcagContrast } from 'culori'
+
+const toOklch = converter('oklch')
+
+// Background colors of the VitePress default theme, which every accent is checked against.
+export const LIGHT_BG = '#ffffff'
+export const DARK_BG = '#1b1b1f'
+
+export function contrast(a: string, b: string): number {
+  return wcagContrast(a, b)
+}
+
+// Moves the OKLCH lightness of `color` away from `bg` until the two reach `ratio`.
+// Hue and chroma are kept, so the result still reads as the same color.
+export function ensureContrast(color: string, bg: string, ratio = 4.5): string {
+  const start = toOklch(parse(color))
+  if (!start) throw new Error(`not a color: ${color}`)
+  const step = contrast(bg, '#000000') > contrast(bg, '#ffffff') ? -0.005 : 0.005
+  let current = start
+  let hex = formatHex(clampChroma(current, 'oklch'))
+  for (let i = 0; i < 200 && contrast(hex, bg) < ratio; i++) {
+    current = { ...current, l: Math.min(1, Math.max(0, current.l + step)) }
+    hex = formatHex(clampChroma(current, 'oklch'))
+  }
+  return hex
+}
+
+export interface Accent {
+  // The color as given, for decoration only (dots, stripes, soft tints).
+  accent: string
+  // Readable as text on white, and white text on it is readable: light-mode links and buttons.
+  accentLight: string
+  // Readable as text on the dark background: dark-mode links.
+  accentDark: string
+}
+
+export function deriveAccent(accent: string, accentDark?: string): Accent {
+  return {
+    accent,
+    accentLight: ensureContrast(accent, LIGHT_BG),
+    accentDark: accentDark ?? ensureContrast(accent, DARK_BG),
+  }
+}

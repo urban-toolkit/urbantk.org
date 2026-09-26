@@ -1,0 +1,251 @@
+/* Layout: keep the footer at the bottom of short pages. */
+#app,
+.Layout,
+.VPContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.Layout {
+  min-height: 100dvh;
+}
+
+.Layout .VPContent {
+  flex: 1 0 auto;
+}
+
+/* Home hero, centered as on autarkjs.org. */
+.VPHome .VPHero {
+  padding-top: 96px;
+  padding-bottom: 32px;
+}
+
+.VPHomeHero .container,
+.VPHomeHero .main,
+.VPHomeHero .name,
+.VPHomeHero .text,
+.VPHomeHero .tagline {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.VPHero .text,
+.VPHero .tagline {
+  max-width: 820px !important;
+}
+
+@media (min-width: 960px) {
+  .VPHero .name,
+  .VPHero .text {
+    font-size: 52px !important;
+    line-height: 1.12 !important;
+  }
+
+  .VPHero .tagline {
+    font-size: 19px !important;
+    line-height: 1.65 !important;
+  }
+}
+
+.VPHomeHero .heading {
+  align-items: center;
+}
+
+.VPHomeHero .actions {
+  justify-content: center;
+}
+
+.VPHomeHero .actions .VPButton {
+  min-width: 140px;
+  text-align: center;
+}
+
+/* Keep the appearance toggle and GitHub link in the bar instead of the "..." menu (from autarkjs.org). */
+@media (min-width: 768px) {
+  .VPNavBar .VPNavBarAppearance,
+  .VPNavBar .VPNavBarSocialLinks {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .VPNavBar .VPNavBarExtra {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .VPNavBar .DocSearch-Button .DocSearch-Button-Placeholder,
+  .VPNavBar .DocSearch-Button .DocSearch-Button-Keys {
+    display: none !important;
+  }
+
+  .VPNavBar .VPNavBarMenuLink,
+  .VPNavBar .VPNavBarMenuGroup .button {
+    padding: 0 6px !important;
+  }
+
+  .VPNavBar .content-body .appearance::before,
+  .VPNavBar .content-body .social-links::before {
+    display: none !important;
+  }
+}
+
+/* The menu has seven entries; below 1100px the full bar does not fit, so the mobile menu takes over. */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .VPNavBar .VPNavBarMenu {
+    display: none !important;
+  }
+
+  .VPNavBar .VPNavBarHamburger {
+    display: flex !important;
+  }
+
+  /* The screen menu only exists while it is open (v-if), so unhiding it here is safe. */
+  .VPNavScreen {
+    display: block !important;
+  }
+}
+
+.utk-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--utk-dot);
+  vertical-align: 1px;
+}
+
+/* Shared building blocks. */
+.utk-container {
+  max-width: var(--utk-max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.utk-section {
+  padding: 56px 0 8px;
+}
+
+.utk-section-header {
+  margin-bottom: 28px;
+}
+
+.utk-section-title {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--vp-c-brand-1);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.utk-section-divider {
+  width: 72px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--vp-c-brand-2), var(--vp-c-brand-1));
+}
+
+.utk-section-lead {
+  margin: 12px 0 0;
+  max-width: var(--utk-text-max);
+  color: var(--vp-c-text-2);
+  line-height: 1.7;
+}
+
+.utk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.utk-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  min-height: 40px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-text-1);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s, background-color 0.2s, transform 0.2s;
+}
+
+.utk-button:hover {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-1);
+  transform: translateY(-1px);
+}
+
+.utk-button--primary {
+  border-color: var(--vp-c-brand-3);
+  background: var(--vp-c-brand-3);
+  color: #fff;
+}
+
+.utk-button--primary:hover {
+  border-color: var(--vp-c-brand-2);
+  background: var(--vp-c-brand-2);
+  color: #fff;
+}
+
+.utk-button svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.utk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.utk-link-more {
+  display: inline-flex;
+  margin-top: 24px;
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.utk-link-more:hover {
+  text-decoration: underline;
+}
+
+.utk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* News posts and plain pages read better a little narrower than the default doc width. */
+.VPDoc .content-container {
+  max-width: var(--utk-text-max) !important;
+}
+
+.vp-doc img {
+  border-radius: var(--utk-radius-sm);
+}

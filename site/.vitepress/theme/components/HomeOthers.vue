@@ -35,22 +35,27 @@ const others = computed(() =>
 
 <style scoped>
 .utk-others {
-  margin-top: 28px;
+  margin-top: 16px;
 }
 
 .utk-others-title {
-  margin: 0 0 12px;
-  font-size: 0.85rem;
-  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.4;
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--vp-c-text-2);
+  color: var(--i-l, var(--vp-c-text-2));
+}
+
+.dark .utk-others-title {
+  color: var(--i-d, var(--vp-c-text-2));
 }
 
 .utk-others ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -59,10 +64,11 @@ const others = computed(() =>
 .utk-others a {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 10px 12px;
   border: 1px solid var(--vp-c-divider);
   border-radius: var(--utk-radius-sm);
+  background: var(--vp-c-bg);
   color: inherit;
   text-decoration: none;
   transition: border-color 0.2s;
@@ -73,8 +79,8 @@ const others = computed(() =>
 }
 
 .utk-others svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   flex: none;
   margin-top: 2px;
   color: var(--vp-c-brand-1);
@@ -82,14 +88,16 @@ const others = computed(() =>
 
 .utk-others strong {
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
   color: var(--vp-c-text-1);
 }
 
 .utk-others small {
   display: block;
   margin-top: 2px;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
   color: var(--vp-c-text-2);
 }
 </style>

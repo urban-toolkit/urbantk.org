@@ -6,7 +6,7 @@ export const SITE = {
   github: 'https://github.com/urban-toolkit',
   // Open Graph image for pages that have none of their own.
   image: '/media/brand/utk-social.png',
-  // Category order of the home page sections, as on the old site. The menu follows categories.yaml.
+  // Category order of the home page's project columns, as on the old site. The menu follows categories.yaml.
   homeOrder: ['dataflow', 'grammars', 'knowledge', 'ai'],
   newsOnHome: 6,
   // The project diagram in the home page hero: categories clockwise from the left, as on the

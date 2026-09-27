@@ -10,7 +10,7 @@ import FeatureGrid from '../components/FeatureGrid.vue'
 import LiteYouTube from '../components/LiteYouTube.vue'
 import LoopVideo from '../components/LoopVideo.vue'
 import PaperEntry from '../components/PaperEntry.vue'
-import ProjectCard from '../components/ProjectCard.vue'
+import ProjectRow from '../components/ProjectRow.vue'
 import ProjectLinks from '../components/ProjectLinks.vue'
 import ProjectLogo from '../components/ProjectLogo.vue'
 import TeamList from '../components/TeamList.vue'
@@ -119,7 +119,7 @@ const hero = computed(() => fm.value.hero ?? {})
           <div class="utk-section-divider" aria-hidden="true" />
         </header>
         <div class="utk-grid">
-          <ProjectCard v-for="other in related" :key="other.slug" :project="other" compact />
+          <ProjectRow v-for="other in related" :key="other.slug" :project="other" />
         </div>
       </section>
     </div>

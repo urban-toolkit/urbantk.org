@@ -11,6 +11,9 @@ hero:
       text: Explore projects
       link: "#projects"
     - theme: alt
+      text: News
+      link: /news/
+    - theme: alt
       text: All papers
       link: /papers/
     - theme: alt

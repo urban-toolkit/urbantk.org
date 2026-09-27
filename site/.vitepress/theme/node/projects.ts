@@ -30,8 +30,6 @@ export interface ProjectSummary {
   logo: string | null
   logoOnDark: string | null
   monogram: string
-  image: string | null
-  imageAlt: string
   accent: string
   accentLight: string
   accentDark: string
@@ -110,8 +108,6 @@ export function loadProjects(): ProjectSummary[] {
         logo: p.logo ?? null,
         logoOnDark: p.logoOnDark ?? null,
         monogram: p.monogram ?? monogramOf(p.name),
-        image: p.card?.image ?? p.hero.image ?? p.hero.poster ?? null,
-        imageAlt: p.card?.alt ?? p.hero.alt ?? p.name,
         ...deriveAccent(p.accent, p.accentDark),
         team: p.team,
         paper: p.paper ?? null,

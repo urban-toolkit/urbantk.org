@@ -12,7 +12,7 @@ hero:
       link: "#projects"
     - theme: alt
       text: News
-      link: /news/
+      link: "#news"
     - theme: alt
       text: All papers
       link: /papers/

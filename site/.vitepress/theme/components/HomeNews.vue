@@ -9,7 +9,7 @@ const latest = computed(() => news.slice(0, theme.value.utk.newsOnHome))
 </script>
 
 <template>
-  <section class="utk-section utk-home-news vp-raw">
+  <section id="news" class="utk-section utk-home-news vp-raw">
     <div class="utk-container">
       <header class="utk-section-header">
         <h2 class="utk-section-title">News &amp; Updates</h2>
@@ -32,6 +32,10 @@ const latest = computed(() => news.slice(0, theme.value.utk.newsOnHome))
 </template>
 
 <style scoped>
+.utk-home-news {
+  scroll-margin-top: var(--vp-nav-height);
+}
+
 .utk-news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

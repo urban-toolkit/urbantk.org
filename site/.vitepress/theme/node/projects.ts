@@ -3,7 +3,7 @@ import path from 'node:path'
 import matter from 'gray-matter'
 import yaml from 'js-yaml'
 import { loadPapers } from './bib'
-import { contrast, DARK_BG, deriveAccent } from './color'
+import { deriveAccent } from './color'
 import { loadTeam } from './team'
 import { DATA_DIR, PROJECTS_DIR } from './paths'
 import { categorySchema, describe, projectSchema, type ProjectFrontmatter } from './schema'
@@ -78,7 +78,9 @@ function checkReferences(file: string, p: ProjectFrontmatter, papers: Set<string
 }
 
 export function loadProjects(): ProjectSummary[] {
-  const categories = new Set(loadCategories().map((c) => c.id))
+  // A project's color is its category's, the one its arc has in the home page diagram.
+  const colors = new Map(loadCategories().map((c) => [c.id, c.color]))
+  const categories = new Set(colors.keys())
   const papers = new Map(loadPapers().map((paper) => [paper.key, paper]))
   const people = new Set(loadTeam().people.map((person) => person.id))
   const projects = fs
@@ -88,10 +90,6 @@ export function loadProjects(): ProjectSummary[] {
       const slug = file.slice(0, -'.md'.length)
       const p = readProject(path.join(PROJECTS_DIR, file))
       checkReferences(file, p, new Set(papers.keys()), people)
-      // Derived accents meet 4.5:1 by construction; a hand-picked dark variant has to as well.
-      if (p.accentDark && contrast(p.accentDark, DARK_BG) < 4.5) {
-        throw new Error(`site/projects/${file}: accentDark ${p.accentDark} is below 4.5:1 on ${DARK_BG}`)
-      }
       if (!categories.has(p.category)) {
         throw new Error(`site/projects/${file}: unknown category "${p.category}" (see site/data/categories.yaml)`)
       }
@@ -108,7 +106,7 @@ export function loadProjects(): ProjectSummary[] {
         logo: p.logo ?? null,
         logoOnDark: p.logoOnDark ?? null,
         monogram: p.monogram ?? monogramOf(p.name),
-        ...deriveAccent(p.accent, p.accentDark),
+        ...deriveAccent(colors.get(p.category)!),
         team: p.team,
         paper: p.paper ?? null,
         arxiv: p.arxiv ?? null,

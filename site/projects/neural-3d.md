@@ -5,7 +5,6 @@ title: A Neural Field-Based Approach for View Computation & Data Exploration in 
 tagline: Neural fields for view computation and data exploration in 3D cities
 category: ai
 order: 40
-accent: "#4c6ef5"
 monogram: N3D
 venue: IEEE TVCG 2026
 hero:

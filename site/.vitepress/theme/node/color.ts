@@ -44,10 +44,10 @@ export interface Accent {
 export const LIGHT_TARGET = 6
 export const DARK_TARGET = 7
 
-export function deriveAccent(accent: string, accentDark?: string): Accent {
+export function deriveAccent(accent: string): Accent {
   return {
     accent,
     accentLight: ensureContrast(accent, LIGHT_BG, LIGHT_TARGET),
-    accentDark: accentDark ?? ensureContrast(accent, DARK_BG, DARK_TARGET),
+    accentDark: ensureContrast(accent, DARK_BG, DARK_TARGET),
   }
 }

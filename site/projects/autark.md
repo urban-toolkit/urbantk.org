@@ -5,7 +5,6 @@ title: A Serverless Toolkit for Prototyping Urban Visual Analytics Systems
 tagline: Load, process, and visualize geospatial data entirely in the browser
 category: grammars
 order: 30
-accent: "#8da0cb"
 logo: /media/projects/autark/logo.svg
 logoOnDark: /media/projects/autark/logo-dark.svg
 hero:

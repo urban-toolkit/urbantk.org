@@ -6,7 +6,6 @@ tagline: Declarative grammar for atmospheric data visualization
 category: grammars
 order: 40
 listed: false
-accent: "#228be6"
 logo: /media/projects/atmos/logo.webp
 hero:
   image: "/media/projects/atmos/teaser.webp"

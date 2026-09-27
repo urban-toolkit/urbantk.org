@@ -47,8 +47,6 @@ export const projectSchema = z
     category: z.string(),
     order: z.number().int().default(100),
     listed: z.boolean().default(true),
-    accent: hex,
-    accentDark: hex.optional(),
     logo: sitePath.optional(),
     logoOnDark: sitePath.optional(),
     monogram: z.string().max(3).optional(),

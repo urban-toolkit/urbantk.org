@@ -6,7 +6,6 @@ tagline: Scenario-oriented urban toolkit for decision support
 category: dataflow
 order: 30
 listed: false
-accent: "#2f9e44"
 logo: /media/projects/scout/logo.webp
 hero:
   image: "/media/projects/scout/teaser.webp"

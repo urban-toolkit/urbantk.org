@@ -6,7 +6,6 @@ tagline: Interactive topology repair of sidewalk networks
 category: ai
 order: 50
 listed: false
-accent: "#c2255c"
 hero:
   image: "/media/projects/sidewalk/teaser.webp"
   alt: "The Sidewalk Stewards interface over Recife: an uncertainty heatmap, parallel coordinates and a gallery of tiles"

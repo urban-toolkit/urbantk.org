@@ -5,7 +5,6 @@ title: Uncovering Building Blocks for Visual Analytics System Design
 tagline: LLM-generated knowledge base for visual analytics system components
 category: knowledge
 order: 10
-accent: "#1c4f8a"
 logo: /media/projects/va-blueprint/logo.webp
 hero:
   image: "/media/projects/va-blueprint/teaser.webp"

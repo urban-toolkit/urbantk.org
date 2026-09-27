@@ -5,7 +5,6 @@ title: A Dataflow-Based Framework for Human-AI Interactive Alignment in Urban Vi
 tagline: Dataflow-based framework for Human-AI alignment in urban visual analytics
 category: dataflow
 order: 20
-accent: "#7048e8"
 logo: /media/projects/urbanite/logo.webp
 hero:
   image: "/media/projects/urbanite/teaser.webp"

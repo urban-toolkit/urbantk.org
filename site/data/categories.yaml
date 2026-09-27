@@ -1,6 +1,7 @@
 # Project categories, in menu order. `label` is the menu entry, `heading` the home page section title,
 # `anchor` the id of that section (the old site linked /other-projects/ for AI & ML; it now points to /#ai-ml).
-# `color` tints the category's arc in the home page diagram; its fill and label colors are derived from it.
+# `color` tints the category's arc in the home page diagram, and is the color of every project page, card and
+# menu dot in the category; fills, label colors and contrast-safe variants are derived from it.
 - id: grammars
   label: Grammars & Toolkits
   heading: Grammars & toolkits

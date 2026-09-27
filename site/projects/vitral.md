@@ -6,7 +6,6 @@ tagline: Framework for reproducible design studies in visual analytics
 category: dataflow
 order: 40
 listed: false
-accent: "#5f3dc4"
 logo: /media/projects/vitral/logo.webp
 hero:
   image: "/media/projects/vitral/teaser.webp"

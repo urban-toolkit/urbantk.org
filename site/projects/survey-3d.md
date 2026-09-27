@@ -5,7 +5,6 @@ title: The State of the Art in Visual Analytics for 3D Urban Data
 tagline: Survey on 3D urban visual analytics
 category: knowledge
 order: 20
-accent: "#a61e4d"
 monogram: 3D
 hero:
   image: "/media/projects/survey-3d/teaser.webp"

@@ -5,7 +5,6 @@ title: A Generative Approach for Sunlight Access Computation in Urban Spaces
 tagline: Generative approach for city-scale shadow computation
 category: ai
 order: 10
-accent: "#9c36b5"
 hero:
   image: "/media/projects/shadows/teaser.webp"
   alt: "A single timestep shadow next to shadows accumulated over a time range, over a 3D city"

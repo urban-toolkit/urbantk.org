@@ -5,7 +5,6 @@ title: City-Scale Semantic Segmentation of Sidewalk Materials
 tagline: Segmentation of sidewalk surfaces from street-level images
 category: ai
 order: 30
-accent: "#e67700"
 monogram: CS
 venue: Sustainable Cities and Society 2022
 hero:

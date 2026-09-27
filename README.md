@@ -32,7 +32,7 @@ The menu, the home page cards and the home page diagram are generated from the p
 3. Put its logo and its lead image in `site/public/media/projects/<slug>/`: one image per project, the most descriptive one (usually the paper's teaser), preferably wide. Use WebP of at most 1600 px wide and 500 KB, then run `node scripts/media/build-cards.mjs <slug>` to crop the home page card from it.
 4. Set `listed: false` to publish the page without adding it to the menu and the home page.
 
-Each project page has the same structure. What sets projects apart is the `accent` color, the `logo` (or a monogram in the accent color when there is none) and the `hero` image, which the home page card is cropped from. Dark-mode and contrast-safe variants of the accent are computed at build time.
+Each project page has the same structure. What sets projects apart is the `logo` (or a monogram when there is none) and the `hero` image, which the home page card is cropped from. A project's color is its category's `color` in `site/data/categories.yaml`, the same one its arc has in the home page diagram, so every project in a category shares it. Dark-mode and contrast-safe variants are computed at build time.
 
 ## The home page diagram
 

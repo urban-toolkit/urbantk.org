@@ -5,11 +5,10 @@ layout: ProjectPage
 name: Project name
 title: Full title, usually the paper title
 tagline: One line for the menu card and the page header
-category: grammars          # grammars | dataflow | knowledge | ai (site/data/categories.yaml)
+category: grammars          # grammars | dataflow | knowledge | ai (site/data/categories.yaml); also sets the page's color
 order: 100                  # position within the category
 listed: true                # false: reachable by URL, but not in the menu or on the home page
-accent: "#046bd2"           # the project's color; dark-mode and contrast variants are derived
-logo: /media/projects/<slug>/logo.webp  # omit to get a monogram in the accent color
+logo: /media/projects/<slug>/logo.webp  # omit to get a monogram in the category's color
 # bubble: { label: false }  # home page diagram: set label false when the logo already shows the name
 hero:                       # the one image the page leads with, usually the paper's teaser; prefer wide
   image: /media/projects/<slug>/teaser.webp

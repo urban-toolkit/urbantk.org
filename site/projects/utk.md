@@ -5,7 +5,6 @@ title: "The Urban Toolkit: A Grammar-based Framework for Urban Visual Analytics"
 tagline: Grammar for urban visualizations
 category: grammars
 order: 10
-accent: "#046bd2"
 logo: /media/projects/utk/logo.webp
 hero:
   image: "/media/projects/utk/teaser.webp"

@@ -5,7 +5,6 @@ title: A Declarative Grammar for Street-Overlaid Visualization of Multivariate D
 tagline: Grammar for street-overlaid visualizations
 category: grammars
 order: 20
-accent: "#e03e36"
 logo: /media/projects/streetweave/logo.webp
 hero:
   image: "/media/projects/streetweave/teaser.webp"

@@ -5,7 +5,6 @@ title: "Mapping the Walk: A Scalable Computer Vision Approach for Generating Sid
 tagline: Automatic generation of sidewalk networks from aerial imagery
 category: ai
 order: 20
-accent: "#0c8599"
 monogram: T2N
 venue: Computers, Environment and Urban Systems 2023
 hero:

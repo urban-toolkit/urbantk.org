@@ -1,6 +1,6 @@
 // Cuts the Curio feature clips listed in scripts/media/clips.json out of a tour recording.
 //
-// node scripts/media/clips.mjs <recording-dir>
+// node scripts/media/clips.mjs <recording-dir> [id ...]
 //
 // <recording-dir> holds curio-feature-tour.webm and curio-feature-tour.marks.json (curio's
 // test_feature_tour_video.py with CURIO_TOUR_CAPTIONS=0). Each clip's window is given in seconds after
@@ -20,8 +20,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const OUT = path.join(ROOT, 'site/public/media/projects/curio/clips')
 const FADE = 0.25
 
-const dir = process.argv[2]
-if (!dir) throw new Error('usage: clips.mjs <recording-dir>')
+const [dir, ...only] = process.argv.slice(2)
+if (!dir) throw new Error('usage: clips.mjs <recording-dir> [id ...]')
 const video = path.join(dir, 'curio-feature-tour.webm')
 const { marks } = JSON.parse(await fs.readFile(path.join(dir, 'curio-feature-tour.marks.json'), 'utf8'))
 const spec = JSON.parse(await fs.readFile(path.join(ROOT, 'scripts/media/clips.json'), 'utf8'))
@@ -44,6 +44,8 @@ function filters(clip, crop, duration) {
 }
 
 for (const clip of clips) {
+  // Named ids cut only those clips, for when they come from different recordings.
+  if (only.length && !only.includes(clip.id)) continue
   const start = marks.find((m) => m.name === clip.scene && m.event === 'start')
   if (!start) throw new Error(`${clip.id}: scene ${clip.scene} is not in the recording`)
   const crop = clip.crop ?? spec.crop

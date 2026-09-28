@@ -332,7 +332,7 @@ export function loadImpact(): Impact {
   const allPackages = withPackages.flatMap((p) => [...p.pypi, ...p.npm])
   const monthlyRow = software(
     'downloads-month',
-    'Package downloads (monthly average)',
+    'Package downloads (average per month)',
     withPackages,
     (p, w) => perMonth(downloads([...p.pypi, ...p.npm], w.start, endOf(w)), w.start, endOf(w)),
     (w) => perMonth(downloads(allPackages, w.start, endOf(w)), w.start, endOf(w)),
@@ -541,7 +541,7 @@ export function loadImpact(): Impact {
       },
       {
         label: 'Package downloads',
-        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The monthly average divides a year's downloads by its months, counting the elapsed days of a partial month.`,
+        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
         links: links.downloads,
       },
       {

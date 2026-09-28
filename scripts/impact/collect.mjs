@@ -1,9 +1,9 @@
 // Collects the numbers behind /impact/ that live outside this repo and writes them to
 // .cache/impact/metrics.json, which the build reads. Deploy runs it before every build.
 //
-//   GitHub stars, with the day of each star      GitHub GraphQL API; needs GITHUB_TOKEN (any token, even read-only)
+//   GitHub stars, with the day of each star      GitHub GraphQL API; needs a personal token (STARS_TOKEN or GITHUB_TOKEN)
 //   commit authors, with their commit months      git history of each repository, all branches
-//   commit authors' GitHub accounts and profiles  GitHub REST API
+//   commit authors' GitHub accounts and profiles  GitHub REST API; needs GITHUB_TOKEN (a workflow's token will do)
 //   PyPI downloads, per day                       ClickHouse's public PyPI dataset (sql-clickhouse.clickhouse.com)
 //   npm downloads, per day                        npm's download counts API (api.npmjs.org)
 //   Curio's example gallery and Data Catalog      Curio's repository (docs/README.md, datasets/, docs/examples/)
@@ -79,8 +79,11 @@ function git(dir, args) {
   return run('git', ['-C', dir, ...args], { maxBuffer: MAX_BUFFER }).then((r) => r.stdout)
 }
 
-// The day of each star, through GitHub's GraphQL API: the REST stargazer list refuses a workflow's token.
+// The day of each star, through GitHub's GraphQL API. GitHub shows stargazers only to personal tokens: deploy
+// passes the IMPACT_GITHUB_TOKEN secret as STARS_TOKEN. Without one, stars are null and the page reads
+// "Not reported".
 async function stars(repo) {
+  const token = process.env.STARS_TOKEN || process.env.GITHUB_TOKEN
   const [owner, name] = repo.split('/')
   const query = `query($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {
@@ -96,10 +99,11 @@ async function stars(repo) {
     const body = await tried(`stars of ${repo}`, async () => {
       const res = await fetch('https://api.github.com/graphql', {
         method: 'POST',
-        headers: { 'User-Agent': 'urbantk.org impact page', Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
+        headers: { 'User-Agent': 'urbantk.org impact page', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ query, variables: { owner, name, after } }),
       })
       const json = await res.json().catch(() => ({}))
+      if (json.errors?.some((e) => e.type === 'FORBIDDEN')) return null
       if (!res.ok || json.errors) {
         const error = new Error(`HTTP ${res.status}: ${JSON.stringify(json.errors ?? json).slice(0, 300)}`)
         error.permanent = res.status < 500 && res.status !== 429
@@ -107,6 +111,7 @@ async function stars(repo) {
       }
       return json
     })
+    if (!body) return null
     const page = body.data.repository.stargazers
     days.push(...page.edges.map((edge) => edge.starredAt.slice(0, 10)))
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null
@@ -312,7 +317,9 @@ async function main() {
     console.log(`github  ${project.repo}`)
     dirs[project.repo] = await clone(project.repo)
     out.repos[project.repo] = { stars: await stars(project.repo), authors: await authors(dirs[project.repo]) }
-    console.log(`        ${out.repos[project.repo].stars.filter((day) => day >= start).length} stars since ${start}`)
+    const starred = out.repos[project.repo].stars
+    if (starred) console.log(`        ${starred.filter((day) => day >= start).length} stars since ${start}`)
+    else console.log('::warning::GitHub refused the stargazer list to this token; stars read "Not reported". Add a personal token as the IMPACT_GITHUB_TOKEN secret.')
     for (const pkg of project.pypi ?? []) {
       console.log(`pypi    ${pkg}`)
       out.pypi[pkg] = await pypi(pkg, start)

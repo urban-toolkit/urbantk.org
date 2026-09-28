@@ -21,7 +21,8 @@ interface Downloads {
 
 interface Metrics {
   collected: string
-  repos: Record<string, { stars: string[]; authors: Author[] }>
+  // `stars` is null when GitHub refused the stargazer list (no personal token).
+  repos: Record<string, { stars: string[] | null; authors: Author[] }>
   accounts: {
     logins: Record<string, string | null>
     profiles: Record<string, { name: string | null; company: string | null; bio: string | null }>
@@ -329,9 +330,12 @@ export function loadImpact(): Impact {
     (p, w) => perMonth(downloads([...p.pypi, ...p.npm], w.start, endOf(w)), w.start, endOf(w)),
     (w) => perMonth(downloads(allPackages, w.start, endOf(w)), w.start, endOf(w)),
   )
-  const starRow = software('stars', `GitHub stars (total since ${sinceShort})`, config.projects, (p, w) =>
-    metrics.repos[p.repo].stars.filter((day) => day >= since && day < w.end).length,
-  )
+  const starLabel = `GitHub stars (total since ${sinceShort})`
+  const starRow: ImpactRow = config.projects.every((p) => metrics.repos[p.repo].stars)
+    ? software('stars', starLabel, config.projects, (p, w) =>
+        metrics.repos[p.repo].stars!.filter((day) => day >= since && day < w.end).length,
+      )
+    : { id: 'stars', label: starLabel, values: windows.map(() => null), projects: [], items: null }
 
   // Rows that count items: every item falls in the year of its date or its award year.
   const yearOf = (item: { date?: string | null; year?: number }): number => {

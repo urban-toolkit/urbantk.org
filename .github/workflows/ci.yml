@@ -20,6 +20,7 @@ jobs:
       - run: npm run impact
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          STARS_TOKEN: ${{ secrets.IMPACT_GITHUB_TOKEN }}
 
       # Fails on dead Markdown links and invalid frontmatter, papers.bib, team.yaml or impact.yaml.
       - run: npm run build

@@ -36,6 +36,8 @@ jobs:
       - run: npm run impact
         env:
           GITHUB_TOKEN: ${{ github.token }}
+          # GitHub lists stargazers only to personal tokens; without this secret, stars read "Not reported".
+          STARS_TOKEN: ${{ secrets.IMPACT_GITHUB_TOKEN }}
 
       - run: npm run build
 

@@ -15,6 +15,16 @@ function toggle(id: string) {
 
 const listed = impact.groups.flatMap((g) => g.rows).filter((row) => row.items?.some((list) => list.length))
 const external = (url: string) => /^https?:/.test(url)
+
+// The notes cite their sources as numbered footnotes; a source cited twice keeps its first number.
+const sources: { label: string; url: string }[] = []
+const marks = impact.notes.map((note) =>
+  note.links.map((link) => {
+    let k = sources.findIndex((s) => s.url === link.url)
+    if (k < 0) k = sources.push(link) - 1
+    return k + 1
+  }),
+)
 </script>
 
 <template>
@@ -100,13 +110,20 @@ const external = (url: string) => /^https?:/.test(url)
 
     <h2>How the numbers are collected</h2>
     <ul class="utk-impact-notes">
-      <li v-for="note in impact.notes" :key="note.label">
-        <strong>{{ note.label }}.</strong> {{ note.text }}
-        <span v-if="note.links.length" class="utk-impact-links">
-          <a v-for="link in note.links" :key="link.url" :href="link.url" target="_blank" rel="noopener">{{ link.label }}</a>
-        </span>
+      <li v-for="(note, n) in impact.notes" :key="note.label">
+        <strong>{{ note.label }}.</strong> {{ note.text
+        }}<sup v-for="k in marks[n]" :key="k" class="utk-impact-mark"><a :href="`#source-${k}`">[{{ k }}]</a></sup>
       </li>
     </ul>
+
+    <h3>Sources</h3>
+    <ol class="utk-impact-sources">
+      <li v-for="(source, k) in sources" :id="`source-${k + 1}`" :key="source.url">
+        <span class="utk-impact-source-mark">[{{ k + 1 }}]</span>
+        <a :href="source.url" target="_blank" rel="noopener">{{ source.label }}</a>
+        <span class="utk-impact-source-url">{{ source.url.replace(/^https:\/\//, '') }}</span>
+      </li>
+    </ol>
   </div>
 </template>
 
@@ -256,11 +273,35 @@ tbody th[scope='row'] {
   margin: 10px 0;
 }
 
-.utk-impact-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2px 16px;
-  margin-top: 2px;
+.utk-impact-mark {
+  margin-left: 2px;
+  font-size: 0.72rem;
+}
+
+.utk-impact-mark a {
+  text-decoration: none;
+}
+
+.utk-impact-sources {
+  padding-left: 0;
+  list-style: none;
   font-size: 0.88rem;
+}
+
+.utk-impact-sources li {
+  margin: 4px 0;
+  scroll-margin-top: calc(var(--vp-nav-height) + 16px);
+}
+
+.utk-impact-source-mark {
+  display: inline-block;
+  min-width: 2.2em;
+  color: var(--vp-c-text-2);
+}
+
+.utk-impact-source-url {
+  margin-left: 6px;
+  color: var(--vp-c-text-3);
+  word-break: break-all;
 }
 </style>

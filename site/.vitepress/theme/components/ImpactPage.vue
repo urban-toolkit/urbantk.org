@@ -112,7 +112,7 @@ const marks = impact.notes.map((note) =>
     <ul class="utk-impact-notes">
       <li v-for="(note, n) in impact.notes" :key="note.label">
         <strong>{{ note.label }}.</strong> {{ note.text
-        }}<sup v-for="k in marks[n]" :key="k" class="utk-impact-mark"><a :href="`#source-${k}`">[{{ k }}]</a></sup>
+        }}<span v-for="k in marks[n]" :key="k" class="utk-impact-mark"><a :href="`#source-${k}`">[{{ k }}]</a></span>
       </li>
     </ul>
 
@@ -274,12 +274,18 @@ tbody th[scope='row'] {
 }
 
 .utk-impact-mark {
-  margin-left: 2px;
-  font-size: 0.72rem;
+  margin-left: 4px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .utk-impact-mark a {
+  color: var(--vp-c-brand-1);
   text-decoration: none;
+}
+
+.utk-impact-mark a:hover {
+  text-decoration: underline;
 }
 
 .utk-impact-sources {

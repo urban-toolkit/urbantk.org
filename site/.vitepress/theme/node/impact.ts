@@ -282,10 +282,6 @@ export function loadImpact(): Impact {
     if (!metrics.repos[p.repo]) throw new Error(`.cache/impact/metrics.json has no ${p.repo}: run npm run impact again`)
   }
 
-  const since = config.award.start
-  const [sinceYear, sinceMonth] = since.split('-').map(Number)
-  const sinceShort = `${SHORT[sinceMonth - 1]} ${sinceYear}`
-  const sinceLong = `${MONTHS[sinceMonth - 1]} ${sinceYear}`
 
   // Downloads of the current year run to the last day every download source has.
   const throughs = [...Object.values(metrics.pypi), ...Object.values(metrics.npm)].map((d) => d.through).filter(Boolean) as string[]
@@ -337,10 +333,10 @@ export function loadImpact(): Impact {
     (p, w) => perMonth(downloads([...p.pypi, ...p.npm], w.start, endOf(w)), w.start, endOf(w)),
     (w) => perMonth(downloads(allPackages, w.start, endOf(w)), w.start, endOf(w)),
   )
-  const starLabel = `GitHub stars (total since ${sinceShort})`
+  const starLabel = 'GitHub stars (total)'
   const starRow: ImpactRow = config.projects.every((p) => metrics.repos[p.repo].stars)
     ? software('stars', starLabel, config.projects, (p, w) =>
-        metrics.repos[p.repo].stars!.filter((day) => day >= since && day < w.end).length,
+        metrics.repos[p.repo].stars!.filter((day) => day < w.end).length,
       )
     : { id: 'stars', label: starLabel, values: windows.map(() => null), projects: [], items: null }
 
@@ -531,7 +527,7 @@ export function loadImpact(): Impact {
     notes: [
       {
         label: 'Years',
-        text: `Each column counts its year on its own, except the rows marked "since ${sinceShort}", which add up from ${sinceLong}. The current year runs to the last update.`,
+        text: 'Each column counts its year on its own, except GitHub stars and users at large, which are the totals at the end of the year. The current year runs to the last update.',
         links: [],
       },
       {
@@ -546,7 +542,7 @@ export function loadImpact(): Impact {
       },
       {
         label: 'GitHub stars',
-        text: `Stars on the ${config.projects.length} repositories that GitHub dates on or after ${MONTHS[sinceMonth - 1]} 1, ${sinceYear}.`,
+        text: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
         links: links.stars,
       },
       {

@@ -165,9 +165,8 @@ export const impactSchema = z
     ),
     people: z.array(z.object({ ids: z.array(z.string()).min(1), institution: z.string().optional() }).strict()).default([]),
     curio: z.object({ repo: z.string(), demos: z.array(z.number().int()) }).strict(),
-    users: z
-      .array(z.object({ year: z.number().int().positive(), count: z.number().int().nonnegative(), detail: z.string().optional() }).strict())
-      .default([]),
+    instances: z.array(z.string().url()).default([]),
+    history: z.string().url(),
     deployments: z.array(reported).default([]),
     workshops: z.array(reported).default([]),
     hackathons: z.array(reported).default([]),

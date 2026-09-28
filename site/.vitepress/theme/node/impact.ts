@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import yaml from 'js-yaml'
+import { SITE } from '../../site'
 import { loadPapers, type Paper } from './bib'
 import { DATA_DIR, IMPACT_METRICS } from './paths'
 import { loadProjects } from './projects'
@@ -35,6 +36,8 @@ interface Metrics {
     files: { file: string; name: string; examples: number[]; added: string | null }[]
   }
   papers: Record<string, { eprint: string; html: boolean; section: string | null; useCases: string[] }>
+  // Registered accounts per hosted Curio, one entry per day a deploy ran.
+  history: { day: string; users: Record<string, number> }[]
 }
 
 export interface ImpactYear {
@@ -47,6 +50,11 @@ export interface ImpactItem {
   name: string
   detail: string | null
   url: string | null
+}
+
+export interface ImpactLink {
+  label: string
+  url: string
 }
 
 export interface ImpactProjectRow {
@@ -69,6 +77,8 @@ export interface ImpactRow {
   items: ImpactItem[][] | null
   // Shown under a value: the events an attendance figure comes from.
   captions?: (string | null)[]
+  // Where the numbers come from; listed in the spreadsheet.
+  sources?: ImpactLink[]
 }
 
 export interface ImpactGroup {
@@ -78,9 +88,11 @@ export interface ImpactGroup {
 
 export interface Impact {
   updated: string
+  // The code that collects and computes every number.
+  method: ImpactLink[]
   years: ImpactYear[]
   groups: ImpactGroup[]
-  notes: { label: string; text: string }[]
+  notes: { label: string; text: string; links: ImpactLink[] }[]
 }
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -144,6 +156,11 @@ function readConfig(): ImpactConfig {
   const parsed = impactSchema.safeParse(yaml.load(fs.readFileSync(file, 'utf8')))
   if (!parsed.success) throw new Error(`site/data/impact.yaml is invalid:\n${describe(parsed.error)}`)
   return parsed.data
+}
+
+// The history the build publishes at /impact/history.json, for the next deploy to extend.
+export function impactHistory(): Metrics['history'] {
+  return readMetrics().history
 }
 
 function readMetrics(): Metrics {
@@ -429,12 +446,21 @@ export function loadImpact(): Impact {
       .map((paper) => ({ name: paper.title, detail: paper.presented ?? paper.venue, url: paperUrl(paper), date: paperDay(paper) })),
   )
 
+  // A year's users are the last count recorded in it, summed over the hosted instances.
+  const lastCount = (w: Window) => [...metrics.history].reverse().find((entry) => entry.day >= w.start && entry.day < w.end)
   const users: ImpactRow = {
     id: 'users',
     label: 'Users at large',
-    values: windows.map((_, i) => config.users.find((u) => u.year === i + 1)?.count ?? 0),
+    values: windows.map((w) => Object.values(lastCount(w)?.users ?? {}).reduce((sum, n) => sum + n, 0)),
     projects: [],
-    items: null,
+    items: windows.map((w) => {
+      const entry = lastCount(w)
+      return Object.entries(entry?.users ?? {}).map(([base, n]) => ({
+        name: new URL(base).host,
+        detail: `${n} registered accounts on ${entry!.day}`,
+        url: base,
+      }))
+    }),
   }
 
   const internalNames = config.internal.map((i) => i.name)
@@ -443,58 +469,122 @@ export function loadImpact(): Impact {
   const npmCount = withPackages.reduce((n, p) => n + p.npm.length, 0)
   const updated = new Date(metrics.collected)
 
+  // Where each number comes from, listed under "How the numbers are collected" and in the spreadsheet.
+  const siteRepo = `${SITE.github}/urbantk.org/blob/main`
+  const curioRepo = `https://github.com/${config.curio.repo}`
+  const links: Record<string, ImpactLink[]> = {
+    contributors: [
+      { label: 'Git history of the repositories', url: SITE.github },
+      { label: 'GitHub REST API: commits', url: 'https://docs.github.com/en/rest/commits/commits' },
+      { label: 'GitHub REST API: users', url: 'https://docs.github.com/en/rest/users/users' },
+      { label: 'Team page', url: `${SITE.hostname}/team/` },
+    ],
+    downloads: [
+      { label: "ClickHouse's public PyPI dataset", url: 'https://clickpy.clickhouse.com/' },
+      { label: 'npm download counts API', url: 'https://github.com/npm/registry/blob/main/docs/download-counts.md' },
+    ],
+    stars: [{ label: 'GitHub GraphQL API: stargazers', url: 'https://docs.github.com/en/graphql/reference/objects#stargazerconnection' }],
+    users: config.instances.map((base) => ({ label: `Curio monitor, ${new URL(base).host}`, url: `${base}/monitor` })),
+    datasets: [
+      { label: "Curio's Data Catalog", url: `${curioRepo}/tree/main/datasets` },
+      { label: "Curio's example data", url: `${curioRepo}/tree/main/docs/examples/data` },
+    ],
+    'use-cases': [
+      { label: "Curio's example gallery", url: `${curioRepo}/blob/main/docs/README.md#examples` },
+      { label: 'Papers, read from their HTML versions on arXiv', url: `${SITE.hostname}/papers/` },
+    ],
+    publications: [{ label: 'Papers', url: `${SITE.hostname}/papers/` }],
+    reported: [{ label: "The team's figures, in impact.yaml", url: `${siteRepo}/site/data/impact.yaml` }],
+  }
+  const method: ImpactLink[] = [
+    { label: 'Collector: scripts/impact/collect.mjs', url: `${siteRepo}/scripts/impact/collect.mjs` },
+    { label: 'Computation: site/.vitepress/theme/node/impact.ts', url: `${siteRepo}/site/.vitepress/theme/node/impact.ts` },
+  ]
+  const sourceOf: Record<string, string> = {
+    contributors: 'contributors',
+    'downloads-total': 'downloads',
+    'downloads-average': 'downloads',
+    'downloads-month': 'downloads',
+    stars: 'stars',
+    users: 'users',
+    datasets: 'datasets',
+    'use-cases': 'use-cases',
+    publications: 'publications',
+  }
+
+  const groups: ImpactGroup[] = [
+    { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, averageRow, monthlyRow, starRow] },
+    {
+      label: 'Cloud Environment',
+      rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)))],
+    },
+    { label: 'Urban Data', rows: [counted('datasets', 'Curated datasets', datasets)] },
+    {
+      label: 'Community metrics',
+      rows: [
+        attendance('hackathons', 'Hackathon attendance (per hackathon)'),
+        attendance('workshops', 'Workshop attendance (per workshop)'),
+        counted('use-cases', 'Use cases', useCases),
+        counted('internships', 'Internship projects', bucket(reportedItems(config.internships))),
+        counted('tutorials', 'Tutorials', bucket(reportedItems(config.tutorials))),
+        counted('courses', 'Courses', bucket(reportedItems(config.courses))),
+      ],
+    },
+    { label: 'Scientific Impact', rows: [counted('publications', 'Publications', publications)] },
+  ]
+  for (const group of groups) for (const row of group.rows) row.sources = links[sourceOf[row.id] ?? 'reported']
+
   return {
     updated: `${updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}, ${updated.toISOString().slice(11, 16)} UTC`,
+    method,
     years: windows.map((w, i) => ({ label: `Y${i + 1}${w.current ? ' (so far)' : ''}`, period: periodOf(w), current: w.current })),
-    groups: [
-      { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, averageRow, monthlyRow, starRow] },
-      {
-        label: 'Cloud Environment',
-        rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)))],
-      },
-      { label: 'Urban Data', rows: [counted('datasets', 'Curated datasets', datasets)] },
-      {
-        label: 'Community metrics',
-        rows: [
-          attendance('hackathons', 'Hackathon attendance (per hackathon)'),
-          attendance('workshops', 'Workshop attendance (per workshop)'),
-          counted('use-cases', 'Use cases', useCases),
-          counted('internships', 'Internship projects', bucket(reportedItems(config.internships))),
-          counted('tutorials', 'Tutorials', bucket(reportedItems(config.tutorials))),
-          counted('courses', 'Courses', bucket(reportedItems(config.courses))),
-        ],
-      },
-      { label: 'Scientific Impact', rows: [counted('publications', 'Publications', publications)] },
-    ],
+    groups,
     notes: [
       {
         label: 'Years',
         text: `Each column counts its year on its own, except the rows marked "since ${sinceShort}", which add up from the start of the award in ${sinceLong}. The current year runs to the last update.`,
+        links: [],
       },
       {
         label: 'External GitHub contributors',
         text: `People with at least one commit that year, on any branch, to the ${config.projects.length} repositories listed under the row. They are external when no commit email, team listing or GitHub profile places them at ${listOf(internalNames)}. Bots are not counted.`,
+        links: links.contributors,
       },
       {
         label: 'Package downloads',
         text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. Monthly figures divide by the months of the period, counting the elapsed days of a partial month.`,
+        links: links.downloads,
       },
       {
         label: 'GitHub stars',
         text: `Stars on the ${config.projects.length} repositories that GitHub dates on or after ${MONTHS[sinceMonth - 1]} 1, ${sinceYear}.`,
+        links: links.stars,
+      },
+      {
+        label: 'Users at large',
+        text: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
+        links: links.users,
       },
       {
         label: 'Curated datasets',
         text: "Datasets in Curio's Data Catalog, other than boundaries and test samples, and the data files Curio's examples read, other than OpenStreetMap extracts. Each counts in the year it was added to Curio.",
+        links: links.datasets,
       },
       {
         label: 'Use cases',
-        text: "The urban use cases in the usage-scenario or case-study sections of the papers below, in the year of the paper, and the examples in Curio's gallery that are not feature demos, in the year their walkthrough was added.",
+        text: "The urban use cases in the usage-scenario or case-study sections of the papers, in the year of the paper, and the examples in Curio's gallery that are not feature demos, in the year their walkthrough was added.",
+        links: links['use-cases'],
       },
-      { label: 'Publications', text: 'Papers on the Papers page, in the year of their issue. Preprints are not counted.' },
+      { label: 'Publications', text: 'Papers on the Papers page, in the year of their issue. Preprints are not counted.', links: links.publications },
       {
         label: 'Reported by the team',
-        text: 'Users, deployments, attendance, internship projects, tutorials and courses. Attendance is the mean per event.',
+        text: 'Deployments, attendance, internship projects, tutorials and courses. Attendance is the mean per event.',
+        links: links.reported,
+      },
+      {
+        label: 'Code',
+        text: 'Every deploy of the site collects and computes all of these numbers again with these two files.',
+        links: method,
       },
     ],
   }

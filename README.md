@@ -125,7 +125,8 @@ npm run dev
 - `internal`: the institutions whose people are not external contributors, with their email domains and the words their members' GitHub profiles use.
 - `people`: commit identities of one person that share no email, name or GitHub account, and the institution of people nothing else places.
 - `curio.demos`: the Curio examples that show a feature rather than an urban analysis.
-- `users`, `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`; a year without items shows 0.
+- `instances`: Curio's hosted apps, whose public monitor API gives the registered accounts behind "Users at large". Each deploy adds the day's counts to `/impact/history.json`, so a finished year keeps its last count.
+- `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`; a year without items shows 0.
 
 A paper's use cases are the parts of its usage-scenario or case-study section in its arXiv HTML version.
 

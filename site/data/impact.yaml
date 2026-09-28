@@ -73,9 +73,15 @@ curio:
   repo: urban-toolkit/curio
   demos: [11, 12, 13, 14, 15, 16]
 
-# Rows reported by the team. Each item has a `date` or an award `year`; a year without items shows 0.
-users: []
+# Curio's hosted instances. Users at large are the accounts their public monitor API reports as registered
+# (the shared guest account is not one). Every deploy adds the day's counts to `history`, published with the
+# site, so a finished year keeps its last count.
+instances:
+  - https://curio.urbantk.org
+  - https://curio-dev.urbantk.org
+history: https://urbantk.org/impact/history.json
 
+# Rows reported by the team. Each item has a `date` or an award `year`; a year without items shows 0.
 deployments: []
 
 workshops:

@@ -100,7 +100,12 @@ const external = (url: string) => /^https?:/.test(url)
 
     <h2>How the numbers are collected</h2>
     <ul class="utk-impact-notes">
-      <li v-for="note in impact.notes" :key="note.label"><strong>{{ note.label }}.</strong> {{ note.text }}</li>
+      <li v-for="note in impact.notes" :key="note.label">
+        <strong>{{ note.label }}.</strong> {{ note.text }}
+        <span v-if="note.links.length" class="utk-impact-links">
+          <a v-for="link in note.links" :key="link.url" :href="link.url" target="_blank" rel="noopener">{{ link.label }}</a>
+        </span>
+      </li>
     </ul>
   </div>
 </template>
@@ -248,6 +253,14 @@ tbody th[scope='row'] {
 }
 
 .utk-impact-notes li {
-  margin: 8px 0;
+  margin: 10px 0;
+}
+
+.utk-impact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+  margin-top: 2px;
+  font-size: 0.88rem;
 }
 </style>

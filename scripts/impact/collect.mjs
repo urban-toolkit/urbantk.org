@@ -8,6 +8,7 @@
 //   npm downloads, per day                        npm's download counts API (api.npmjs.org)
 //   Curio's example gallery and Data Catalog      Curio's repository (docs/README.md, datasets/, docs/examples/)
 //   the use cases each paper presents             the paper's HTML version on arXiv
+//   registered accounts on Curio's hosted apps    their public monitor API, added to the published history
 //
 //   GITHUB_TOKEN="$(gh auth token)" npm run impact
 //
@@ -282,6 +283,24 @@ async function paperUseCases(eprint) {
   return { eprint, html: true, section: section.title, useCases }
 }
 
+// Registered accounts on a hosted Curio, from its public monitor API. The API path depends on how the host
+// proxies /api, so both layouts are tried. An instance without the API (an older release) counts as null.
+async function registered(base) {
+  for (const route of ['/api/api/monitor', '/api/monitor']) {
+    const res = await fetch(`${base}${route}`, { headers: { 'User-Agent': 'urbantk.org impact page' } }).catch(() => null)
+    if (!res?.ok) continue
+    const json = await res.json().catch(() => null)
+    if (Number.isInteger(json?.accounts?.registered)) return json.accounts.registered
+  }
+  return null
+}
+
+// The counts every earlier deploy recorded, from the published site; none yet before the first deploy.
+async function history(url) {
+  const res = await tried('impact history', () => get(url, {}, { missingOk: true }))
+  return res ? await res.json() : []
+}
+
 // Papers from the award start on, by issue month; a preprint without a month is dated by its arXiv id.
 function recentEprints(start) {
   const library = parse(fs.readFileSync(path.join(ROOT, 'site/data/papers.bib'), 'utf8'), {
@@ -310,7 +329,7 @@ async function main() {
   const start = isoDay(new Date(config.award.start))
   const collected = new Date()
   const yesterday = addDays(isoDay(collected), -1)
-  const out = { collected: collected.toISOString(), repos: {}, accounts: null, pypi: {}, npm: {}, curio: null, papers: {} }
+  const out = { collected: collected.toISOString(), repos: {}, accounts: null, pypi: {}, npm: {}, curio: null, papers: {}, history: [] }
 
   const dirs = {}
   for (const project of config.projects) {
@@ -338,6 +357,16 @@ async function main() {
     out.papers[key] = await paperUseCases(eprint)
     await new Promise((resolve) => setTimeout(resolve, 1000))
   }
+
+  const users = {}
+  for (const base of config.instances ?? []) {
+    const count = await registered(base)
+    console.log(`curio   ${base}: ${count ?? 'no monitor API'}`)
+    if (count !== null) users[base] = count
+  }
+  const today = isoDay(collected)
+  out.history = [...(await history(config.history)).filter((entry) => entry.day !== today), { day: today, users }]
+  out.history.sort((a, b) => (a.day < b.day ? -1 : 1))
 
   fs.mkdirSync(CACHE, { recursive: true })
   fs.writeFileSync(OUT, `${JSON.stringify(out)}\n`)

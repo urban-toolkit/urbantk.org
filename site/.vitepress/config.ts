@@ -7,7 +7,7 @@ import { DARK_BG, ensureContrast, mix } from './theme/node/color'
 import { writeFeed } from './theme/node/feed'
 import { socialHead } from './theme/node/head'
 import { loadImpact } from './theme/node/impact'
-import { writeImpactSheet } from './theme/node/impact-sheet'
+import { writeImpactHistory, writeImpactSheet } from './theme/node/impact-sheet'
 import { buildNav } from './theme/node/nav'
 import { loadNews } from './theme/node/news'
 import { loadCategories, loadProjects } from './theme/node/projects'
@@ -97,6 +97,7 @@ export default defineConfig({
     writeRedirects(siteConfig.outDir, loadRedirects(news), SITE.hostname)
     writeFeed(siteConfig.outDir, news, SITE)
     await writeImpactSheet(siteConfig.outDir, loadImpact())
+    writeImpactHistory(siteConfig.outDir)
     // WordPress published its sitemap at /wp-sitemap.xml; keep that URL alive for crawlers that cached it.
     const sitemap = path.join(siteConfig.outDir, 'sitemap.xml')
     await completeFile(sitemap, '</urlset>')

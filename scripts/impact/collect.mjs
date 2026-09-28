@@ -1,7 +1,7 @@
 // Collects the numbers behind /impact/ that live outside this repo and writes them to
 // .cache/impact/metrics.json, which the build reads. Deploy runs it before every build.
 //
-//   GitHub stars, with the day of each star      GitHub REST API; needs GITHUB_TOKEN (any token, even read-only)
+//   GitHub stars, with the day of each star      GitHub GraphQL API; needs GITHUB_TOKEN (any token, even read-only)
 //   commit authors, with their commit months      git history of each repository, all branches
 //   commit authors' GitHub accounts and profiles  GitHub REST API
 //   PyPI downloads, per day                       ClickHouse's public PyPI dataset (sql-clickhouse.clickhouse.com)
@@ -51,7 +51,8 @@ async function get(url, headers = {}, { missingOk = false } = {}) {
   const res = await fetch(url, { headers: { 'User-Agent': 'urbantk.org impact page', ...headers } })
   if (missingOk && res.status === 404) return null
   if (!res.ok) {
-    const error = new Error(`HTTP ${res.status} for ${url}`)
+    const reply = (await res.text().catch(() => '')).slice(0, 200)
+    const error = new Error(`HTTP ${res.status} for ${url}${reply ? `: ${reply}` : ''}`)
     // Rate limits and server errors can pass; any other client error will not.
     error.permanent = res.status < 500 && res.status !== 429 && res.status !== 403
     throw error
@@ -78,16 +79,39 @@ function git(dir, args) {
   return run('git', ['-C', dir, ...args], { maxBuffer: MAX_BUFFER }).then((r) => r.stdout)
 }
 
+// The day of each star, through GitHub's GraphQL API: the REST stargazer list refuses a workflow's token.
 async function stars(repo) {
+  const [owner, name] = repo.split('/')
+  const query = `query($owner: String!, $name: String!, $after: String) {
+    repository(owner: $owner, name: $name) {
+      stargazers(first: 100, after: $after, orderBy: { field: STARRED_AT, direction: ASC }) {
+        pageInfo { hasNextPage endCursor }
+        edges { starredAt }
+      }
+    }
+  }`
   const days = []
-  let route = `repos/${repo}/stargazers?per_page=100`
-  while (route) {
-    const res = await github(route, { accept: 'application/vnd.github.star+json' })
-    for (const star of await res.json()) days.push(star.starred_at.slice(0, 10))
-    const next = /<https:\/\/api\.github\.com\/([^>]+)>;\s*rel="next"/.exec(res.headers.get('link') ?? '')
-    route = next ? next[1] : null
-  }
-  return days.sort()
+  let after = null
+  do {
+    const body = await tried(`stars of ${repo}`, async () => {
+      const res = await fetch('https://api.github.com/graphql', {
+        method: 'POST',
+        headers: { 'User-Agent': 'urbantk.org impact page', Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
+        body: JSON.stringify({ query, variables: { owner, name, after } }),
+      })
+      const json = await res.json().catch(() => ({}))
+      if (!res.ok || json.errors) {
+        const error = new Error(`HTTP ${res.status}: ${JSON.stringify(json.errors ?? json).slice(0, 300)}`)
+        error.permanent = res.status < 500 && res.status !== 429
+        throw error
+      }
+      return json
+    })
+    const page = body.data.repository.stargazers
+    days.push(...page.edges.map((edge) => edge.starredAt.slice(0, 10)))
+    after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null
+  } while (after)
+  return days
 }
 
 // A blob-less bare clone is enough for the history and stays small; later runs only fetch new commits.
@@ -275,7 +299,7 @@ function recentEprints(start) {
 
 async function main() {
   if (!process.env.GITHUB_TOKEN) {
-    throw new Error('GitHub lists stargazers only to signed-in requests: set GITHUB_TOKEN, e.g. GITHUB_TOKEN="$(gh auth token)" npm run impact')
+    throw new Error('GitHub answers these requests only with a token: set GITHUB_TOKEN, e.g. GITHUB_TOKEN="$(gh auth token)" npm run impact')
   }
   const config = yaml.load(fs.readFileSync(path.join(ROOT, 'site/data/impact.yaml'), 'utf8'))
   const start = isoDay(new Date(config.award.start))
@@ -288,6 +312,7 @@ async function main() {
     console.log(`github  ${project.repo}`)
     dirs[project.repo] = await clone(project.repo)
     out.repos[project.repo] = { stars: await stars(project.repo), authors: await authors(dirs[project.repo]) }
+    console.log(`        ${out.repos[project.repo].stars.filter((day) => day >= start).length} stars since ${start}`)
     for (const pkg of project.pypi ?? []) {
       console.log(`pypi    ${pkg}`)
       out.pypi[pkg] = await pypi(pkg, start)

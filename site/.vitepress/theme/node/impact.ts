@@ -476,7 +476,10 @@ export function loadImpact(): Impact {
         label: 'Package downloads',
         text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. Monthly figures divide by the months of the period, counting the elapsed days of a partial month.`,
       },
-      { label: 'GitHub stars', text: `Stars on the ${config.projects.length} repositories that GitHub dates on or after ${MONTHS[sinceMonth - 1]} 1, ${sinceYear}.` },
+      {
+        label: 'GitHub stars',
+        text: `Stars on the ${config.projects.length} repositories that GitHub dates on or after ${MONTHS[sinceMonth - 1]} 1, ${sinceYear}.`,
+      },
       {
         label: 'Curated datasets',
         text: "Datasets in Curio's Data Catalog, other than boundaries and test samples, and the data files Curio's examples read, other than OpenStreetMap extracts. Each counts in the year it was added to Curio.",

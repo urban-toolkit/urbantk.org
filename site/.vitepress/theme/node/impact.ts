@@ -330,15 +330,8 @@ export function loadImpact(): Impact {
   const totalRow = software('downloads-total', `Package downloads (total since ${sinceShort})`, withPackages, (p, w) =>
     downloads([...p.pypi, ...p.npm], since, endOf(w)),
   )
-  // Averages of the totals are taken from the raw sums, so they need not equal the sum of rounded project rows.
+  // The total per month comes from the raw sum, so it need not equal the sum of the rounded project rows.
   const allPackages = withPackages.flatMap((p) => [...p.pypi, ...p.npm])
-  const averageRow = software(
-    'downloads-average',
-    `Package downloads (monthly average since ${sinceShort})`,
-    withPackages,
-    (p, w) => perMonth(downloads([...p.pypi, ...p.npm], since, endOf(w)), since, endOf(w)),
-    (w) => perMonth(downloads(allPackages, since, endOf(w)), since, endOf(w)),
-  )
   const monthlyRow = software(
     'downloads-month',
     'Package downloads (per month)',
@@ -503,7 +496,6 @@ export function loadImpact(): Impact {
   const sourceOf: Record<string, string> = {
     contributors: 'contributors',
     'downloads-total': 'downloads',
-    'downloads-average': 'downloads',
     'downloads-month': 'downloads',
     stars: 'stars',
     users: 'users',
@@ -513,7 +505,7 @@ export function loadImpact(): Impact {
   }
 
   const groups: ImpactGroup[] = [
-    { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, averageRow, monthlyRow, starRow] },
+    { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, monthlyRow, starRow] },
     {
       label: 'Cloud Environment',
       rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)))],
@@ -552,7 +544,7 @@ export function loadImpact(): Impact {
       },
       {
         label: 'Package downloads',
-        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. Monthly figures divide by the months of the period, counting the elapsed days of a partial month.`,
+        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. Per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
         links: links.downloads,
       },
       {

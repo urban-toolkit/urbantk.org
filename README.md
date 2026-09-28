@@ -110,7 +110,7 @@ node scripts/media/build-cards.mjs [slug]         # the home page card, cropped 
 
 `/impact/` shows adoption and outreach by year, from September to August. Every deploy collects its numbers before the build: `npm run impact` (`scripts/impact/collect.mjs`) reads GitHub, PyPI, npm, Curio's repository and the papers' HTML versions on arXiv, and writes `.cache/impact/metrics.json`, which is not committed. The build turns it into the page and into the spreadsheet at `/impact/urbantk-impact.xlsx`.
 
-GitHub lists stargazers only to personal tokens, so deploy reads one from the repository secret `IMPACT_GITHUB_TOKEN`: a fine-grained token whose resource owner is urban-toolkit, with read-only Metadata on all its repositories and a lifetime of at most 366 days. GitHub hides stargazer lists from tokens without access to the repositories. Without it, or once it expires, the stars row reads "Not available" and the deploy log says why.
+GitHub lists stargazers only to personal tokens, so deploy reads one from the repository secret `IMPACT_GITHUB_TOKEN`: a fine-grained token whose resource owner is urban-toolkit, limited to the repositories in `impact.yaml`, with Contents read and write and a lifetime of at most 366 days. GitHub lists stargazers only to tokens that can write to the repository, so a project added to `impact.yaml` has to be added to the token too. Without it, or once it expires, the stars row reads "Not available" and the deploy log says why.
 
 To build the site locally, collect once first, with your own token:
 

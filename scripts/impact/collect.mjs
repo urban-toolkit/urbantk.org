@@ -394,7 +394,7 @@ async function main() {
   }
   if (Object.values(out.repos).some((repo) => !repo.stars)) {
     console.log(
-      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a fine-grained token owned by the organization, with read-only Metadata on its repositories and a lifetime of at most 366 days, as the IMPACT_GITHUB_TOKEN secret.`,
+      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". The IMPACT_GITHUB_TOKEN secret needs a fine-grained urban-toolkit token with Contents read and write on every repository in impact.yaml.`,
     )
   }
   console.log('github  accounts of commit authors')

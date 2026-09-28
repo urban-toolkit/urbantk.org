@@ -269,6 +269,7 @@ async function curio(dir) {
       id: manifest.id,
       folder,
       name: manifest.name,
+      publisher: manifest.publisher ?? null,
       tags: manifest.tags ?? [],
       description: manifest.description ?? '',
       added: await added(`${folder}/manifest.json`),

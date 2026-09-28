@@ -3,8 +3,8 @@ import path from 'node:path'
 import yaml from 'js-yaml'
 import { SITE } from '../../site'
 import { loadPapers, type Paper } from './bib'
-import { DATA_DIR, IMPACT_METRICS } from './paths'
-import { loadProjects } from './projects'
+import { DATA_DIR, IMPACT_METRICS, PROJECTS_DIR } from './paths'
+import { loadProjects, readProject } from './projects'
 import { describe, impactSchema, type ImpactConfig } from './schema'
 import { loadTeam } from './team'
 
@@ -32,7 +32,15 @@ interface Metrics {
   npm: Record<string, Downloads>
   curio: {
     examples: { number: number; title: string; useCase: string; file: string; added: string | null }[]
-    datasets: { id: string; folder: string; name: string; tags: string[]; description: string; added: string | null }[]
+    datasets: {
+      id: string
+      folder: string
+      name: string
+      publisher: string | null
+      tags: string[]
+      description: string
+      added: string | null
+    }[]
     files: { file: string; name: string; examples: number[]; added: string | null }[]
   }
   papers: Record<string, { eprint: string; html: boolean; section: string | null; useCases: string[] }>
@@ -77,7 +85,8 @@ export interface ImpactRow {
   items: ImpactItem[][] | null
   // Shown under a value: the events an attendance figure comes from.
   captions?: (string | null)[]
-  // Where the numbers come from; listed in the spreadsheet.
+  // How the row is computed and where its numbers come from.
+  how?: string
   sources?: ImpactLink[]
 }
 
@@ -393,7 +402,7 @@ export function loadImpact(): Impact {
   const shortTitle = (paper: Paper) => paper.title.split(':')[0]
   const useCases = bucket([
     ...metrics.curio.examples
-      .filter((e) => !config.curio.demos.includes(e.number))
+      .filter((e) => !config.curio.demos.includes(e.number) && !config.curio.inPapers.includes(e.number))
       .map((e) => ({
         name: e.useCase,
         detail: `Curio example ${String(e.number).padStart(2, '0')}, ${e.title}`,
@@ -409,9 +418,33 @@ export function loadImpact(): Impact {
       })),
     ),
   ])
+  // Data the team created or curated for its papers: the data releases linked from the project pages, dated by
+  // the project's paper, the Data Catalog datasets its own publishers made, and the data files Curio's examples read.
+  const releases = fs
+    .readdirSync(PROJECTS_DIR)
+    .filter((file) => file.endsWith('.md') && !file.startsWith('_'))
+    .flatMap((file) => {
+      const page = readProject(path.join(PROJECTS_DIR, file))
+      const paper = page.paper ? papers.find((p) => p.key === page.paper) : undefined
+      return page.links
+        .filter((link) => link.kind === 'data' && link.url)
+        .map((link) => ({
+          name: link.label ?? `${page.name} data`,
+          detail: paper ? `${page.name}, ${shortTitle(paper)} paper` : page.name,
+          url: link.url!,
+          date: paper ? paperDay(paper) : null,
+        }))
+    })
   const datasets = bucket([
+    ...releases,
     ...metrics.curio.datasets
-      .filter((d) => !d.tags.some((t) => /^boundar/i.test(t)) && !/sample extract/i.test(d.description))
+      .filter(
+        (d) =>
+          d.publisher !== null &&
+          config.curio.publishers.includes(d.publisher) &&
+          !d.tags.some((t) => /^boundar/i.test(t)) &&
+          !/sample extract/i.test(d.description),
+      )
       .map((d) => ({
         name: d.name,
         detail: 'Curio Data Catalog',
@@ -473,6 +506,7 @@ export function loadImpact(): Impact {
     stars: [{ label: 'GitHub GraphQL API: stargazers', url: 'https://docs.github.com/en/graphql/reference/objects#stargazerconnection' }],
     users: config.instances.map((base) => ({ label: `Curio monitor, ${new URL(base).host}`, url: `${base}/monitor` })),
     datasets: [
+      { label: 'Data releases on the project pages', url: `${SITE.hostname}/#projects` },
       { label: "Curio's Data Catalog", url: `${curioRepo}/tree/main/datasets` },
       { label: "Curio's example data", url: `${curioRepo}/tree/main/docs/examples/data` },
     ],
@@ -517,7 +551,25 @@ export function loadImpact(): Impact {
     },
     { label: 'Scientific Impact', rows: [counted('publications', 'Publications', publications)] },
   ]
-  for (const group of groups) for (const row of group.rows) row.sources = links[sourceOf[row.id] ?? 'reported']
+  // How each row is computed, shown with its sources in the row's entry under "What is counted".
+  const how: Record<string, string> = {
+    contributors: `People with at least one commit that year, on any branch, to the ${config.projects.length} repositories listed under the row. They are external when no commit email, team listing or GitHub profile places them at ${listOf(internalNames)}. Bots are not counted.`,
+    'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
+    stars: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
+    users: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
+    datasets: `Data the team created or curated for its papers, not data downloaded as is: the data releases linked from the project pages, in the year of their paper; the datasets in Curio's Data Catalog that ${listOf(config.curio.publishers)} published, in the year they were added; and the data files Curio's examples read, other than OpenStreetMap extracts.`,
+    'use-cases':
+      "The urban use cases in the usage-scenario or case-study sections of the papers, in the year of the paper, and the examples in Curio's gallery that are neither feature demos nor one of those use cases, in the year their walkthrough was added.",
+    publications: 'Papers on the Papers page, in the year of their issue. Preprints are not counted.',
+    hackathons: 'Reported by the team. Attendance is the mean per hackathon.',
+    workshops: 'Reported by the team. Attendance is the mean per workshop.',
+  }
+  for (const group of groups) {
+    for (const row of group.rows) {
+      row.sources = links[sourceOf[row.id] ?? 'reported']
+      row.how = how[row.id] ?? 'Reported by the team.'
+    }
+  }
 
   return {
     updated: `${updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}, ${updated.toISOString().slice(11, 16)} UTC`,
@@ -529,42 +581,6 @@ export function loadImpact(): Impact {
         label: 'Years',
         text: 'Each column counts its year on its own, except GitHub stars and users at large, which are the totals at the end of the year. The current year runs to the last update.',
         links: [],
-      },
-      {
-        label: 'External GitHub contributors',
-        text: `People with at least one commit that year, on any branch, to the ${config.projects.length} repositories listed under the row. They are external when no commit email, team listing or GitHub profile places them at ${listOf(internalNames)}. Bots are not counted.`,
-        links: links.contributors,
-      },
-      {
-        label: 'Package downloads',
-        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
-        links: links.downloads,
-      },
-      {
-        label: 'GitHub stars',
-        text: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
-        links: links.stars,
-      },
-      {
-        label: 'Users at large',
-        text: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
-        links: links.users,
-      },
-      {
-        label: 'Curated datasets',
-        text: "Datasets in Curio's Data Catalog, other than boundaries and test samples, and the data files Curio's examples read, other than OpenStreetMap extracts. Each counts in the year it was added to Curio.",
-        links: links.datasets,
-      },
-      {
-        label: 'Use cases',
-        text: "The urban use cases in the usage-scenario or case-study sections of the papers, in the year of the paper, and the examples in Curio's gallery that are not feature demos, in the year their walkthrough was added.",
-        links: links['use-cases'],
-      },
-      { label: 'Publications', text: 'Papers on the Papers page, in the year of their issue. Preprints are not counted.', links: links.publications },
-      {
-        label: 'Reported by the team',
-        text: 'Deployments, attendance, internship projects, tutorials and courses. Attendance is the mean per event.',
-        links: links.reported,
       },
       {
         label: 'Code',

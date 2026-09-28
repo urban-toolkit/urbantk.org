@@ -4,8 +4,9 @@ import { withBase } from 'vitepress'
 import { data as impact } from '@data/impact.data'
 import Icon from './Icon.vue'
 
-// The metrics table, the items each counting row counted, and how each number is collected. The software
-// rows open onto one row per project; stars start open.
+// The metrics table, and under "What is counted" one numbered entry per row: how the row is computed, its
+// sources and the items it counted. Each row links to its entry, like a footnote. The software rows open
+// onto one row per project; stars start open.
 const format = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 })
 const open = ref<string[]>(['stars'])
 
@@ -13,18 +14,9 @@ function toggle(id: string) {
   open.value = open.value.includes(id) ? open.value.filter((x) => x !== id) : [...open.value, id]
 }
 
-const listed = impact.groups.flatMap((g) => g.rows).filter((row) => row.items?.some((list) => list.length))
+const rows = impact.groups.flatMap((g) => g.rows)
+const number = new Map(rows.map((row, i) => [row.id, i + 1]))
 const external = (url: string) => /^https?:/.test(url)
-
-// The notes cite their sources as numbered footnotes; a source cited twice keeps its first number.
-const sources: { label: string; url: string }[] = []
-const marks = impact.notes.map((note) =>
-  note.links.map((link) => {
-    let k = sources.findIndex((s) => s.url === link.url)
-    if (k < 0) k = sources.push(link) - 1
-    return k + 1
-  }),
-)
 </script>
 
 <template>
@@ -65,6 +57,7 @@ const marks = impact.notes.map((note) =>
                 {{ row.label }}
               </button>
               <template v-else>{{ row.label }}</template>
+              <a class="utk-impact-ref" :href="`#counted-${row.id}`" :aria-label="`How ${row.label} is counted`">[{{ number.get(row.id) }}]</a>
             </th>
             <td v-for="(value, i) in row.values" :key="i" class="utk-impact-num">
               <span v-if="value === null" class="utk-impact-missing">Not available</span>
@@ -91,9 +84,17 @@ const marks = impact.notes.map((note) =>
     </table>
 
     <h2>What is counted</h2>
-    <section v-for="row in listed" :key="row.id" class="utk-impact-items">
-      <h3>{{ row.label }}</h3>
-      <template v-for="(list, i) in row.items!" :key="i">
+    <section v-for="row in rows" :id="`counted-${row.id}`" :key="row.id" class="utk-impact-items">
+      <h3><span class="utk-impact-number">[{{ number.get(row.id) }}]</span> {{ row.label }}</h3>
+      <p class="utk-impact-how">{{ row.how }}</p>
+      <p v-if="row.sources?.length" class="utk-impact-sources">
+        Sources:
+        <template v-for="(source, k) in row.sources" :key="source.url"
+          ><a :href="source.url" target="_blank" rel="noopener">{{ source.label }}</a
+          ><template v-if="k < row.sources.length - 1">, </template></template
+        >
+      </p>
+      <template v-for="(list, i) in row.items ?? []" :key="i">
         <template v-if="list.length">
           <h4>{{ impact.years[i].label }}</h4>
           <ul>
@@ -108,22 +109,16 @@ const marks = impact.notes.map((note) =>
       </template>
     </section>
 
-    <h2>How the numbers are collected</h2>
+    <h2>Notes</h2>
     <ul class="utk-impact-notes">
-      <li v-for="(note, n) in impact.notes" :key="note.label">
-        <strong>{{ note.label }}.</strong> {{ note.text
-        }}<span v-for="k in marks[n]" :key="k" class="utk-impact-mark"><a :href="`#source-${k}`">[{{ k }}]</a></span>
+      <li v-for="note in impact.notes" :key="note.label">
+        <strong>{{ note.label }}.</strong> {{ note.text }}
+        <template v-for="(link, k) in note.links" :key="link.url"
+          ><a :href="link.url" target="_blank" rel="noopener">{{ link.label }}</a
+          ><template v-if="k < note.links.length - 1">, </template></template
+        >
       </li>
     </ul>
-
-    <h3>Sources</h3>
-    <ol class="utk-impact-sources">
-      <li v-for="(source, k) in sources" :id="`source-${k + 1}`" :key="source.url">
-        <span class="utk-impact-source-mark">[{{ k + 1 }}]</span>
-        <a :href="source.url" target="_blank" rel="noopener">{{ source.label }}</a>
-        <span class="utk-impact-source-url">{{ source.url.replace(/^https:\/\//, '') }}</span>
-      </li>
-    </ol>
   </div>
 </template>
 
@@ -273,41 +268,34 @@ tbody th[scope='row'] {
   margin: 10px 0;
 }
 
-.utk-impact-mark {
-  margin-left: 4px;
+.utk-impact-ref {
+  margin-left: 6px;
+  font-size: 0.8rem;
   font-weight: 600;
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
   white-space: nowrap;
 }
 
-.utk-impact-mark a {
-  color: var(--vp-c-brand-1);
-  text-decoration: none;
-}
-
-.utk-impact-mark a:hover {
+.utk-impact-ref:hover {
   text-decoration: underline;
 }
 
-.utk-impact-sources {
-  padding-left: 0;
-  list-style: none;
-  font-size: 0.88rem;
-}
-
-.utk-impact-sources li {
-  margin: 4px 0;
+.utk-impact-items {
   scroll-margin-top: calc(var(--vp-nav-height) + 16px);
 }
 
-.utk-impact-source-mark {
-  display: inline-block;
-  min-width: 2.2em;
-  color: var(--vp-c-text-2);
+.utk-impact-number {
+  color: var(--vp-c-brand-1);
 }
 
-.utk-impact-source-url {
-  margin-left: 6px;
-  color: var(--vp-c-text-3);
-  word-break: break-all;
+.utk-impact-how {
+  margin: 4px 0;
+}
+
+.utk-impact-sources {
+  margin: 4px 0 8px;
+  font-size: 0.88rem;
+  color: var(--vp-c-text-2);
 }
 </style>

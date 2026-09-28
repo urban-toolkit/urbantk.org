@@ -164,7 +164,14 @@ export const impactSchema = z
       z.object({ id: z.string(), name: z.string(), domains: z.array(z.string()), profile: z.array(z.string()) }).strict(),
     ),
     people: z.array(z.object({ ids: z.array(z.string()).min(1), institution: z.string().optional() }).strict()).default([]),
-    curio: z.object({ repo: z.string(), demos: z.array(z.number().int()) }).strict(),
+    curio: z
+      .object({
+        repo: z.string(),
+        demos: z.array(z.number().int()),
+        inPapers: z.array(z.number().int()).default([]),
+        publishers: z.array(z.string()).default([]),
+      })
+      .strict(),
     instances: z.array(z.string().url()).default([]),
     history: z.string().url(),
     deployments: z.array(reported).default([]),

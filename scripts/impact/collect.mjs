@@ -83,6 +83,27 @@ function git(dir, args) {
 // Why GitHub refused the stargazer list, for the deploy log.
 let starsRefusal = null
 
+// The same list from the REST API, which some tokens GraphQL refuses may read.
+async function starsRest(repo, token) {
+  const headers = { 'User-Agent': 'urbantk.org impact page', Accept: 'application/vnd.github.star+json', Authorization: `Bearer ${token}` }
+  const days = []
+  let url = `https://api.github.com/repos/${repo}/stargazers?per_page=100`
+  while (url) {
+    const res = await tried(`stars of ${repo}`, async () => {
+      const r = await fetch(url, { headers })
+      if (r.status >= 500 || r.status === 429) throw new Error(`HTTP ${r.status} for ${url}`)
+      return r
+    })
+    if (!res.ok) {
+      starsRefusal = `${starsRefusal}; REST: HTTP ${res.status} ${((await res.json().catch(() => ({}))).message ?? '').slice(0, 120)}`
+      return null
+    }
+    for (const star of await res.json()) days.push(star.starred_at.slice(0, 10))
+    url = /<([^>]+)>;\s*rel="next"/.exec(res.headers.get('link') ?? '')?.[1] ?? null
+  }
+  return days
+}
+
 // The day of each star, through GitHub's GraphQL API. GitHub shows stargazers only to personal tokens: deploy
 // passes the IMPACT_GITHUB_TOKEN secret as STARS_TOKEN. Without one, stars are null and the page reads
 // "Not reported".
@@ -119,7 +140,7 @@ async function stars(repo) {
       }
       return json
     })
-    if (!body) return null
+    if (!body) return starsRest(repo, token)
     const page = body.data.repository.stargazers
     days.push(...page.edges.map((edge) => edge.starredAt.slice(0, 10)))
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null

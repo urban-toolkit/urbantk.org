@@ -356,7 +356,7 @@ async function main() {
   }
   if (Object.values(out.repos).some((repo) => !repo.stars)) {
     console.log(
-      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a classic personal token with no scopes as the IMPACT_GITHUB_TOKEN secret.`,
+      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a personal token GitHub accepts as the IMPACT_GITHUB_TOKEN secret.`,
     )
   }
   console.log('github  accounts of commit authors')

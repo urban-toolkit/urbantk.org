@@ -25,7 +25,7 @@ export async function writeImpactSheet(outDir: string, impact: Impact): Promise<
   })
   const sources = Math.max(0, ...impact.groups.flatMap((g) => g.rows.map((r) => r.sources?.length ?? 0)))
   const rows: any[][] = [
-    [{ value: 'The Urban Toolkit: impact by award year', fontWeight: 'bold' }],
+    [{ value: 'The Urban Toolkit: impact by year', fontWeight: 'bold' }],
     [{ value: `Last updated ${impact.updated}. https://urbantk.org/impact/` }],
     [{ value: 'How it is computed', fontWeight: 'bold' }, ...impact.method.map(link)],
     [],

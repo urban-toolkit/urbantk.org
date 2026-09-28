@@ -542,7 +542,7 @@ export function loadImpact(): Impact {
     notes: [
       {
         label: 'Years',
-        text: `Each column counts its year on its own, except the rows marked "since ${sinceShort}", which add up from the start of the award in ${sinceLong}. The current year runs to the last update.`,
+        text: `Each column counts its year on its own, except the rows marked "since ${sinceShort}", which add up from ${sinceLong}. The current year runs to the last update.`,
         links: [],
       },
       {

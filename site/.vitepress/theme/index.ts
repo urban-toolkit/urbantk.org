@@ -5,6 +5,7 @@ import './styles/vars.css'
 import './styles/base.css'
 import ProjectPage from './layouts/ProjectPage.vue'
 import HomeEcosystem from './components/HomeEcosystem.vue'
+import HomeFunding from './components/HomeFunding.vue'
 import HomeNews from './components/HomeNews.vue'
 import LiteYouTube from './components/LiteYouTube.vue'
 import LoopVideo from './components/LoopVideo.vue'
@@ -20,6 +21,7 @@ export default {
   Layout() {
     return h(DefaultTheme.Layout, null, {
       'home-hero-image': () => h(HomeEcosystem),
+      'home-hero-actions-after': () => h(HomeFunding),
       'doc-before': () => h(PostHeader),
       'layout-bottom': () => h(SiteFooter),
     })

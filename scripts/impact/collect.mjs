@@ -338,7 +338,6 @@ async function main() {
     out.repos[project.repo] = { stars: await stars(project.repo), authors: await authors(dirs[project.repo]) }
     const starred = out.repos[project.repo].stars
     if (starred) console.log(`        ${starred.filter((day) => day >= start).length} stars since ${start}`)
-    else console.log('::warning::GitHub refused the stargazer list to this token; stars read "Not reported". Add a personal token as the IMPACT_GITHUB_TOKEN secret.')
     for (const pkg of project.pypi ?? []) {
       console.log(`pypi    ${pkg}`)
       out.pypi[pkg] = await pypi(pkg, start)
@@ -347,6 +346,9 @@ async function main() {
       console.log(`npm     ${pkg}`)
       out.npm[pkg] = await npm(pkg, start, yesterday)
     }
+  }
+  if (Object.values(out.repos).some((repo) => !repo.stars)) {
+    console.log('::warning::GitHub refused the stargazer list to this token, so stars read "Not available". Add a personal token as the IMPACT_GITHUB_TOKEN secret.')
   }
   console.log('github  accounts of commit authors')
   out.accounts = await accounts(out.repos)

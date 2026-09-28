@@ -108,7 +108,7 @@ node scripts/media/build-cards.mjs [slug]         # the home page card, cropped 
 
 ## The impact page
 
-`/impact/` shows adoption and outreach by award year. Every deploy collects its numbers before the build: `npm run impact` (`scripts/impact/collect.mjs`) reads GitHub, PyPI, npm, Curio's repository and the papers' HTML versions on arXiv, and writes `.cache/impact/metrics.json`, which is not committed. The build turns it into the page and into the spreadsheet at `/impact/urbantk-impact.xlsx`.
+`/impact/` shows adoption and outreach by year, from September to August. Every deploy collects its numbers before the build: `npm run impact` (`scripts/impact/collect.mjs`) reads GitHub, PyPI, npm, Curio's repository and the papers' HTML versions on arXiv, and writes `.cache/impact/metrics.json`, which is not committed. The build turns it into the page and into the spreadsheet at `/impact/urbantk-impact.xlsx`.
 
 GitHub lists stargazers only to personal tokens, so deploy reads one from the repository secret `IMPACT_GITHUB_TOKEN`: a fine-grained token with read-only access to public repositories is enough. Without it, the stars row reads "Not available".
 

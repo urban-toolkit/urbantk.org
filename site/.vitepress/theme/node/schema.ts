@@ -127,6 +127,59 @@ export const newsSchema = z
   })
   .strict()
 
+const day = z.coerce.date().transform((d) => d.toISOString().slice(0, 10))
+
+const reported = z
+  .object({
+    name: z.string(),
+    detail: z.string().optional(),
+    url: z.string().optional(),
+    date: day.optional(),
+    year: z.number().int().positive().optional(),
+    attendance: z.number().int().nonnegative().optional(),
+  })
+  .strict()
+  .refine((item) => item.date || item.year, 'an item needs a date or an award year')
+
+// site/data/impact.yaml: what /impact/ counts, and the rows only the team can report.
+export const impactSchema = z
+  .object({
+    award: z
+      .object({
+        start: day.refine((d) => d.endsWith('-01'), 'the award must start on the first of a month'),
+        years: z.number().int().positive(),
+      })
+      .strict(),
+    projects: z.array(
+      z
+        .object({
+          project: z.string(),
+          repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/, 'expected owner/name'),
+          pypi: z.array(z.string()).default([]),
+          npm: z.array(z.string()).default([]),
+        })
+        .strict(),
+    ),
+    internal: z.array(
+      z.object({ id: z.string(), name: z.string(), domains: z.array(z.string()), profile: z.array(z.string()) }).strict(),
+    ),
+    people: z.array(z.object({ ids: z.array(z.string()).min(1), institution: z.string().optional() }).strict()).default([]),
+    curio: z.object({ repo: z.string(), demos: z.array(z.number().int()) }).strict(),
+    users: z
+      .array(z.object({ year: z.number().int().positive(), count: z.number().int().nonnegative(), detail: z.string().optional() }).strict())
+      .default([]),
+    deployments: z.array(reported).default([]),
+    workshops: z.array(reported).default([]),
+    hackathons: z.array(reported).default([]),
+    tutorials: z.array(reported).default([]),
+    courses: z.array(reported).default([]),
+    internships: z.array(reported).default([]),
+    none: z.record(z.string(), z.array(z.number().int().positive())).default({}),
+  })
+  .strict()
+
+export type ImpactConfig = z.infer<typeof impactSchema>
+
 export function describe(error: z.ZodError): string {
   return z.prettifyError(error)
 }

@@ -21,5 +21,6 @@ export function buildNav(projects: ProjectSummary[], categories: Category[]): De
     ...groups,
     { text: 'All papers', link: '/papers/' },
     { text: 'Team', link: '/team/' },
+    { text: 'Impact', link: '/impact/' },
   ]
 }

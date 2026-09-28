@@ -16,7 +16,12 @@ jobs:
 
       - run: npm ci
 
-      # Fails on dead Markdown links and invalid frontmatter, papers.bib or team.yaml.
+      # The numbers behind /impact/, which the build needs.
+      - run: npm run impact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      # Fails on dead Markdown links and invalid frontmatter, papers.bib, team.yaml or impact.yaml.
       - run: npm run build
 
       # Links in the built HTML, the old WordPress URLs, redirects and media budgets.

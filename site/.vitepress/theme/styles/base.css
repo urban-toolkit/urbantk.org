@@ -137,8 +137,8 @@
   }
 }
 
-/* The menu has seven entries; below 1100px the full bar does not fit, so the mobile menu takes over. */
-@media (min-width: 768px) and (max-width: 1099px) {
+/* The menu has eight entries; below 1200px the mobile menu takes over, so the full bar never crowds. */
+@media (min-width: 768px) and (max-width: 1199px) {
   .VPNavBar .VPNavBarMenu {
     display: none !important;
   }

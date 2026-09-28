@@ -8,3 +8,5 @@ export const DATA_DIR = path.join(SITE_DIR, 'data')
 export const PUBLIC_DIR = path.join(SITE_DIR, 'public')
 export const PROJECTS_DIR = path.join(SITE_DIR, 'projects')
 export const NEWS_DIR = path.join(SITE_DIR, 'news')
+// Written by scripts/impact/collect.mjs (npm run impact); not committed.
+export const IMPACT_METRICS = path.join(SITE_DIR, '..', '.cache', 'impact', 'metrics.json')

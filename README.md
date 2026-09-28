@@ -4,6 +4,7 @@ The website of the Urban Toolkit, built with [VitePress](https://vitepress.dev/)
 
 ```bash
 npm install
+GITHUB_TOKEN="$(gh auth token)" npm run impact   # the numbers behind /impact/; needed once before dev and build
 npm run dev       # http://localhost:5173
 npm run build     # static site in site/.vitepress/dist
 npm run check     # links, old WordPress URLs, redirects and media budgets of the build
@@ -19,6 +20,7 @@ npm run check     # links, old WordPress URLs, redirects and media budgets of th
 | News posts | `site/news/YYYY/MM/<slug>.md`, served at `/YYYY/MM/<slug>/` |
 | Menu categories | `site/data/categories.yaml` |
 | Old URLs that redirect | `site/data/redirects.yaml` |
+| Impact page: what to count, and the rows the team reports | `site/data/impact.yaml` |
 | Images, logos, clips | `site/public/media/` |
 | Funding text, footer logos, home page order | `site/.vitepress/site.ts` |
 | Theme (layouts, components, styles) | `site/.vitepress/theme/` |
@@ -104,9 +106,30 @@ node scripts/media/build-cards.mjs [slug]         # the home page card, cropped 
 
 `build-figures.mjs` prints the image's width and height for the page's `hero`. Projects without a paper on arXiv use a frame of their video instead (`STILLS` in `scripts/media/prepare-assets.mjs`). `media-src/` is not committed. The scripts under `scripts/` need Node 20.10 or newer.
 
+## The impact page
+
+`/impact/` shows adoption and outreach by award year. Every deploy collects its numbers before the build: `npm run impact` (`scripts/impact/collect.mjs`) reads GitHub, PyPI, npm, Curio's repository and the papers' HTML versions on arXiv, and writes `.cache/impact/metrics.json`, which is not committed. The build turns it into the page and into the spreadsheet at `/impact/urbantk-impact.xlsx`.
+
+To build the site locally, collect once first. GitHub lists stargazers only to signed-in requests, so the collector needs a token:
+
+```bash
+GITHUB_TOKEN="$(gh auth token)" npm run impact
+npm run dev
+```
+
+`site/data/impact.yaml` says what to count and holds what only the team knows:
+
+- `projects`: the repositories and packages. Add a line to count another project.
+- `internal`: the institutions whose people are not external contributors, with their email domains and the words their members' GitHub profiles use.
+- `people`: commit identities of one person that share no email, name or GitHub account, and the institution of people nothing else places.
+- `curio.demos`: the Curio examples that show a feature rather than an urban analysis.
+- `users`, `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`. A year without items reads "Not reported"; `none` turns that into 0.
+
+A paper's use cases are the parts of its usage-scenario or case-study section in its arXiv HTML version.
+
 ## Deployment
 
-`.github/workflows/deploy.yml` builds, checks and deploys `main` to GitHub Pages. Pull requests run the same build and checks in `.github/workflows/ci.yml`. The custom domain is set in the repository's Pages settings.
+`.github/workflows/deploy.yml` collects the impact numbers, then builds, checks and deploys `main` to GitHub Pages. Pull requests run the same build and checks in `.github/workflows/ci.yml`. The custom domain is set in the repository's Pages settings.
 
 GitHub Pages has no server-side redirects. The build writes a small HTML page at each old URL in `site/data/redirects.yaml`, and at each old WordPress year and month archive.
 

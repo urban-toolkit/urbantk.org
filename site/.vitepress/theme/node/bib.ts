@@ -14,6 +14,8 @@ export interface Paper {
   venue: string
   presented: string | null
   year: number
+  // The issue month; a preprint without one takes the month of its arXiv id. Null when neither says.
+  month: number | null
   doi: string | null
   arxiv: string | null
   url: string | null
@@ -66,6 +68,13 @@ function list(value: string | undefined): string[] {
   return (value ?? '').split(',').map((v) => v.trim()).filter(Boolean)
 }
 
+function monthOf(value: unknown, arxiv: string | null, year: number): number | null {
+  const month = Number.parseInt(String(value ?? ''), 10)
+  if (month >= 1 && month <= 12) return month
+  const id = arxiv ? /^(\d{2})(\d{2})\./.exec(arxiv) : null
+  return id && 2000 + Number(id[1]) === year ? Number(id[2]) : null
+}
+
 function toPaper(entry: Entry): Paper {
   const f = entry.fields as Record<string, any>
   const year = Number.parseInt(f.year ?? f.date ?? '', 10)
@@ -85,6 +94,7 @@ function toPaper(entry: Entry): Paper {
     venue: clean(f.journal ?? f.journaltitle ?? f.booktitle ?? (arxiv ? 'arXiv preprint' : f.publisher?.[0])),
     presented: f.presented ? clean(f.presented) : null,
     year,
+    month: monthOf(f.month, arxiv, year),
     doi: f.doi ? clean(f.doi) : null,
     arxiv,
     url: f.url ? clean(f.url) : null,

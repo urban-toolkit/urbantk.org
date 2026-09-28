@@ -16,7 +16,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const DIST = path.join(ROOT, 'site/.vitepress/dist')
 
 // Links from outside this repo that must keep working (Curio's login page, the org profile, READMEs).
-const INBOUND = ['/', '/curio', '/scout', '/urbanite', '/shadows/', '/survey-3d/', '/utk/', '/streetweave/', '/vitral/', '/neural-3d/']
+const INBOUND = ['/', '/curio', '/scout', '/urbanite', '/shadows/', '/survey-3d/', '/utk/', '/streetweave/', '/vitral/', '/neural-3d/', '/impact/']
 
 function legacyUrls() {
   return fs

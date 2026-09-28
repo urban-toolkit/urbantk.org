@@ -1,0 +1,129 @@
+# The inputs behind /impact/. Stars, commits, downloads, Curio's examples and datasets, and the papers' use
+# cases are collected by `npm run impact` (scripts/impact/collect.mjs) on every deploy; this file says what to
+# count, and holds the rows only the team can report.
+
+# Year 1 starts on this day and every year runs twelve months. The page shows the finished years and the
+# current one "so far".
+award:
+  start: 2024-09-01
+  years: 5
+
+# The repositories and packages behind the software rows, in table order. `project` is a page in
+# site/projects/.
+projects:
+  - project: utk
+    repo: urban-toolkit/utk
+    pypi: [utk]
+  - project: curio
+    repo: urban-toolkit/curio
+    pypi: [utk-curio]
+  - project: urbanite
+    repo: urban-toolkit/urbanite
+  - project: neural-3d
+    repo: urban-toolkit/neural-3d
+  - project: streetweave
+    repo: urban-toolkit/streetweave
+  - project: vitral
+    repo: urban-toolkit/vitral
+  - project: autark
+    repo: urban-toolkit/autark
+    npm:
+      - '@urban-toolkit/autk-core'
+      - '@urban-toolkit/autk-grammar'
+      - '@urban-toolkit/autk-compute'
+      - '@urban-toolkit/autk'
+      - '@urban-toolkit/autk-db'
+      - '@urban-toolkit/autk-plot'
+      - '@urban-toolkit/autk-map'
+  - project: scout
+    repo: urban-toolkit/scout
+  - project: sidewalk
+    repo: urban-toolkit/sidewalk-stewards
+
+# Contributors from these institutions are not external. A person belongs to one when a commit email is under
+# one of its domains, when team.yaml places them there, or when their GitHub profile's company or bio matches
+# one of its patterns (regular expressions, case-insensitive).
+internal:
+  - id: uic
+    name: University of Illinois Chicago
+    domains: [uic.edu]
+    profile: ['University of Illinois (at )?Chicago', '\bUIC\b']
+  - id: nyu
+    name: New York University
+    domains: [nyu.edu]
+    profile: ['New York University', '\bNYU\b']
+  - id: uw
+    name: University of Washington
+    domains: [uw.edu, washington.edu]
+    profile: ['University of Washington', '\bUW\b']
+
+# Commit identities of one person that share no email, name or GitHub account (`ids`: author names, emails or
+# GitHub logins), and the institution of people nothing else places.
+people:
+  - ids: [Vinícius Costa, Vinícius de Lima Costa]
+  - ids: [Karla, Karla Falcão]
+  - ids: [tuanduc8t1, ducnt2406]
+  - ids: [Abhishikth_Pammi, pammi abhishikth]
+  - ids: [João Rulff, joaorulff]
+    institution: nyu
+
+# Curio's use cases and curated datasets come from its repository. Examples in its gallery that show a feature
+# rather than an urban analysis are not use cases.
+curio:
+  repo: urban-toolkit/curio
+  demos: [11, 12, 13, 14, 15, 16]
+
+# Rows reported by the team. Each item has a `date` or an award `year`. A year without items reads
+# "Not reported"; list it under `none` (for example `none: {tutorials: [1]}`) to show 0 instead.
+users: []
+
+deployments: []
+
+workshops:
+  - name: Interdisciplinary transportation workshop
+    detail: UIC with the University of Toronto and the Chicago Metropolitan Agency for Planning
+    year: 2
+    attendance: 30
+
+hackathons:
+  - name: Transportation workshop hackathon 1
+    detail: Real-world transportation and urban data
+    year: 2
+  - name: Transportation workshop hackathon 2
+    detail: Real-world transportation and urban data
+    year: 2
+  - name: Transportation workshop hackathon 3
+    detail: Real-world transportation and urban data
+    year: 2
+
+tutorials:
+  - name: 'Autark in Action: Building Serverless Prototypes of Urban Visual Analytics Systems'
+    detail: SIBGRAPI 2026, Tutorials Track
+    date: 2026-08-20
+
+courses:
+  - name: 'CS 424: Visualization & Visual Analytics'
+    detail: UIC, Fall 2025, 61 students, with Curio
+    year: 2
+  - name: 'CS 524: Big Data Visualization & Analytics'
+    detail: UIC, Spring 2026, 22 students, with Curio
+    year: 2
+
+internships:
+  - name: Curio for street-level data collection (SideSeeing)
+    detail: Undergraduate intern, University of São Paulo
+    year: 2
+  - name: Interaction provenance in Curio
+    detail: PhD intern, Universidade Federal Fluminense
+    year: 2
+  - name: Sidewalk Stewards evaluation
+    detail: Master's intern, Federal University of Pernambuco
+    year: 2
+  - name: Research visit
+    detail: PhD intern, University of Birmingham
+    year: 2
+  - name: Curio redevelopment and deployment
+    detail: Three undergraduates, UIC Early Access to Paid Internships Program
+    year: 2
+
+none: {}

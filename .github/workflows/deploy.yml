@@ -32,6 +32,11 @@ jobs:
 
       - run: npm ci
 
+      # Stars, commits, downloads, Curio's examples and datasets, and the papers' use cases for /impact/.
+      - run: npm run impact
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - run: npm run build
 
       - run: npm run check

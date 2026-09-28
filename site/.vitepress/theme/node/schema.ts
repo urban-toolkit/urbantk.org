@@ -174,7 +174,6 @@ export const impactSchema = z
     tutorials: z.array(reported).default([]),
     courses: z.array(reported).default([]),
     internships: z.array(reported).default([]),
-    none: z.record(z.string(), z.array(z.number().int().positive())).default({}),
   })
   .strict()
 

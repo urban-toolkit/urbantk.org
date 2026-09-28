@@ -6,7 +6,7 @@ import type { Impact } from './impact'
 export const IMPACT_SHEET = '/impact/urbantk-impact.xlsx'
 
 // The table of /impact/ as a one-sheet spreadsheet: a row per metric, with the per-project rows indented
-// under their metric. Empty cells are the ones the page shows as "Not reported".
+// under their metric. Empty cells are the ones the page shows as "Not available".
 export async function writeImpactSheet(outDir: string, impact: Impact): Promise<void> {
   const number = (value: number | null) => (value === null ? null : { value, format: '#,##0' })
   const rows: any[][] = [
@@ -19,9 +19,11 @@ export async function writeImpactSheet(outDir: string, impact: Impact): Promise<
     group.rows.forEach((row, i) => {
       rows.push([i === 0 ? { value: group.label, fontWeight: 'bold' } : null, { value: row.label }, ...row.values.map(number)])
       for (const project of row.projects) rows.push([null, { value: project.name, indent: 1 }, ...project.values.map(number)])
+      row.captions?.forEach((caption, year) => {
+        if (caption) rows.push([null, { value: caption, indent: 1 }, ...row.values.map((v, j) => (j === year ? number(v) : null))])
+      })
     })
   }
-  rows.push([], [{ value: 'Empty cells are not reported.' }])
 
   const file = path.join(outDir, IMPACT_SHEET)
   fs.mkdirSync(path.dirname(file), { recursive: true })

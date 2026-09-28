@@ -110,7 +110,7 @@ node scripts/media/build-cards.mjs [slug]         # the home page card, cropped 
 
 `/impact/` shows adoption and outreach by award year. Every deploy collects its numbers before the build: `npm run impact` (`scripts/impact/collect.mjs`) reads GitHub, PyPI, npm, Curio's repository and the papers' HTML versions on arXiv, and writes `.cache/impact/metrics.json`, which is not committed. The build turns it into the page and into the spreadsheet at `/impact/urbantk-impact.xlsx`.
 
-GitHub lists stargazers only to personal tokens, so deploy reads one from the repository secret `IMPACT_GITHUB_TOKEN`: a fine-grained token with read-only access to public repositories is enough. Without it, the stars row reads "Not reported".
+GitHub lists stargazers only to personal tokens, so deploy reads one from the repository secret `IMPACT_GITHUB_TOKEN`: a fine-grained token with read-only access to public repositories is enough. Without it, the stars row reads "Not available".
 
 To build the site locally, collect once first, with your own token:
 
@@ -125,7 +125,7 @@ npm run dev
 - `internal`: the institutions whose people are not external contributors, with their email domains and the words their members' GitHub profiles use.
 - `people`: commit identities of one person that share no email, name or GitHub account, and the institution of people nothing else places.
 - `curio.demos`: the Curio examples that show a feature rather than an urban analysis.
-- `users`, `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`. A year without items reads "Not reported"; `none` turns that into 0.
+- `users`, `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`; a year without items shows 0.
 
 A paper's use cases are the parts of its usage-scenario or case-study section in its arXiv HTML version.
 

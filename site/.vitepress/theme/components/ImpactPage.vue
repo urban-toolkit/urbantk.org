@@ -5,9 +5,9 @@ import { data as impact } from '@data/impact.data'
 import Icon from './Icon.vue'
 
 // The metrics table, the items each counting row counted, and how each number is collected. The software
-// rows open onto one row per project.
+// rows open onto one row per project; stars start open.
 const format = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 })
-const open = ref<string[]>([])
+const open = ref<string[]>(['stars'])
 
 function toggle(id: string) {
   open.value = open.value.includes(id) ? open.value.filter((x) => x !== id) : [...open.value, id]
@@ -57,8 +57,9 @@ const external = (url: string) => /^https?:/.test(url)
               <template v-else>{{ row.label }}</template>
             </th>
             <td v-for="(value, i) in row.values" :key="i" class="utk-impact-num">
-              <span v-if="value === null" class="utk-impact-missing">Not reported</span>
+              <span v-if="value === null" class="utk-impact-missing">Not available</span>
               <template v-else>{{ format.format(value) }}</template>
+              <small v-if="row.captions?.[i]" class="utk-impact-caption">{{ row.captions[i] }}</small>
             </td>
           </tr>
           <tr
@@ -208,6 +209,16 @@ tbody th[scope='row'] {
 
 .utk-impact-project a:hover {
   color: var(--vp-c-brand-1);
+}
+
+.utk-impact-caption {
+  display: block;
+  max-width: 12em;
+  margin-left: auto;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  color: var(--vp-c-text-2);
+  white-space: normal;
 }
 
 .utk-impact-missing {

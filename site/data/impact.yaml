@@ -73,8 +73,7 @@ curio:
   repo: urban-toolkit/curio
   demos: [11, 12, 13, 14, 15, 16]
 
-# Rows reported by the team. Each item has a `date` or an award `year`. A year without items reads
-# "Not reported"; list it under `none` (for example `none: {tutorials: [1]}`) to show 0 instead.
+# Rows reported by the team. Each item has a `date` or an award `year`; a year without items shows 0.
 users: []
 
 deployments: []
@@ -86,15 +85,10 @@ workshops:
     attendance: 30
 
 hackathons:
-  - name: Transportation workshop hackathon 1
-    detail: Real-world transportation and urban data
+  - name: Interdisciplinary transportation workshop
+    detail: Hackathons on real-world transportation and urban data
     year: 2
-  - name: Transportation workshop hackathon 2
-    detail: Real-world transportation and urban data
-    year: 2
-  - name: Transportation workshop hackathon 3
-    detail: Real-world transportation and urban data
-    year: 2
+    attendance: 30
 
 tutorials:
   - name: 'Autark in Action: Building Serverless Prototypes of Urban Visual Analytics Systems'
@@ -125,5 +119,3 @@ internships:
   - name: Curio redevelopment and deployment
     detail: Three undergraduates, UIC Early Access to Paid Internships Program
     year: 2
-
-none: {}

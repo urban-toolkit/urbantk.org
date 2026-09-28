@@ -61,12 +61,14 @@ export interface ImpactProjectRow {
 export interface ImpactRow {
   id: string
   label: string
-  // One value per year; null reads "Not reported".
+  // One value per year; null reads "Not available" (stars without a personal token).
   values: (number | null)[]
   // The software rows, broken down by project.
   projects: ImpactProjectRow[]
   // What a counting row counted, per year.
   items: ImpactItem[][] | null
+  // Shown under a value: the events an attendance figure comes from.
+  captions?: (string | null)[]
 }
 
 export interface ImpactGroup {
@@ -83,7 +85,6 @@ export interface Impact {
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 const SHORT = MONTHS.map((m) => m.slice(0, 3))
-const REPORTED = ['users', 'deployments', 'workshops', 'hackathons', 'tutorials', 'courses', 'internships'] as const
 
 function addMonths(day: string, n: number): string {
   const [y, m] = day.split('-').map(Number)
@@ -142,8 +143,6 @@ function readConfig(): ImpactConfig {
   const file = path.join(DATA_DIR, 'impact.yaml')
   const parsed = impactSchema.safeParse(yaml.load(fs.readFileSync(file, 'utf8')))
   if (!parsed.success) throw new Error(`site/data/impact.yaml is invalid:\n${describe(parsed.error)}`)
-  const unknown = Object.keys(parsed.data.none).filter((row) => !(REPORTED as readonly string[]).includes(row))
-  if (unknown.length) throw new Error(`site/data/impact.yaml: "none" names unknown rows ${unknown.join(', ')}`)
   return parsed.data
 }
 
@@ -350,10 +349,10 @@ export function loadImpact(): Impact {
     }
     return lists
   }
-  const counted = (id: string, label: string, lists: ImpactItem[][], complete: boolean): ImpactRow => ({
+  const counted = (id: string, label: string, lists: ImpactItem[][]): ImpactRow => ({
     id,
     label,
-    values: lists.map((list, i) => (list.length || complete || config.none[id]?.includes(i + 1) ? list.length : null)),
+    values: lists.map((list) => list.length),
     projects: [],
     items: lists,
   })
@@ -368,10 +367,13 @@ export function loadImpact(): Impact {
     return {
       id,
       label,
-      values: lists.map((list, i) => {
+      values: lists.map((list) => {
         const known = list.filter((item) => item.attendance !== undefined)
-        if (known.length) return Math.round(known.reduce((sum, item) => sum + item.attendance!, 0) / known.length)
-        return config.none[id]?.includes(i + 1) ? 0 : null
+        return known.length ? Math.round(known.reduce((sum, item) => sum + item.attendance!, 0) / known.length) : 0
+      }),
+      captions: lists.map((list) => {
+        const names = list.filter((item) => item.attendance !== undefined).map((item) => item.name)
+        return names.length ? names.join('; ') : null
       }),
       projects: [],
       items: bucket(reportedItems(config[id])).map((list, i) =>
@@ -430,10 +432,7 @@ export function loadImpact(): Impact {
   const users: ImpactRow = {
     id: 'users',
     label: 'Users at large',
-    values: windows.map((_, i) => {
-      const entry = config.users.find((u) => u.year === i + 1)
-      return entry ? entry.count : config.none.users?.includes(i + 1) ? 0 : null
-    }),
+    values: windows.map((_, i) => config.users.find((u) => u.year === i + 1)?.count ?? 0),
     projects: [],
     items: null,
   }
@@ -451,21 +450,21 @@ export function loadImpact(): Impact {
       { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, averageRow, monthlyRow, starRow] },
       {
         label: 'Cloud Environment',
-        rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)), false)],
+        rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)))],
       },
-      { label: 'Urban Data', rows: [counted('datasets', 'Curated datasets', datasets, true)] },
+      { label: 'Urban Data', rows: [counted('datasets', 'Curated datasets', datasets)] },
       {
         label: 'Community metrics',
         rows: [
           attendance('hackathons', 'Hackathon attendance (per hackathon)'),
           attendance('workshops', 'Workshop attendance (per workshop)'),
-          counted('use-cases', 'Use cases', useCases, true),
-          counted('internships', 'Internship projects', bucket(reportedItems(config.internships)), false),
-          counted('tutorials', 'Tutorials', bucket(reportedItems(config.tutorials)), false),
-          counted('courses', 'Courses', bucket(reportedItems(config.courses)), false),
+          counted('use-cases', 'Use cases', useCases),
+          counted('internships', 'Internship projects', bucket(reportedItems(config.internships))),
+          counted('tutorials', 'Tutorials', bucket(reportedItems(config.tutorials))),
+          counted('courses', 'Courses', bucket(reportedItems(config.courses))),
         ],
       },
-      { label: 'Scientific Impact', rows: [counted('publications', 'Publications', publications, true)] },
+      { label: 'Scientific Impact', rows: [counted('publications', 'Publications', publications)] },
     ],
     notes: [
       {

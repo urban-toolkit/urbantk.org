@@ -95,7 +95,9 @@ async function starsRest(repo, token) {
       return r
     })
     if (!res.ok) {
-      starsRefusal = `${starsRefusal}; REST: HTTP ${res.status} ${((await res.json().catch(() => ({}))).message ?? '').slice(0, 120)}`
+      if (!starsRefusal?.includes('REST')) {
+        starsRefusal = `${starsRefusal}; REST: HTTP ${res.status} ${((await res.json().catch(() => ({}))).message ?? '').slice(0, 120)}`
+      }
       return null
     }
     for (const star of await res.json()) days.push(star.starred_at.slice(0, 10))
@@ -377,7 +379,7 @@ async function main() {
   }
   if (Object.values(out.repos).some((repo) => !repo.stars)) {
     console.log(
-      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a personal token GitHub accepts as the IMPACT_GITHUB_TOKEN secret.`,
+      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a classic personal token (no scopes, expiring within a year) as the IMPACT_GITHUB_TOKEN secret.`,
     )
   }
   console.log('github  accounts of commit authors')

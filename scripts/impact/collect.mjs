@@ -80,6 +80,9 @@ function git(dir, args) {
   return run('git', ['-C', dir, ...args], { maxBuffer: MAX_BUFFER }).then((r) => r.stdout)
 }
 
+// Why GitHub refused the stargazer list, for the deploy log.
+let starsRefusal = null
+
 // The day of each star, through GitHub's GraphQL API. GitHub shows stargazers only to personal tokens: deploy
 // passes the IMPACT_GITHUB_TOKEN secret as STARS_TOKEN. Without one, stars are null and the page reads
 // "Not reported".
@@ -104,7 +107,11 @@ async function stars(repo) {
         body: JSON.stringify({ query, variables: { owner, name, after } }),
       })
       const json = await res.json().catch(() => ({}))
-      if (json.errors?.some((e) => e.type === 'FORBIDDEN')) return null
+      const refused = json.errors?.find((e) => e.type === 'FORBIDDEN')
+      if (refused) {
+        starsRefusal ??= refused.message
+        return null
+      }
       if (!res.ok || json.errors) {
         const error = new Error(`HTTP ${res.status}: ${JSON.stringify(json.errors ?? json).slice(0, 300)}`)
         error.permanent = res.status < 500 && res.status !== 429
@@ -348,7 +355,9 @@ async function main() {
     }
   }
   if (Object.values(out.repos).some((repo) => !repo.stars)) {
-    console.log('::warning::GitHub refused the stargazer list to this token, so stars read "Not available". Add a personal token as the IMPACT_GITHUB_TOKEN secret.')
+    console.log(
+      `::warning::GitHub refused the stargazer list to this token (${starsRefusal}), so stars read "Not available". Store a classic personal token with no scopes as the IMPACT_GITHUB_TOKEN secret.`,
+    )
   }
   console.log('github  accounts of commit authors')
   out.accounts = await accounts(out.repos)

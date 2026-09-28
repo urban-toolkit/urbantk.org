@@ -83,8 +83,9 @@ function git(dir, args) {
 // Why GitHub refused the stargazer list, for the deploy log.
 let starsRefusal = null
 
-// The same list from the REST API, which some tokens GraphQL refuses may read.
-async function starsRest(repo, token) {
+// The same list from the REST API, which some tokens GraphQL refuses may read. `expected` is the count
+// GraphQL reported, if any: an empty REST list then means the list is hidden, not that there are no stars.
+async function starsRest(repo, token, expected = 0) {
   const headers = { 'User-Agent': 'urbantk.org impact page', Accept: 'application/vnd.github.star+json', Authorization: `Bearer ${token}` }
   const days = []
   let url = `https://api.github.com/repos/${repo}/stargazers?per_page=100`
@@ -103,6 +104,10 @@ async function starsRest(repo, token) {
     for (const star of await res.json()) days.push(star.starred_at.slice(0, 10))
     url = /<([^>]+)>;\s*rel="next"/.exec(res.headers.get('link') ?? '')?.[1] ?? null
   }
+  if (expected > 0 && days.length === 0) {
+    if (!starsRefusal?.includes('REST')) starsRefusal = `${starsRefusal}; REST lists none either`
+    return null
+  }
   return days
 }
 
@@ -114,6 +119,7 @@ async function stars(repo) {
   const [owner, name] = repo.split('/')
   const query = `query($owner: String!, $name: String!, $after: String) {
     repository(owner: $owner, name: $name) {
+      stargazerCount
       stargazers(first: 100, after: $after, orderBy: { field: STARRED_AT, direction: ASC }) {
         pageInfo { hasNextPage endCursor }
         edges { starredAt }
@@ -143,7 +149,12 @@ async function stars(repo) {
       return json
     })
     if (!body) return starsRest(repo, token)
-    const page = body.data.repository.stargazers
+    const { stargazerCount, stargazers: page } = body.data.repository
+    // Some tokens see the count but an empty list; the REST list is the second chance.
+    if (!after && stargazerCount > 0 && page.edges.length === 0) {
+      starsRefusal ??= `GraphQL shows ${stargazerCount} stars on ${repo} but lists none`
+      return starsRest(repo, token, stargazerCount)
+    }
     days.push(...page.edges.map((edge) => edge.starredAt.slice(0, 10)))
     after = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null
   } while (after)

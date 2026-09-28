@@ -97,7 +97,11 @@ async function starsRest(repo, token, expected = 0) {
     })
     if (!res.ok) {
       if (!starsRefusal?.includes('REST')) {
-        starsRefusal = `${starsRefusal}; REST: HTTP ${res.status} ${((await res.json().catch(() => ({}))).message ?? '').slice(0, 120)}`
+        // What the endpoint wants, and whether the token can read the repository at all.
+        const wants = res.headers.get('x-accepted-github-permissions') ?? 'not said'
+        const repoRead = await fetch(`https://api.github.com/repos/${repo}`, { headers }).then((r) => r.status).catch(() => 'failed')
+        const message = ((await res.json().catch(() => ({}))).message ?? '').slice(0, 120)
+        starsRefusal = `${starsRefusal}; REST: HTTP ${res.status} ${message}; the endpoint wants ${wants}; reading ${repo} gives HTTP ${repoRead}`
       }
       return null
     }

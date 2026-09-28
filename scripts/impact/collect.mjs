@@ -279,8 +279,14 @@ async function curio(dir) {
   const dataflows = (await list('docs/examples')).filter((file) => /\/\d{2}-[^/]+\.json$/.test(file))
   const texts = []
   for (const file of dataflows) texts.push(await show(file))
+  // Files only: a folder there holds a storage example's sample files, not one dataset.
+  const blobs = (await git(dir, ['ls-tree', 'main', 'docs/examples/data/']))
+    .trim()
+    .split('\n')
+    .filter((line) => line.split(/\s+/)[1] === 'blob')
+    .map((line) => line.split('\t')[1])
   const files = []
-  for (const file of await list('docs/examples/data')) {
+  for (const file of blobs) {
     const name = path.posix.basename(file)
     const readers = dataflows.filter((_, i) => texts[i].includes(name)).map((f) => Number(/\/(\d{2})-/.exec(f)[1]))
     if (readers.length) files.push({ file, name, examples: readers, added: await added(file) })

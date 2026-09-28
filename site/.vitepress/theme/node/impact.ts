@@ -327,14 +327,12 @@ export function loadImpact(): Impact {
     (p, w) => external(w, p.repo),
     (w) => external(w),
   )
-  const totalRow = software('downloads-total', `Package downloads (total since ${sinceShort})`, withPackages, (p, w) =>
-    downloads([...p.pypi, ...p.npm], since, endOf(w)),
-  )
-  // The total per month comes from the raw sum, so it need not equal the sum of the rounded project rows.
+  // A year's downloads over its months. The total comes from the raw sum, so it need not equal the sum of the
+  // rounded project rows.
   const allPackages = withPackages.flatMap((p) => [...p.pypi, ...p.npm])
   const monthlyRow = software(
     'downloads-month',
-    'Package downloads (per month)',
+    'Package downloads (monthly average)',
     withPackages,
     (p, w) => perMonth(downloads([...p.pypi, ...p.npm], w.start, endOf(w)), w.start, endOf(w)),
     (w) => perMonth(downloads(allPackages, w.start, endOf(w)), w.start, endOf(w)),
@@ -495,7 +493,6 @@ export function loadImpact(): Impact {
   ]
   const sourceOf: Record<string, string> = {
     contributors: 'contributors',
-    'downloads-total': 'downloads',
     'downloads-month': 'downloads',
     stars: 'stars',
     users: 'users',
@@ -505,7 +502,7 @@ export function loadImpact(): Impact {
   }
 
   const groups: ImpactGroup[] = [
-    { label: 'CI Software Ecosystem', rows: [contributorRow, totalRow, monthlyRow, starRow] },
+    { label: 'CI Software Ecosystem', rows: [contributorRow, monthlyRow, starRow] },
     {
       label: 'Cloud Environment',
       rows: [users, counted('deployments', 'External cloud deployments', bucket(reportedItems(config.deployments)))],
@@ -544,7 +541,7 @@ export function loadImpact(): Impact {
       },
       {
         label: 'Package downloads',
-        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. Per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
+        text: `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The monthly average divides a year's downloads by its months, counting the elapsed days of a partial month.`,
         links: links.downloads,
       },
       {

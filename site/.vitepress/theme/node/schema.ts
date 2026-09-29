@@ -150,6 +150,7 @@ export const impactSchema = z
         years: z.number().int().positive(),
       })
       .strict(),
+    npmOrg: z.string().optional(),
     projects: z.array(
       z
         .object({

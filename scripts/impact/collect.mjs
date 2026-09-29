@@ -220,16 +220,35 @@ async function accounts(repos) {
   return { logins, profiles }
 }
 
-async function pypi(pkg, start) {
+// The last day ClickHouse's PyPI dataset holds. A package without downloads that day still has data for it.
+async function pypiThrough() {
+  const query = 'SELECT toString(max(date)) FROM pypi.pypi_downloads_per_day FORMAT JSONCompact'
+  const res = await tried('PyPI dataset', () => get(`${CLICKHOUSE}?${new URLSearchParams({ user: 'demo', query })}`))
+  return (await res.json()).data[0][0]
+}
+
+async function pypi(pkg, start, through) {
   const query =
     'SELECT toString(date) AS day, sum(count) AS n FROM pypi.pypi_downloads_per_day ' +
-    'WHERE project = {p:String} AND date >= {s:Date} GROUP BY date ORDER BY date FORMAT JSONCompact'
-  const url = `${CLICKHOUSE}?${new URLSearchParams({ user: 'demo', query, param_p: pkg, param_s: start })}`
+    'WHERE project = {p:String} AND date >= {s:Date} AND date <= {t:Date} GROUP BY date ORDER BY date FORMAT JSONCompact'
+  const url = `${CLICKHOUSE}?${new URLSearchParams({ user: 'demo', query, param_p: pkg, param_s: start, param_t: through })}`
   const res = await tried(`PyPI downloads of ${pkg}`, () => get(url))
   const days = {}
   for (const [day, n] of (await res.json()).data) if (Number(n)) days[day] = Number(n)
-  const all = Object.keys(days)
-  return { through: all.length ? all[all.length - 1] : null, days }
+  return { through, days }
+}
+
+// The packages an npm organization owns, scoped or not.
+async function npmOwned(org) {
+  const res = await tried(`npm packages of ${org}`, () => get(`https://registry.npmjs.org/-/org/${org}/package`))
+  return Object.keys(await res.json()).sort()
+}
+
+// `*` in a name matches any run of characters, among the packages the organization owns.
+function npmNames(names, owned) {
+  const escape = (part) => part.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+  const glob = (name) => new RegExp(`^${name.split('*').map(escape).join('.*')}$`)
+  return names.flatMap((name) => (name.includes('*') ? owned.filter((pkg) => glob(name).test(pkg)) : [name]))
 }
 
 // npm answers at most 18 months per request; a year at a time stays well inside that.
@@ -389,8 +408,20 @@ async function main() {
   const start = isoDay(new Date(config.award.start))
   const collected = new Date()
   const yesterday = addDays(isoDay(collected), -1)
-  const out = { collected: collected.toISOString(), repos: {}, accounts: null, pypi: {}, npm: {}, curio: null, papers: {}, history: [] }
+  const out = {
+    collected: collected.toISOString(),
+    repos: {},
+    accounts: null,
+    pypi: {},
+    npm: {},
+    npmPackages: {},
+    curio: null,
+    papers: {},
+    history: [],
+  }
 
+  const pypiDay = await pypiThrough()
+  const owned = config.npmOrg ? await npmOwned(config.npmOrg) : []
   const dirs = {}
   for (const project of config.projects) {
     console.log(`github  ${project.repo}`)
@@ -400,12 +431,20 @@ async function main() {
     if (starred) console.log(`        ${starred.filter((day) => day >= start).length} stars since ${start}`)
     for (const pkg of project.pypi ?? []) {
       console.log(`pypi    ${pkg}`)
-      out.pypi[pkg] = await pypi(pkg, start)
+      out.pypi[pkg] = await pypi(pkg, start, pypiDay)
     }
-    for (const pkg of project.npm ?? []) {
+    out.npmPackages[project.project] = npmNames(project.npm ?? [], owned)
+    for (const pkg of out.npmPackages[project.project]) {
       console.log(`npm     ${pkg}`)
       out.npm[pkg] = await npm(pkg, start, yesterday)
     }
+  }
+  // npm reports 0 for a day it has not counted yet, so its data runs to the last day any package has downloads.
+  const npmDay = Object.values(out.npm).flatMap((d) => Object.keys(d.days)).sort().at(-1) ?? null
+  for (const d of Object.values(out.npm)) d.through = npmDay
+  const uncounted = owned.filter((pkg) => !out.npm[pkg])
+  if (uncounted.length) {
+    console.log(`::warning::No project in impact.yaml counts these packages of the ${config.npmOrg} npm organization: ${uncounted.join(', ')}.`)
   }
   if (Object.values(out.repos).some((repo) => !repo.stars)) {
     console.log(

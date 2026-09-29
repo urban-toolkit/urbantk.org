@@ -8,12 +8,17 @@ award:
   start: 2024-09-01
   years: 5
 
+# The npm organization that owns the packages below. A `*` in an npm name matches any run of characters
+# among its packages, and the deploy log warns about a package of it that no project counts.
+npmOrg: urban-toolkit
+
 # The repositories and packages behind the software rows, in table order. `project` is a page in
-# site/projects/.
+# site/projects/. A package's earlier names are listed with it.
 projects:
   - project: utk
     repo: urban-toolkit/utk
-    pypi: [utk]
+    # urbantk is its earlier name.
+    pypi: [utk, urbantk]
   - project: curio
     repo: urban-toolkit/curio
     pypi: [utk-curio]
@@ -27,14 +32,8 @@ projects:
     repo: urban-toolkit/vitral
   - project: autark
     repo: urban-toolkit/autark
-    npm:
-      - '@urban-toolkit/autk-core'
-      - '@urban-toolkit/autk-grammar'
-      - '@urban-toolkit/autk-compute'
-      - '@urban-toolkit/autk'
-      - '@urban-toolkit/autk-db'
-      - '@urban-toolkit/autk-plot'
-      - '@urban-toolkit/autk-map'
+    # The-urban-grammar is autk-grammar's earlier name, and the unscoped autk-* are the others' earlier names.
+    npm: ['@urban-toolkit/autk*', '@urban-toolkit/the-urban-grammar', 'autk-*']
   - project: scout
     repo: urban-toolkit/scout
   - project: sidewalk

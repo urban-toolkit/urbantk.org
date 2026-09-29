@@ -30,6 +30,8 @@ interface Metrics {
   }
   pypi: Record<string, Downloads>
   npm: Record<string, Downloads>
+  // Each project's npm packages, its impact.yaml names matched against the npm organization's packages.
+  npmPackages: Record<string, string[]>
   curio: {
     examples: { number: number; title: string; useCase: string; file: string; added: string | null }[]
     datasets: {
@@ -309,7 +311,9 @@ export function loadImpact(): Impact {
     return months > 0 ? Math.round(n / months) : 0
   }
 
-  const withPackages = config.projects.filter((p) => p.pypi.length + p.npm.length > 0)
+  if (!metrics.npmPackages) throw new Error('.cache/impact/metrics.json has no npm package list: run npm run impact again')
+  const npmOf = (p: ImpactConfig['projects'][number]) => metrics.npmPackages[p.project] ?? []
+  const withPackages = config.projects.filter((p) => p.pypi.length + npmOf(p).length > 0)
   const projectRow = (p: ImpactConfig['projects'][number], values: number[]): ImpactProjectRow => {
     const page = projects.get(p.project)!
     return { name: page.name, url: page.url, accent: page.accent, accentLight: page.accentLight, accentDark: page.accentDark, values }
@@ -335,12 +339,12 @@ export function loadImpact(): Impact {
   )
   // A year's downloads over its months. The total comes from the raw sum, so it need not equal the sum of the
   // rounded project rows.
-  const allPackages = withPackages.flatMap((p) => [...p.pypi, ...p.npm])
+  const allPackages = withPackages.flatMap((p) => [...p.pypi, ...npmOf(p)])
   const monthlyRow = software(
     'downloads-month',
     'Package downloads (average per month)',
     withPackages,
-    (p, w) => perMonth(downloads([...p.pypi, ...p.npm], w.start, endOf(w)), w.start, endOf(w)),
+    (p, w) => perMonth(downloads([...p.pypi, ...npmOf(p)], w.start, endOf(w)), w.start, endOf(w)),
     (w) => perMonth(downloads(allPackages, w.start, endOf(w)), w.start, endOf(w)),
   )
   const starLabel = 'GitHub stars (total)'
@@ -487,7 +491,7 @@ export function loadImpact(): Impact {
   const internalNames = config.internal.map((i) => i.name)
   const listOf = (names: string[]) => (names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0])
   const pypiNames = withPackages.flatMap((p) => p.pypi)
-  const npmCount = withPackages.reduce((n, p) => n + p.npm.length, 0)
+  const npmCount = withPackages.reduce((n, p) => n + npmOf(p).length, 0)
   const updated = new Date(metrics.collected)
 
   // Where each number comes from, listed under "How the numbers are collected" and in the spreadsheet.
@@ -556,7 +560,7 @@ export function loadImpact(): Impact {
   // How each row is computed, shown with its sources in the row's entry under "What is counted".
   const how: Record<string, string> = {
     contributors: `People with at least one commit that year, on any branch, to the ${config.projects.length} repositories listed under the row. They are external when no commit email, team listing or GitHub profile places them at ${listOf(internalNames)}. Bots are not counted.`,
-    'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
+    'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. A package's earlier names count too. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
     stars: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
     users: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
     datasets:

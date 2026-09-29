@@ -248,8 +248,10 @@ async function npm(pkg, start, through) {
 // examples read by path. Each carries the day its file was added to main.
 async function curio(dir) {
   const show = (file) => git(dir, ['show', `main:${file}`])
-  const added = async (file) => {
-    const days = (await git(dir, ['log', 'main', '--diff-filter=A', '--format=%ad', '--date=short', '--', file])).trim().split('\n')
+  // `follow` traces a file back through renames, so a dataset folder that was renamed keeps the day it was added.
+  const added = async (file, follow = false) => {
+    const args = ['log', 'main', ...(follow ? ['--follow'] : []), '--diff-filter=A', '--format=%ad', '--date=short']
+    const days = (await git(dir, [...args, '--', file])).trim().split('\n')
     return days[days.length - 1] || null
   }
   const list = async (folder) => (await git(dir, ['ls-tree', '--name-only', 'main', `${folder}/`])).trim().split('\n').filter(Boolean)
@@ -281,7 +283,7 @@ async function curio(dir) {
       tags: manifest.tags ?? [],
       description: manifest.description ?? '',
       examples: readers((text) => id.test(text)),
-      added: await added(`${folder}/manifest.json`),
+      added: await added(`${folder}/manifest.json`, true),
     })
   }
 

@@ -12,16 +12,15 @@ award:
 # among its packages, and the deploy log warns about a package of it that no project counts, unless it is
 # listed in `npmSkip`.
 npmOrg: urban-toolkit
-# Autk-grammar's earlier name.
-npmSkip: ['@urban-toolkit/the-urban-grammar']
+# Earlier names of the packages below, which are not counted.
+npmSkip: ['@urban-toolkit/the-urban-grammar', autk-compute, autk-db, autk-map, autk-plot]
 
 # The repositories and packages behind the software rows, in table order. `project` is a page in
-# site/projects/. A package's earlier names are listed with it.
+# site/projects/.
 projects:
   - project: utk
     repo: urban-toolkit/utk
-    # urbantk is its earlier name.
-    pypi: [utk, urbantk]
+    pypi: [utk]
   - project: curio
     repo: urban-toolkit/curio
     pypi: [utk-curio]
@@ -35,8 +34,7 @@ projects:
     repo: urban-toolkit/vitral
   - project: autark
     repo: urban-toolkit/autark
-    # The unscoped autk-* are the earlier names of the packages, before @urban-toolkit.
-    npm: ['@urban-toolkit/autk*', 'autk-*']
+    npm: ['@urban-toolkit/autk*']
   - project: scout
     repo: urban-toolkit/scout
   - project: sidewalk

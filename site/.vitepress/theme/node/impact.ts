@@ -560,7 +560,7 @@ export function loadImpact(): Impact {
   // How each row is computed, shown with its sources in the row's entry under "What is counted".
   const how: Record<string, string> = {
     contributors: `People with at least one commit that year, on any branch, to the ${config.projects.length} repositories listed under the row. They are external when no commit email, team listing or GitHub profile places them at ${listOf(internalNames)}. Bots are not counted.`,
-    'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. A package's earlier names count too. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
+    'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
     stars: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
     users: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
     datasets:

@@ -442,7 +442,7 @@ async function main() {
   // npm reports 0 for a day it has not counted yet, so its data runs to the last day any package has downloads.
   const npmDay = Object.values(out.npm).flatMap((d) => Object.keys(d.days)).sort().at(-1) ?? null
   for (const d of Object.values(out.npm)) d.through = npmDay
-  const uncounted = owned.filter((pkg) => !out.npm[pkg])
+  const uncounted = owned.filter((pkg) => !out.npm[pkg] && !(config.npmSkip ?? []).includes(pkg))
   if (uncounted.length) {
     console.log(`::warning::No project in impact.yaml counts these packages of the ${config.npmOrg} npm organization: ${uncounted.join(', ')}.`)
   }

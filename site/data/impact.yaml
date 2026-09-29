@@ -9,8 +9,11 @@ award:
   years: 5
 
 # The npm organization that owns the packages below. A `*` in an npm name matches any run of characters
-# among its packages, and the deploy log warns about a package of it that no project counts.
+# among its packages, and the deploy log warns about a package of it that no project counts, unless it is
+# listed in `npmSkip`.
 npmOrg: urban-toolkit
+# Autk-grammar's earlier name.
+npmSkip: ['@urban-toolkit/the-urban-grammar']
 
 # The repositories and packages behind the software rows, in table order. `project` is a page in
 # site/projects/. A package's earlier names are listed with it.
@@ -32,8 +35,8 @@ projects:
     repo: urban-toolkit/vitral
   - project: autark
     repo: urban-toolkit/autark
-    # The-urban-grammar is autk-grammar's earlier name, and the unscoped autk-* are the others' earlier names.
-    npm: ['@urban-toolkit/autk*', '@urban-toolkit/the-urban-grammar', 'autk-*']
+    # The unscoped autk-* are the earlier names of the packages, before @urban-toolkit.
+    npm: ['@urban-toolkit/autk*', 'autk-*']
   - project: scout
     repo: urban-toolkit/scout
   - project: sidewalk

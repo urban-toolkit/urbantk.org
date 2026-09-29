@@ -121,7 +121,7 @@ npm run dev
 
 `site/data/impact.yaml` says what to count and holds what only the team knows:
 
-- `npmOrg` and `projects`: the repositories and packages, with each package's earlier names. Add a line to count another project. A `*` in an npm name matches any of the organization's packages, and the deploy log warns about one that no project counts.
+- `npmOrg` and `projects`: the repositories and packages, with each package's earlier names. Add a line to count another project. A `*` in an npm name matches any of the organization's packages, and the deploy log warns about one that no project counts, unless `npmSkip` lists it.
 - `internal`: the institutions whose people are not external contributors, with their email domains and the words their members' GitHub profiles use.
 - `people`: commit identities of one person that share no email, name or GitHub account, and the institution of people nothing else places.
 - `curio.demos`: the Curio examples that show a feature rather than an urban analysis.

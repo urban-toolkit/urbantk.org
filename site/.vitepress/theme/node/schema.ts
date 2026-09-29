@@ -151,6 +151,7 @@ export const impactSchema = z
       })
       .strict(),
     npmOrg: z.string().optional(),
+    npmSkip: z.array(z.string()).default([]),
     projects: z.array(
       z
         .object({

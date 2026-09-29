@@ -19,6 +19,9 @@ hero:
     - theme: alt
       text: GitHub
       link: https://github.com/urban-toolkit
+    - theme: alt
+      text: Discord
+      link: https://discord.gg/ajT6wF8TmN
 ---
 
 <HomeNews />

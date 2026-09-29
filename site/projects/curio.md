@@ -26,7 +26,6 @@ links:
   - { kind: github, url: "https://github.com/urban-toolkit/curio" }
   - { kind: paper, bib: moreira2025curio }
   - { kind: pypi, url: "https://pypi.org/project/utk-curio/" }
-  - { kind: discord, url: "https://discord.gg/ajT6wF8TmN" }
 features:
   - id: build
     title: "Build dataflows from code, grammar and GUI nodes"

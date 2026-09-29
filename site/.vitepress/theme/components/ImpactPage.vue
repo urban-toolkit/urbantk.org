@@ -6,9 +6,9 @@ import Icon from './Icon.vue'
 
 // The metrics table, and under "What is counted" one numbered entry per row: how the row is computed, its
 // sources and the items it counted. Each row links to its entry, like a footnote. The software rows open
-// onto one row per project; stars start open.
+// onto one row per project.
 const format = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 })
-const open = ref<string[]>(['stars'])
+const open = ref<string[]>([])
 
 function toggle(id: string) {
   open.value = open.value.includes(id) ? open.value.filter((x) => x !== id) : [...open.value, id]

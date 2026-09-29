@@ -17,6 +17,7 @@ card:
   alt: "Analyzing flood simulations with Urbanite"
 bubble: { label: false }
 links:
+  - { kind: website, url: "https://curio.urbantk.org", label: "Website: curio.urbantk.org", primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/urbanite" }
   - { kind: paper, bib: moreira2026urbanite }
 team: [gmoreira, lferreira, mhosseini, cveiga, fmiranda]

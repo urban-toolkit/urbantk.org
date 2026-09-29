@@ -18,7 +18,7 @@ card:
   alt: "Urbane rebuilt with Autark"
 bubble: { image: /media/projects/autark/wordmark.webp, fill: false, label: false }
 links:
-  - { kind: website, url: "https://autarkjs.org", label: autarkjs.org, primary: true }
+  - { kind: website, url: "https://autarkjs.org", label: "Website: autarkjs.org", primary: true }
   - { kind: docs, url: "https://autarkjs.org/introduction", label: Get started }
   - { kind: demo, url: "https://autarkjs.org/gallery/", label: Gallery }
   - { kind: github, url: "https://github.com/urban-toolkit/autark" }

@@ -18,6 +18,7 @@ card:
   alt: "What-if shadow analysis and building-level sunlight access specified with the UTK grammar"
 bubble: { image: /media/projects/utk/card.webp }
 links:
+  - { kind: website, url: "https://autarkjs.org", label: "Website: autarkjs.org", primary: true }
   - { kind: github, url: "https://github.com/urban-toolkit/utk" }
   - { kind: install, url: "https://github.com/urban-toolkit/utk/blob/master/docs/USAGE.md" }
   - { kind: docs, url: "https://github.com/urban-toolkit/utk/blob/master/docs/QUICK-START.md", label: Getting started }

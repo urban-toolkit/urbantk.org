@@ -103,4 +103,4 @@ arxiv: "2408.06139"
 
 Curio (Collaborative Urban Insight Observatory) is a framework for collaborative urban visual analytics that uses a dataflow model with multiple abstraction levels (code, grammar, GUI elements) to facilitate collaboration across the design and implementation of visual analytics components. The framework allows experts to intertwine preprocessing, managing, and visualization stages while tracking provenance of code and visualizations.
 
-Try it in the browser at [curio.urbantk.org](https://curio.urbantk.org), or run your own instance with the [installation guide](https://github.com/urban-toolkit/curio/blob/main/docs/USAGE.md).
+Try it in the browser at [flow.urbantk.org](https://flow.urbantk.org), or run your own instance with the [installation guide](https://github.com/urban-toolkit/curio/blob/main/docs/USAGE.md).

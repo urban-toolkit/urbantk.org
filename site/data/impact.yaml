@@ -68,16 +68,14 @@ people:
     institution: nyu
 
 # Curio's use cases and curated datasets come from its repository. Examples in its gallery that show a feature
-# rather than an urban analysis are not use cases. Only the Data Catalog datasets these publishers made count
-# as curated; datasets taken from open-data portals do not.
+# rather than an urban analysis are not use cases.
 curio:
   repo: urban-toolkit/curio
   demos: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
   # Examples that reproduce a use case one of the papers presents: the Curio paper's what-if shadows (06) and
   # Milan heat (09), and the Autark paper's Chicago shadows (07) and Niterói heat (08). They count once, as the
-  # paper's.
+  # paper's, and the data they read counts as curated for it.
   inPapers: [6, 7, 8, 9]
-  publishers: [Urban Analytics Lab]
 
 # Curio's hosted instances. Users at large are the accounts their public monitor API reports as registered
 # (the shared guest account is not one). Every deploy adds the day's counts to `history`, published with the

@@ -261,24 +261,30 @@ async function curio(dir) {
     examples.push({ number: Number(m[1]), title: m[2], useCase: m[4], file, added: await added(file) })
   }
 
+  // The numbered examples whose dataflow mentions a dataset id or a file name.
+  const dataflows = (await list('docs/examples')).filter((file) => /\/\d{2}-[^/]+\.json$/.test(file))
+  const texts = []
+  for (const file of dataflows) texts.push(await show(file))
+  const readers = (reads) => dataflows.filter((_, i) => reads(texts[i])).map((f) => Number(/\/(\d{2})-/.exec(f)[1]))
+
   const datasets = []
   for (const folder of await list('datasets')) {
     if (!/@\d+$/.test(folder)) continue
     const manifest = JSON.parse(await show(`${folder}/manifest.json`))
+    // An id that only begins a longer id is not a read of this dataset.
+    const escaped = manifest.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    const id = new RegExp(`${escaped}(?![\\w-]|\\.\\w)`)
     datasets.push({
       id: manifest.id,
       folder,
       name: manifest.name,
-      publisher: manifest.publisher ?? null,
       tags: manifest.tags ?? [],
       description: manifest.description ?? '',
+      examples: readers((text) => id.test(text)),
       added: await added(`${folder}/manifest.json`),
     })
   }
 
-  const dataflows = (await list('docs/examples')).filter((file) => /\/\d{2}-[^/]+\.json$/.test(file))
-  const texts = []
-  for (const file of dataflows) texts.push(await show(file))
   // Files only: a folder there holds a storage example's sample files, not one dataset.
   const blobs = (await git(dir, ['ls-tree', 'main', 'docs/examples/data/']))
     .trim()
@@ -288,8 +294,8 @@ async function curio(dir) {
   const files = []
   for (const file of blobs) {
     const name = path.posix.basename(file)
-    const readers = dataflows.filter((_, i) => texts[i].includes(name)).map((f) => Number(/\/(\d{2})-/.exec(f)[1]))
-    if (readers.length) files.push({ file, name, examples: readers, added: await added(file) })
+    const examples = readers((text) => text.includes(name))
+    if (examples.length) files.push({ file, name, examples, added: await added(file) })
   }
   return { examples, datasets, files }
 }

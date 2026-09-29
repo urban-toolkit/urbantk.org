@@ -125,8 +125,7 @@ npm run dev
 - `internal`: the institutions whose people are not external contributors, with their email domains and the words their members' GitHub profiles use.
 - `people`: commit identities of one person that share no email, name or GitHub account, and the institution of people nothing else places.
 - `curio.demos`: the Curio examples that show a feature rather than an urban analysis.
-- `curio.inPapers`: the Curio examples that reproduce a use case one of the papers presents; they count once, as the paper's.
-- `curio.publishers`: the publishers whose Data Catalog datasets count as curated. Datasets from open-data portals don't, and neither do boundaries or test samples. A project page's `data` link counts as a curated dataset in the year of its paper.
+- `curio.inPapers`: the Curio examples that reproduce a use case one of the papers presents; they count once, as the paper's. The Data Catalog datasets and data files they read count as curated datasets, except boundaries, test samples and OpenStreetMap extracts. A project page's `data` link counts as a curated dataset in the year of its paper.
 - `instances`: Curio's hosted apps, whose public monitor API gives the registered accounts behind "Users at large". Each deploy adds the day's counts to `/impact/history.json`, so a finished year keeps its last count.
 - `deployments`, `workshops`, `hackathons`, `tutorials`, `courses`, `internships`: the rows the team reports. Each item has a `date` or an award `year`; a year without items shows 0.
 

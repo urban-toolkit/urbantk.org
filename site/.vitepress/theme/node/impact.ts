@@ -36,9 +36,10 @@ interface Metrics {
       id: string
       folder: string
       name: string
-      publisher: string | null
       tags: string[]
       description: string
+      // The numbered examples that read it.
+      examples: number[]
       added: string | null
     }[]
     files: { file: string; name: string; examples: number[]; added: string | null }[]
@@ -419,7 +420,8 @@ export function loadImpact(): Impact {
     ),
   ])
   // Data the team created or curated for its papers: the data releases linked from the project pages, dated by
-  // the project's paper, the Data Catalog datasets its own publishers made, and the data files Curio's examples read.
+  // the project's paper, and the Data Catalog datasets and data files that Curio's examples of a paper's use case
+  // read.
   const releases = fs
     .readdirSync(PROJECTS_DIR)
     .filter((file) => file.endsWith('.md') && !file.startsWith('_'))
@@ -435,27 +437,26 @@ export function loadImpact(): Impact {
           date: paper ? paperDay(paper) : null,
         }))
     })
+  const forPaper = (examples: number[]) => examples.some((n) => config.curio.inPapers.includes(n))
+  const exampleList = (examples: number[]) =>
+    `example${examples.length > 1 ? 's' : ''} ${examples.map((n) => String(n).padStart(2, '0')).join(', ')}`
   const datasets = bucket([
     ...releases,
     ...metrics.curio.datasets
       .filter(
-        (d) =>
-          d.publisher !== null &&
-          config.curio.publishers.includes(d.publisher) &&
-          !d.tags.some((t) => /^boundar/i.test(t)) &&
-          !/sample extract/i.test(d.description),
+        (d) => forPaper(d.examples) && !d.tags.some((t) => /^boundar/i.test(t)) && !/sample extract/i.test(d.description),
       )
       .map((d) => ({
         name: d.name,
-        detail: 'Curio Data Catalog',
+        detail: `Curio Data Catalog, read by ${exampleList(d.examples)}`,
         url: `https://github.com/${config.curio.repo}/tree/main/${d.folder}`,
         date: d.added,
       })),
     ...metrics.curio.files
-      .filter((f) => !f.name.endsWith('.pbf'))
+      .filter((f) => forPaper(f.examples) && !f.name.endsWith('.pbf'))
       .map((f) => ({
         name: f.name,
-        detail: `Data of Curio example${f.examples.length > 1 ? 's' : ''} ${f.examples.map((n) => String(n).padStart(2, '0')).join(', ')}`,
+        detail: `Curio example data, read by ${exampleList(f.examples)}`,
         url: repoOf(f.file),
         date: f.added,
       })),
@@ -509,6 +510,7 @@ export function loadImpact(): Impact {
       { label: 'Data releases on the project pages', url: `${SITE.hostname}/#projects` },
       { label: "Curio's Data Catalog", url: `${curioRepo}/tree/main/datasets` },
       { label: "Curio's example data", url: `${curioRepo}/tree/main/docs/examples/data` },
+      { label: "Curio's example gallery", url: `${curioRepo}/blob/main/docs/README.md#examples` },
     ],
     'use-cases': [
       { label: "Curio's example gallery", url: `${curioRepo}/blob/main/docs/README.md#examples` },
@@ -557,7 +559,8 @@ export function loadImpact(): Impact {
     'downloads-month': `PyPI downloads of ${listOf(pypiNames)}, from ClickHouse's public PyPI dataset, and npm downloads of the ${npmCount} Autark packages. The average per month divides a year's downloads by its months, counting the elapsed days of a partial month.`,
     stars: `All the stars the ${config.projects.length} repositories had at the end of the year, by the dates GitHub gives them.`,
     users: `Accounts registered on Curio's hosted instances (${listOf(config.instances.map((base) => new URL(base).host))}), without the shared guest account, as each instance's public monitor reports them. A year shows the last count taken in it.`,
-    datasets: `Data the team created or curated for its papers, not data downloaded as is: the data releases linked from the project pages, in the year of their paper; the datasets in Curio's Data Catalog that ${listOf(config.curio.publishers)} published, in the year they were added; and the data files Curio's examples read, other than OpenStreetMap extracts.`,
+    datasets:
+      "Data the team created or curated for its papers, not data downloaded as is: the data releases linked from the project pages, in the year of their paper, and the Data Catalog datasets and data files read by the Curio examples that reproduce a paper's use case, in the year they were added to Curio. Boundaries, samples and OpenStreetMap extracts are not counted.",
     'use-cases':
       "The urban use cases in the usage-scenario or case-study sections of the papers, in the year of the paper, and the examples in Curio's gallery that are neither feature demos nor one of those use cases, in the year their walkthrough was added.",
     publications: 'Papers on the Papers page, in the year of their issue. Preprints are not counted.',

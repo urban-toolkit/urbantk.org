@@ -169,7 +169,6 @@ export const impactSchema = z
         repo: z.string(),
         demos: z.array(z.number().int()),
         inPapers: z.array(z.number().int()).default([]),
-        publishers: z.array(z.string()).default([]),
       })
       .strict(),
     instances: z.array(z.string().url()).default([]),

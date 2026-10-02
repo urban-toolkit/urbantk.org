@@ -93,8 +93,23 @@ function checkDisk() {
     if (!file) problems.push(`sitemap lists a missing page: ${loc}`)
     else if (redirectTarget(fs.readFileSync(file, 'utf8'))) problems.push(`sitemap lists a redirect stub: ${loc}`)
   }
+  problems.push(...checkImpactJson())
   console.log(`dist: ${files.length} HTML files, ${links} internal links, ${legacyUrls().length} legacy URLs checked`)
   return problems
+}
+
+// www.evl.uic.edu's Urban Toolkit page reads these rows from /impact/impact.json.
+const IMPACT_JSON_ROWS = ['downloads-month', 'publications']
+
+function checkImpactJson() {
+  const file = path.join(DIST, 'impact', 'impact.json')
+  if (!fs.existsSync(file)) return ['/impact/impact.json is missing']
+  const { years, rows } = JSON.parse(fs.readFileSync(file, 'utf8'))
+  return IMPACT_JSON_ROWS.flatMap((id) => {
+    const row = rows.find((r) => r.id === id)
+    if (!row) return [`/impact/impact.json has no ${id} row`]
+    return row.values.length === years.length ? [] : [`/impact/impact.json: ${id} has ${row.values.length} values for ${years.length} years`]
+  })
 }
 
 async function checkLive(base) {

@@ -4,12 +4,28 @@ import writeXlsxFile from 'write-excel-file/node'
 import { impactHistory, type Impact, type ImpactLink } from './impact'
 
 export const IMPACT_SHEET = '/impact/urbantk-impact.xlsx'
+export const IMPACT_JSON = '/impact/impact.json'
 
 // The counts every deploy recorded, published so the next deploy can extend them.
 export function writeImpactHistory(outDir: string): void {
   const file = path.join(outDir, 'impact', 'history.json')
   fs.mkdirSync(path.dirname(file), { recursive: true })
   fs.writeFileSync(file, `${JSON.stringify(impactHistory(), null, 1)}\n`)
+}
+
+// The table's totals by year, for pages elsewhere that show some of them (www.evl.uic.edu's Urban Toolkit
+// page reads the downloads-month and publications rows). Empty values are the ones the page shows as
+// "Not available".
+export function writeImpactJson(outDir: string, impact: Impact): void {
+  const file = path.join(outDir, IMPACT_JSON)
+  const json = {
+    updated: impact.updated,
+    url: 'https://urbantk.org/impact/',
+    years: impact.years.map(({ label, period, current }) => ({ label, period, current })),
+    rows: impact.groups.flatMap((g) => g.rows.map(({ id, label, values }) => ({ id, group: g.label, label, values }))),
+  }
+  fs.mkdirSync(path.dirname(file), { recursive: true })
+  fs.writeFileSync(file, `${JSON.stringify(json, null, 1)}\n`)
 }
 
 // The table of /impact/ as a one-sheet spreadsheet: a row per metric, with the per-project rows indented

@@ -1,10 +1,8 @@
 ---
 title: Team
-description: The people behind the Urban Toolkit.
+description: The people behind the Urban Toolkit at the University of Illinois Chicago, and their collaborators.
 ---
 
 # Team
-
-See also [fmiranda.me/team](https://fmiranda.me/team/) for an up-to-date list.
 
 <TeamPage />

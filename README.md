@@ -90,7 +90,7 @@ Add `imageFit: contain` when the image is a logo or a wide banner that should no
 
 ## Add a person
 
-Add them to `site/data/team.yaml`, with an `institution` id from the same file. Author names in `papers.bib` that match a person's `name` or one of their `aliases` link to their page. Collaborators who should appear on project pages but not on `/team/` get `listed: false`.
+Add them to `site/data/team.yaml`, with an `institution` id and a `group` id from the same file. `/team/` shows the groups in order as cards, then the people with `alumni: true` (who need no group), then the `compact` group of collaborators as a plain list of names and institutions. A `photo` is a 128 px square WebP in `site/public/media/team/`; without one, the card shows initials. Author names in `papers.bib` that match a person's `name` or one of their `aliases` link to their page. Collaborators who should appear on project pages but not on `/team/` get `listed: false`.
 
 ## Lead images from papers
 

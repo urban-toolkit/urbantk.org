@@ -10,11 +10,18 @@ export interface Institution {
   url?: string
 }
 
+export interface Group {
+  id: string
+  label: string
+  compact?: boolean
+}
+
 export interface Person {
   id: string
   name: string
   url?: string
   institution?: string
+  group?: string
   role?: string
   listed?: boolean
   alumni?: boolean
@@ -24,6 +31,7 @@ export interface Person {
 
 export interface Team {
   institutions: Institution[]
+  groups: Group[]
   people: Person[]
 }
 
@@ -32,12 +40,16 @@ export function loadTeam(file = path.join(DATA_DIR, 'team.yaml')): Team {
   if (!parsed.success) throw new Error(`site/data/team.yaml is invalid:\n${describe(parsed.error)}`)
   const team = parsed.data
   const institutions = new Set(team.institutions.map((i) => i.id))
+  const groups = new Set(team.groups.map((g) => g.id))
   const ids = new Set<string>()
   for (const person of team.people) {
     if (ids.has(person.id)) throw new Error(`team.yaml: duplicate person id ${person.id}`)
     ids.add(person.id)
     if (person.institution && !institutions.has(person.institution)) {
       throw new Error(`team.yaml: ${person.id} has unknown institution ${person.institution}`)
+    }
+    if (person.group && !groups.has(person.group)) {
+      throw new Error(`team.yaml: ${person.id} has unknown group ${person.group}`)
     }
   }
   return team

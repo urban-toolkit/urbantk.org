@@ -1,4 +1,6 @@
-# People of the Urban Toolkit. The /team/ page groups them by institution, in the order below.
+# People of the Urban Toolkit. /team/ shows the `groups` below in order as cards (with `photo`, a 128 px WebP
+# in site/public/media/team/, or initials), then `alumni: true`, then the `compact` groups as a plain list of
+# names and institutions. Visiting students are listed at UIC, with their home university in `role`.
 # Project pages list people by id (`team:` in their frontmatter), and author names in papers.bib that
 # match a name or one of its `aliases` link to the person's page.
 # `listed: false` marks collaborators who appear on project pages but not on /team/.
@@ -23,73 +25,243 @@ institutions:
     name: Politecnico di Milano
     url: https://www.polimi.it/
 
+groups:
+  - { id: faculty, label: Faculty }
+  - { id: staff, label: Research staff }
+  - { id: phd, label: PhD students }
+  - { id: msc, label: MSc students }
+  - { id: undergrad, label: Undergraduate students }
+  - { id: visiting, label: Visiting students }
+  - { id: collaborators, label: Collaborators, compact: true }
+
 people:
   - id: fmiranda
     name: Fabio Miranda
     url: https://fmiranda.me/
     institution: uic
-    role: Faculty
+    group: faculty
+    role: Assistant Professor
+    photo: /media/team/fmiranda.webp
+
   - id: kfalcao
     name: Karla Falcão
     institution: uic
+    group: staff
     role: Research software engineer
-  - id: gmoreira
-    name: Gustavo Moreira
-    url: https://gmmuller.github.io/
-    institution: uic
-    role: PhD candidate
+    photo: /media/team/kfalcao.webp
+
   - id: komar
     name: Kazi Omar
     url: https://komar41.github.io/
     institution: uic
+    group: phd
     role: PhD candidate
+    photo: /media/team/komar.webp
     aliases: [Kazi Shahrukh Omar]
-  - id: lferreira
-    name: Leonardo Ferreira
-    url: https://www.linkedin.com/in/leo-vsferreira/
-    institution: uic
-    role: PhD student
-  - id: ssrabanti
-    name: Sanjana Srabanti
-    url: https://sanjanasrabanti16.github.io/
-    institution: uic
-    role: PhD candidate
   - id: scobeli
     name: Stefan Cobeli
     url: https://stefancobeli.github.io/
     institution: uic
+    group: phd
     role: PhD student
+    photo: /media/team/scobeli.webp
+  - id: lferreira
+    name: Leonardo Ferreira
+    url: https://www.linkedin.com/in/leo-vsferreira/
+    institution: uic
+    group: phd
+    role: PhD student
+    photo: /media/team/lferreira.webp
   - id: kwang
     name: Keira Wang
     institution: uic
+    group: phd
     role: PhD student
+    photo: /media/team/kwang.webp
+  - id: pbaghershahi
+    name: Peyman Baghershahi
+    institution: uic
+    group: phd
+    role: PhD student
+
+  - id: vmeka
+    name: Vamsi Dath Meka
+    institution: uic
+    group: msc
+    role: MSc student
+    aliases: [Vamsi Dath]
+
+  - id: ccarchi
+    name: Carolina Carchi
+    institution: uic
+    group: undergrad
+  - id: dhodczak
+    name: Daniel Hodczak
+    institution: uic
+    group: undergrad
+  - id: lloch
+    name: Logan Loch
+    institution: uic
+    group: undergrad
+  - id: anadeem
+    name: Ahmad Nadeem
+    institution: uic
+    group: undergrad
+  - id: hmnnguyen
+    name: Ho Minh Nhat Nguyen
+    institution: uic
+    group: undergrad
+  - id: tnguyen
+    name: Tuan Duc (Henry) Nguyen
+    institution: uic
+    group: undergrad
+    aliases: [Tuan Duc Nguyen, Duc Nguyen, Henry Nguyen]
+  - id: jpodapati
+    name: Jayanth Podapati
+    institution: uic
+    group: undergrad
+  - id: aquesada
+    name: Andres Quesada
+    institution: uic
+    group: undergrad
+  - id: sshannon
+    name: Shaun Shannon
+    institution: uic
+    group: undergrad
+  - id: dstyka
+    name: Dominik Styka
+    institution: uic
+    group: undergrad
+
+  - id: lsouza
+    name: Lyncoln Souza de Oliveira
+    institution: uic
+    group: visiting
+    role: PhD student, Universidade Federal Fluminense
+    photo: /media/team/lsouza.webp
+    aliases: [Lyncoln Oliveira]
+  - id: lmelo
+    name: Luiza Melo
+    institution: uic
+    group: visiting
+    role: MS student, Universidade Federal de Pernambuco
+    photo: /media/team/lmelo.webp
+  - id: ybi
+    name: Yangbo Bi
+    institution: uic
+    group: visiting
+    role: PhD student, University of Birmingham
+    photo: /media/team/ybi.webp
+  - id: rfilho
+    name: Renzo Filho
+    institution: uic
+    group: visiting
+    role: Undergraduate, University of São Paulo
+    photo: /media/team/rfilho.webp
+  - id: kmakienko
+    name: Kirill Makienko
+    institution: uic
+    group: visiting
+    role: Undergraduate, Tecnológico de Monterrey
+
+  # Alumni
+  - id: gmoreira
+    name: Gustavo Moreira
+    url: https://gmmuller.github.io/
+    institution: uic
+    alumni: true
+    role: PhD 2026
+    photo: /media/team/gmoreira.webp
+  - id: ssrabanti
+    name: Sanjana Srabanti
+    url: https://sanjanasrabanti16.github.io/
+    institution: uic
+    alumni: true
+    role: PhD 2026
+    photo: /media/team/ssrabanti.webp
+  - id: vpidaparthi
+    name: Venkata Pidaparthi
+    institution: uic
+    alumni: true
+    role: MSc 2025
+  - id: dmunukutla
+    name: Durga Venkata Kashyap Munukutla
+    institution: uic
+    alumni: true
+    role: MSc 2025
+  - id: schandra
+    name: Sajal Chandra
+    institution: uic
+    alumni: true
+    role: MSc 2024
+  - id: dbartoletti
+    name: Davide Bartoletti
+    institution: uic
+    alumni: true
+    role: MSc 2023
+  - id: spradhan
+    name: Soham Pradhan
+    institution: uic
+    alumni: true
+    role: MSc 2022
+  - id: skljaic
+    name: Sreten Kljaic
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, BS 2024
+  - id: jmahia
+    name: James Mahia
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher
+  - id: supadhyayula
+    name: Shanmukh Upadhyayula
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher
+  - id: spang
+    name: Sunshine Pang
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher
+
+  # Collaborators, in the compact list at the bottom of /team/.
   - id: mhosseini
     name: Maryam Hosseini
     url: https://www.maryamhosseini.me/
     institution: berkeley
+    group: collaborators
     role: Faculty
   - id: mlage
     name: Marcos Lage
     url: http://www.ic.uff.br/~mlage/
     institution: uff
+    group: collaborators
     role: Faculty
   - id: doliveira
     name: Daniel de Oliveira
     url: http://www2.ic.uff.br/~danielcmo/
     institution: uff
+    group: collaborators
     role: Faculty
     aliases: [Daniel Oliveira]
-  - id: lalexandre
-    name: Lucas Alexandre
-    institution: uff
-    role: MSc student
   - id: nferreira
     name: Nivan Ferreira
     url: https://www.cin.ufpe.br/~nivan/
     institution: ufpe
+    group: collaborators
     role: Faculty
+  - id: cveiga
+    name: Carolina Veiga
+    institution: uiuc
+    group: collaborators
 
   # Collaborators on individual projects.
+  - id: lalexandre
+    name: Lucas Alexandre
+    institution: uff
+    role: MSc student
+    listed: false
   - id: lrenambot
     name: Luc Renambot
     url: https://cs.uic.edu/profiles/luc-renambot/
@@ -104,14 +276,6 @@ people:
   - id: mnipu
     name: Md Nafiul Alam Nipu
     institution: uic
-    listed: false
-  - id: dhodczak
-    name: Daniel Hodczak
-    institution: uic
-    listed: false
-  - id: cveiga
-    name: Carolina Veiga
-    institution: uiuc
     listed: false
   - id: ncolaninno
     name: Nicola Colaninno

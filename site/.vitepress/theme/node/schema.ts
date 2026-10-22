@@ -97,6 +97,8 @@ export const categorySchema = z.array(
 export const teamSchema = z
   .object({
     institutions: z.array(z.object({ id: z.string(), name: z.string(), url: z.string().optional() }).strict()),
+    // The sections of /team/, in order. `compact`: a plain list after the alumni (the collaborators).
+    groups: z.array(z.object({ id: z.string(), label: z.string(), compact: z.boolean().optional() }).strict()).min(1),
     people: z.array(
       z
         .object({
@@ -104,6 +106,7 @@ export const teamSchema = z
           name: z.string(),
           url: z.string().optional(),
           institution: z.string().optional(),
+          group: z.string().optional(),
           role: z.string().optional(),
           // false: a collaborator shown on project pages and linked from papers, but not on /team/.
           listed: z.boolean().optional(),
@@ -111,7 +114,8 @@ export const teamSchema = z
           photo: sitePath.optional(),
           aliases: z.array(z.string()).optional(),
         })
-        .strict(),
+        .strict()
+        .refine((p) => p.listed === false || p.alumni || p.group, { message: 'a listed person needs a group, or alumni: true', path: ['group'] }),
     ),
   })
   .strict()

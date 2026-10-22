@@ -32,7 +32,7 @@ groups:
   - { id: msc, label: MSc students }
   - { id: undergrad, label: Undergraduate students }
   - { id: visiting, label: Visiting students }
-  - { id: collaborators, label: Collaborators, compact: true }
+  - { id: collaborators, label: Frequent collaborators, compact: true }
 
 people:
   - id: fmiranda
@@ -78,37 +78,9 @@ people:
     group: phd
     role: PhD student
     photo: /media/team/kwang.webp
-  - id: pbaghershahi
-    name: Peyman Baghershahi
-    institution: uic
-    group: phd
-    role: PhD student
-
-  - id: vmeka
-    name: Vamsi Dath Meka
-    institution: uic
-    group: msc
-    role: MSc student
-    aliases: [Vamsi Dath]
 
   - id: ccarchi
     name: Carolina Carchi
-    institution: uic
-    group: undergrad
-  - id: dhodczak
-    name: Daniel Hodczak
-    institution: uic
-    group: undergrad
-  - id: lloch
-    name: Logan Loch
-    institution: uic
-    group: undergrad
-  - id: anadeem
-    name: Ahmad Nadeem
-    institution: uic
-    group: undergrad
-  - id: hmnnguyen
-    name: Ho Minh Nhat Nguyen
     institution: uic
     group: undergrad
   - id: tnguyen
@@ -116,22 +88,6 @@ people:
     institution: uic
     group: undergrad
     aliases: [Tuan Duc Nguyen, Duc Nguyen, Henry Nguyen]
-  - id: jpodapati
-    name: Jayanth Podapati
-    institution: uic
-    group: undergrad
-  - id: aquesada
-    name: Andres Quesada
-    institution: uic
-    group: undergrad
-  - id: sshannon
-    name: Shaun Shannon
-    institution: uic
-    group: undergrad
-  - id: dstyka
-    name: Dominik Styka
-    institution: uic
-    group: undergrad
 
   - id: lsouza
     name: Lyncoln Souza de Oliveira
@@ -144,7 +100,7 @@ people:
     name: Luiza Melo
     institution: uic
     group: visiting
-    role: MS student, Universidade Federal de Pernambuco
+    role: MSc student, Universidade Federal de Pernambuco
     photo: /media/team/lmelo.webp
   - id: ybi
     name: Yangbo Bi
@@ -179,6 +135,12 @@ people:
     alumni: true
     role: PhD 2026
     photo: /media/team/ssrabanti.webp
+  - id: vmeka
+    name: Vamsi Dath Meka
+    institution: uic
+    alumni: true
+    role: MSc 2026
+    aliases: [Vamsi Dath]
   - id: vpidaparthi
     name: Venkata Pidaparthi
     institution: uic
@@ -204,26 +166,56 @@ people:
     institution: uic
     alumni: true
     role: MSc 2022
-  - id: skljaic
-    name: Sreten Kljaic
+  - id: dhodczak
+    name: Daniel Hodczak
     institution: uic
     alumni: true
-    role: Undergraduate researcher, BS 2024
+    role: Undergraduate researcher, 2026
+  - id: lloch
+    name: Logan Loch
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: anadeem
+    name: Ahmad Nadeem
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: hmnnguyen
+    name: Ho Minh Nhat Nguyen
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: jpodapati
+    name: Jayanth Podapati
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: aquesada
+    name: Andres Quesada
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: dstyka
+    name: Dominik Styka
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2026
+  - id: sshannon
+    name: Shaun Shannon
+    institution: uic
+    alumni: true
+    role: Undergraduate researcher, 2025
   - id: jmahia
     name: James Mahia
     institution: uic
     alumni: true
-    role: Undergraduate researcher
+    role: Undergraduate researcher, 2025
   - id: supadhyayula
     name: Shanmukh Upadhyayula
     institution: uic
     alumni: true
-    role: Undergraduate researcher
-  - id: spang
-    name: Sunshine Pang
-    institution: uic
-    alumni: true
-    role: Undergraduate researcher
+    role: Undergraduate researcher, 2025
 
   # Collaborators, in the compact list at the bottom of /team/.
   - id: mhosseini

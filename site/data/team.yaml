@@ -247,17 +247,17 @@ people:
     name: Carolina Veiga
     institution: uiuc
     group: collaborators
+  - id: lrenambot
+    name: Luc Renambot
+    url: https://cs.uic.edu/profiles/luc-renambot/
+    institution: uic
+    group: collaborators
 
   # Collaborators on individual projects.
   - id: lalexandre
     name: Lucas Alexandre
     institution: uff
     role: MSc student
-    listed: false
-  - id: lrenambot
-    name: Luc Renambot
-    url: https://cs.uic.edu/profiles/luc-renambot/
-    institution: uic
     listed: false
   - id: gmarai
     name: G. Elisabeta Marai

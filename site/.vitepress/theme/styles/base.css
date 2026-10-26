@@ -296,3 +296,13 @@
 .vp-doc img {
   border-radius: var(--utk-radius-sm);
 }
+
+/* The group photo under the team page's title: the skyline, then the people, fading into the page below their
+   faces. */
+.vp-doc img.utk-team-photo {
+  width: 100%;
+  height: auto;
+  margin: 20px 0 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent);
+  mask-image: linear-gradient(to bottom, #000 76%, transparent);
+}
